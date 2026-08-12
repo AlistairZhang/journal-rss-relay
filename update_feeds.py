@@ -986,14 +986,14 @@ def build_ncpssd_feed(
     supplemented = supplement_cnki_dois(articles, journal)
     if supplemented:
         print(
-            f"中国工业经济从CNKI DOI登记库补全 {supplemented} 条DOI",
+            f"{journal['name']}从 CNKI DOI 登记库补全 {supplemented} 条 DOI",
             flush=True,
         )
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
     ET.SubElement(channel, "title").text = f"{journal['name']} - {suffix}"
-    ET.SubElement(channel, "link").text = journal["source_url"]
+    ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
     ET.SubElement(channel, "description").text = (
         f"{journal['name']}当期题录信息，由 Journal RSS Relay 每 3 天更新"
     )

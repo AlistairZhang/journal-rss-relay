@@ -17,14 +17,13 @@
       "output_file": "shujing-jijing.xml",
       "name": "数量经济技术经济研究",
       "language": "zh-cn",
-      "source_url": "https://www.jqte.net/download_upload_file.aspx?file_name=%2Frss%2Fsljjjsjjyj%2Fcn%2Fcurrent.xml",
+      "source_type": "ncpssd_current",
+      "source_url": "https://www.ncpssd.org/journal/secure/details?params=K0tQenlLclR2ODk1dTE2Mm0xUWM3ZUk5V1l4M05iRDRheWR6eEs4WFJaLzhUNUdLOGgxaHUyM2ZtNWtZWlYxbURHcW0rVUJhY3p6SExwMk82VEgyOVE9PQ",
       "site_url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-      "link_replacements": [
-        {
-          "from": "http://jqte.ijournals.cn/ch/reader/",
-          "to": "https://www.jqte.net/sljjjsjjyj/ch/reader/"
-        }
-      ]
+      "issue_list_api": "https://www.ncpssd.org/journal/journalHandler",
+      "journal_code": "94503X",
+      "detail_api": "https://m.ncpssd.cn/articleinfoHandler/getjournalarticletable",
+      "request_delay_seconds": 1.5
     },
     {
       "slug": "jjdl",
