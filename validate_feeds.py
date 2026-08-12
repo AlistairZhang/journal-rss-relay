@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate every configured feed before it is committed or published."""
+"""在提交和发布前校验全部 RSS 文件的格式、字段及中英文一致性。"""
 
 from __future__ import annotations
 
