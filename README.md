@@ -1,4 +1,4 @@
-# Journal RSS Relay
+# RSS 订阅链接汇总
 
 ## 中文期刊
 
