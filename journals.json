@@ -40,9 +40,13 @@
       "output_file": "guanli-shijie.xml",
       "name": "管理世界",
       "language": "zh-cn",
-      "source_type": "mwm_current",
-      "source_url": "http://www.mwm.net.cn/web/bqym",
-      "referer": "http://www.mwm.net.cn/web/"
+      "source_type": "ncpssd_current",
+      "source_url": "https://www.ncpssd.org/journal/secure/details?params=V2ZQZUlGQnRhM3lxVEkrUDlvU2gyZkVJUE8yTmpKZDFHMElFUUNUR0MyWT0",
+      "site_url": "http://www.mwm.net.cn/web/bqym",
+      "issue_list_api": "https://www.ncpssd.org/journal/journalHandler",
+      "journal_code": "95499X",
+      "detail_api": "https://m.ncpssd.cn/articleinfoHandler/getjournalarticletable",
+      "request_delay_seconds": 1.5
     },
     {
       "slug": "zggyjj",
