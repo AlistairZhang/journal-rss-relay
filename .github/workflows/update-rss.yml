@@ -3,29 +3,26 @@ name: 更新 RSS
 on:
   workflow_dispatch:
   schedule:
-    # UTC 22:15（北京时间次日 06:15），约每 3 天运行一次。
-    - cron: "15 22 */3 * *"
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+    # UTC 23:15（北京时间次日 07:15），约每 3 天运行一次。
+    # 两个国内官网由 Gitee 在北京时间 05:30 采集并即时发送，错开执行。
+    - cron: "15 23 */3 * *"
 
 concurrency:
   group: journal-rss-update
-  cancel-in-progress: false
+  queue: max
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    env:
-      TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
-      TRANSLATION_API_URL: ${{ vars.TRANSLATION_API_URL }}
-      TRANSLATION_MODEL: ${{ vars.TRANSLATION_MODEL }}
+    permissions:
+      contents: write
+      pages: write
 
     steps:
       - name: 读取仓库
         uses: actions/checkout@v5
+        with:
+          ref: main
 
       - name: 准备 Python
         uses: actions/setup-python@v6
@@ -33,6 +30,10 @@ jobs:
           python-version: "3.12"
 
       - name: 更新全部订阅
+        env:
+          TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+          TRANSLATION_API_URL: ${{ vars.TRANSLATION_API_URL }}
+          TRANSLATION_MODEL: ${{ vars.TRANSLATION_MODEL }}
         run: python update_feeds.py
 
       - name: 检查 RSS
@@ -84,6 +85,10 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: update
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

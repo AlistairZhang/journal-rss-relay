@@ -1,0 +1,97 @@
+name: 接收 Gitee 国内期刊题录
+
+on:
+  repository_dispatch:
+    types: [gitee-journal-ingest-v1]
+
+concurrency:
+  group: journal-rss-update
+  queue: max
+
+jobs:
+  receive:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.ingest.outputs.changed }}
+
+    steps:
+      - name: 读取仓库
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: 准备 Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: 验证并接收题录
+        id: ingest
+        env:
+          GITEE_RELAY_HMAC_SECRET: ${{ secrets.GITEE_RELAY_HMAC_SECRET }}
+        run: python ingest_gitee.py
+
+      - name: 检查全部 RSS
+        if: steps.ingest.outputs.changed == 'true'
+        run: python validate_feeds.py
+
+      - name: 保存国内期刊 RSS
+        if: steps.ingest.outputs.changed == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          changed=0
+          while IFS=$'\t' read -r feed_path label; do
+            if [ -n "$(git status --porcelain --untracked-files=all -- "$feed_path")" ]; then
+              git add -- "$feed_path"
+              git commit -m "$label"
+              changed=1
+            fi
+          done <<'EOF'
+          docs/shuliang-jingji-jishu-jingji-yanjiu.xml	数量经济技术经济研究
+          docs/guanli-shijie.xml	管理世界
+          EOF
+          if [ "$changed" -eq 1 ]; then
+            git push
+          fi
+
+  package:
+    if: needs.receive.outputs.changed == 'true'
+    needs: receive
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+
+    steps:
+      - name: 读取更新后的仓库
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: 准备 GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 打包 RSS 文件
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 发布 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
