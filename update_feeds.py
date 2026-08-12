@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import hashlib
 import copy
+import html
 import os
 import re
 import sys
@@ -1513,6 +1514,150 @@ def parse_redif_articles(source_data: bytes) -> list[dict[str, list[str]]]:
     return records
 
 
+def html_meta_values(source_html: bytes) -> dict[str, list[str]]:
+    """Extract repeated HTML meta values without relying on attribute order."""
+    values: dict[str, list[str]] = {}
+    text = source_html.decode("utf-8", errors="replace")
+    for tag in re.findall(r"<meta\b[^>]*>", text, flags=re.IGNORECASE):
+        attributes = {
+            key.lower(): html.unescape(value)
+            for key, _, value in re.findall(
+                r"([\w:-]+)\s*=\s*(['\"])(.*?)\2",
+                tag,
+                flags=re.IGNORECASE | re.DOTALL,
+            )
+        }
+        name = (attributes.get("name") or attributes.get("property") or "").lower()
+        content = attributes.get("content", "").strip()
+        if name and content:
+            values.setdefault(name, []).append(content)
+    return values
+
+
+def build_repec_series_current_feed(
+    journal: dict,
+    suffix: str,
+    base_url: str,
+    source_html: bytes,
+) -> tuple[bytes, int]:
+    """Build a current-issue feed from a publisher-supplied IDEAS/RePEc series."""
+    text = source_html.decode("utf-8", errors="replace")
+    issue_blocks = re.findall(
+        r"<h3>([A-Za-z]+\s+\d{4}),\s*Volume\s*(\d+),\s*Issue\s*(\d+)</h3>"
+        r"<div[^>]*>\s*<ul[^>]*>(.*?)</ul>",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not issue_blocks:
+        raise RuntimeError("RePEc series page did not return issue metadata")
+
+    def issue_key(block: tuple[str, str, str, str]) -> tuple[datetime, int, int]:
+        return datetime.strptime(block[0], "%B %Y"), int(block[1]), int(block[2])
+
+    month_year, volume, issue_number, issue_html = max(issue_blocks, key=issue_key)
+    issue_date = datetime.strptime(month_year, "%B %Y").replace(tzinfo=timezone.utc)
+    article_paths = list(
+        dict.fromkeys(
+            html.unescape(path)
+            for path in re.findall(
+                r"href=['\"]([^'\"]*?/a/[^'\"]+\.html)['\"]",
+                issue_html,
+                flags=re.IGNORECASE,
+            )
+        )
+    )
+    if not article_paths:
+        raise RuntimeError("RePEc current issue did not return article links")
+
+    articles: list[dict[str, object]] = []
+    seen_dois: set[str] = set()
+    for article_path in article_paths:
+        article_url = urllib.parse.urljoin(journal["source_url"], article_path)
+        article_html = fetch(
+            article_url,
+            accept="text/html,application/xhtml+xml,*/*;q=0.8",
+            referer=journal["source_url"],
+        )
+        meta = html_meta_values(article_html)
+        title = (meta.get("citation_title") or [""])[0].strip()
+        abstract = (meta.get("citation_abstract") or [""])[0].strip()
+        journal_title = (meta.get("citation_journal_title") or [""])[0].strip()
+        article_volume = (meta.get("citation_volume") or [""])[0].strip()
+        article_issue = (meta.get("citation_issue") or [""])[0].strip()
+        article_year = (meta.get("citation_year") or [""])[0].strip()
+        authors = [
+            author.strip()
+            for author in re.split(
+                r"\s*;\s*",
+                (meta.get("citation_authors") or meta.get("author") or [""])[0],
+            )
+            if author.strip()
+        ]
+        first_page = (meta.get("citation_firstpage") or [""])[0].strip()
+        last_page = (meta.get("citation_lastpage") or [""])[0].strip()
+        doi = normalize_doi(article_html.decode("utf-8", errors="replace"))
+        if (
+            not all((title, abstract, authors, first_page, last_page, doi))
+            or journal_title != journal["expected_journal_title"]
+            or article_volume != volume
+            or article_issue != issue_number
+            or article_year != str(issue_date.year)
+        ):
+            raise RuntimeError(f"RePEc article metadata validation failed: {article_url}")
+        if doi.lower() in seen_dois:
+            raise RuntimeError(f"RePEc current issue contains duplicate DOI: {doi}")
+        seen_dois.add(doi.lower())
+        articles.append(
+            {
+                "title": title,
+                "abstract": abstract,
+                "authors": authors,
+                "first_page": int(first_page),
+                "pages": f"{first_page}\u2013{last_page}",
+                "doi": doi,
+                "link": f"https://doi.org/{doi}",
+            }
+        )
+    articles.sort(key=lambda article: int(article["first_page"]))
+
+    rss = ET.Element("rss", {"version": "2.0"})
+    channel = ET.SubElement(rss, "channel")
+    ET.SubElement(channel, "title").text = f"{journal['name']} - {suffix}"
+    ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
+    ET.SubElement(channel, "description").text = (
+        f"{journal['expected_journal_title']} latest-issue metadata, updated every 3 days"
+    )
+    ET.SubElement(channel, "language").text = journal.get("language", "en")
+    ET.SubElement(channel, "lastBuildDate").text = format_datetime(datetime.now(timezone.utc))
+    ET.SubElement(
+        channel,
+        f"{{{ATOM_NS}}}link",
+        {
+            "href": public_feed_url(base_url, journal),
+            "rel": "self",
+            "type": "application/rss+xml",
+        },
+    )
+    published = format_datetime(issue_date)
+    for article in articles:
+        item = ET.SubElement(channel, "item")
+        ET.SubElement(item, "title").text = str(article["title"])
+        ET.SubElement(item, "link").text = str(article["link"])
+        for author in article["authors"]:
+            ET.SubElement(item, f"{{{DC_NS}}}creator").text = str(author)
+        ET.SubElement(item, "pubDate").text = published
+        ET.SubElement(item, "description").text = str(article["abstract"])
+        ET.SubElement(item, "category").text = (
+            f"Vol. {volume}, No. {issue_number}, pp. {article['pages']}"
+        )
+        ET.SubElement(item, f"{{{DC_NS}}}identifier").text = str(article["link"])
+        ET.SubElement(item, "guid", {"isPermaLink": "false"}).text = (
+            f"doi:{article['doi']}"
+        )
+    ET.indent(rss, space="  ")
+    return ET.tostring(rss, encoding="utf-8", xml_declaration=True), len(articles)
+
+
 def build_jpe_current_feed(
     journal: dict,
     suffix: str,
@@ -1761,6 +1906,18 @@ def main() -> int:
                 base_url,
                 source_data,
                 redif_data,
+            )
+        elif journal.get("source_type") == "repec_series_current":
+            source_data = fetch(
+                journal["source_url"],
+                accept="text/html,application/xhtml+xml,*/*;q=0.8",
+                referer=journal.get("site_url", journal["source_url"]),
+            )
+            feed_xml, count = build_repec_series_current_feed(
+                journal,
+                suffix,
+                base_url,
+                source_data,
             )
         elif journal.get("source_type") == "ncpssd_current":
             current_url = discover_ncpssd_current_url(journal)

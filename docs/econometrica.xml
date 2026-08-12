@@ -2,134 +2,146 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
     <title>Econometrica - 祥仔</title>
-    <link>https://onlinelibrary.wiley.com/feed/14680262/most-recent</link>
-    <description>Econometrica题录信息，由 Journal RSS Relay 每 3 天更新</description>
+    <link>https://onlinelibrary.wiley.com/journal/14680262</link>
+    <description>Econometrica latest-issue metadata, updated every 3 days</description>
     <language>en</language>
-    <lastBuildDate>Wed, 12 Aug 2026 11:13:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 11:35:23 +0000</lastBuildDate>
     <atom:link href="https://alistairzhang.github.io/journal-rss-relay/econometrica.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Firm‐to‐Firm Trade: Imports, Exports, and the Labor Market</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA20506?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1135-1170, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
-      <dc:creator>Jonathan Eaton</dc:creator>
-      <dc:creator>Samuel Kortum</dc:creator>
-      <dc:creator>Francis Kramarz</dc:creator>
-      <dc:identifier>https://doi.org/10.3982/ECTA20506</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA20506</guid>
-    </item>
-    <item>
-      <title>Identification in Instrumental Variables Models: The Central Role of Abadie's Kappa</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23174?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1095-1133, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
-      <dc:creator>Manu Navjeevan</dc:creator>
-      <dc:creator>Rodrigo Pinto</dc:creator>
-      <dc:creator>Andres Santos</dc:creator>
-      <dc:identifier>https://doi.org/10.3982/ECTA23174</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA23174</guid>
-    </item>
-    <item>
-      <title>The Equilibrium Effects of Campaign Finance Deregulation on U.S. Elections</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA22979?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1209-1243, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
-      <dc:creator>Christian Cox</dc:creator>
-      <dc:identifier>https://doi.org/10.3982/ECTA22979</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA22979</guid>
-    </item>
-    <item>
-      <title>Information Design in Common Value Auction With Moral Hazard: Application to OCS Leasing Auctions</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA21839?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1171-1208, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
-      <dc:creator>Anh Nguyen</dc:creator>
-      <dc:identifier>https://doi.org/10.3982/ECTA21839</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA21839</guid>
-    </item>
-    <item>
-      <title>Mechanism Design for Personalized Policy: A Field Experiment Incentivizing Exercise</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA21926?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1409-1448, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
-      <dc:creator>Rebecca Dizon‐Ross</dc:creator>
-      <dc:creator>Ariel Zucker</dc:creator>
-      <dc:identifier>https://doi.org/10.3982/ECTA21926</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA21926</guid>
-    </item>
-    <item>
-      <title>Economic Growth and the Rise of Large Firms</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA22110?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1375-1408, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
-      <dc:creator>Zhang Chen</dc:creator>
-      <dc:identifier>https://doi.org/10.3982/ECTA22110</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA22110</guid>
-    </item>
-    <item>
       <title>Walras–Bowley Lecture: Climate Policy in the Wide World</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA22451?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1061-1093, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <link>https://doi.org/10.3982/ECTA22451</link>
       <dc:creator>John Hassler</dc:creator>
       <dc:creator>Per Krusell</dc:creator>
       <dc:creator>Conny Olovsson</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>We construct a dynamic integrated assessment model of climate and the economy with very high geographic resolution. Migration is free within, but not allowed across, countries. The model parameterization uses a wealth of data, including the distribution of output, population, energy sources and use, and estimates of the local damages from climate change. It implies very large geographic dispersion in damages from warming. We conduct three kinds of policy experiments. In one, we note that a modest, uniform carbon tax limits global warming and damages around the world substantially. In a second experiment, we let the poorest countries not tax carbon, while the rest compensate by setting higher taxes; the efficiency losses are large. In a final experiment, we find that fast green technology growth alone is a poor substitute for carbon taxes, whether globally available or not.</description>
+      <category>Vol. 94, No. 4, pp. 1061–1093</category>
       <dc:identifier>https://doi.org/10.3982/ECTA22451</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA22451</guid>
+      <guid isPermaLink="false">doi:10.3982/ECTA22451</guid>
     </item>
     <item>
-      <title>Job Ladder and Wealth Dynamics in General Equilibrium</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA22542?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1449-1485, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
-      <dc:creator>Leo Kaas</dc:creator>
-      <dc:creator>Etienne Lalé</dc:creator>
-      <dc:creator>Nawid Siassi</dc:creator>
-      <dc:identifier>https://doi.org/10.3982/ECTA22542</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA22542</guid>
+      <title>Identification in Instrumental Variables Models: The Central Role of Abadie's Kappa</title>
+      <link>https://doi.org/10.3982/ECTA23174</link>
+      <dc:creator>Manu Navjeevan</dc:creator>
+      <dc:creator>Rodrigo Pinto</dc:creator>
+      <dc:creator>Andres Santos</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>We study instrumental variables models characterized by: (i) Unobserved heterogeneity consisting of potential outcomes and response types that describe how the instrument determines treatment choice; (ii) Conditional independence of the instrument and the unobserved heterogeneity; and (iii) Convex restrictions on the distribution of unobserved heterogeneity. We show certain causal parameters are identified in these models if and only if a version of the kappa of Abadie (2003) exists. Our identification results are constructive in yielding estimating moment conditions. Focusing on a leading special case, we develop asymptotically normal estimators based on a doubly robust version of these moment conditions.</description>
+      <category>Vol. 94, No. 4, pp. 1095–1133</category>
+      <dc:identifier>https://doi.org/10.3982/ECTA23174</dc:identifier>
+      <guid isPermaLink="false">doi:10.3982/ECTA23174</guid>
+    </item>
+    <item>
+      <title>Firm‐to‐Firm Trade: Imports, Exports, and the Labor Market</title>
+      <link>https://doi.org/10.3982/ECTA20506</link>
+      <dc:creator>Jonathan Eaton</dc:creator>
+      <dc:creator>Samuel Kortum</dc:creator>
+      <dc:creator>Francis Kramarz</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>Customs data reveal the heterogeneity and granularity of relationships among buyers and sellers, showing how more exports to a destination break down into more firms selling there and more buyers per exporter. We develop a quantitative general equilibrium model of firm‐to‐firm matching that builds on this insight to separate the roles of iceberg costs and matching frictions in gravity. In the cross section, we find matching frictions as important as iceberg costs in impeding trade, and more sensitive to distance. Because domestic and imported intermediates compete directly with labor in performing production tasks, our model also fits the heterogeneity of labor shares across French producers. Applying the framework to the 2004 expansion of the European Union, reduced iceberg costs and reduced matching frictions contributed equally to the increase in French exports to the new members. While workers benefited overall, those competing most directly with imports gained less, even losing in some countries entering the EU.</description>
+      <category>Vol. 94, No. 4, pp. 1135–1170</category>
+      <dc:identifier>https://doi.org/10.3982/ECTA20506</dc:identifier>
+      <guid isPermaLink="false">doi:10.3982/ECTA20506</guid>
+    </item>
+    <item>
+      <title>Information Design in Common Value Auction With Moral Hazard: Application to OCS Leasing Auctions</title>
+      <link>https://doi.org/10.3982/ECTA21839</link>
+      <dc:creator>Anh Nguyen</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>This paper explores the impact of information design on the auctioneer's revenue in the U.S. offshore oil/gas lease auctions where, post‐auction, the winner decides whether to explore the auctioned tract and must pay the government a royalty on its production value. I first document that there is a positive correlation between the exploration rate and publicly observed losing bids. This suggests that the winning bidder uses the rivals' bids to infer their private information about the tract's potential. I then characterize the equilibrium bidding strategy when the auctioneer designs and commits to how to reveal information on losing bids to the winning bidder. Counterfactual exercises reveal that alternative bid disclosure policies significantly improve auctioneer revenue.</description>
+      <category>Vol. 94, No. 4, pp. 1171–1208</category>
+      <dc:identifier>https://doi.org/10.3982/ECTA21839</dc:identifier>
+      <guid isPermaLink="false">doi:10.3982/ECTA21839</guid>
+    </item>
+    <item>
+      <title>The Equilibrium Effects of Campaign Finance Deregulation on U.S. Elections</title>
+      <link>https://doi.org/10.3982/ECTA22979</link>
+      <dc:creator>Christian Cox</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>The U.S. Supreme Court's 2010 decision in Citizens United v. Federal Election Commission deregulated campaign finance, enabling the rise of a new political action committee (the Super PAC) with broad freedom to raise and spend money. This led to an unprecedented surge in spending in primary and general elections. To evaluate the impact of Super PACs, I estimate a multistage model of political competition using data from U.S. Congressional elections between 2010 and 2020. I find that Super PAC spending by both sides prompts offsetting responses, resulting in limited net equilibrium effects. However, by amplifying the role of donors, Super PACs still have the potential to reshape the electoral landscape.</description>
+      <category>Vol. 94, No. 4, pp. 1209–1243</category>
+      <dc:identifier>https://doi.org/10.3982/ECTA22979</dc:identifier>
+      <guid isPermaLink="false">doi:10.3982/ECTA22979</guid>
     </item>
     <item>
       <title>Dynamic Screening of Buyers With Heterogeneous Purchase Frequency</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23049?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1245-1278, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <link>https://doi.org/10.3982/ECTA23049</link>
       <dc:creator>Johannes Hörner</dc:creator>
       <dc:creator>Anna Sanktjohanser</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>We consider a dynamic buyer–seller interaction. Instead of the buyer's valuation, it is the frequency with which he needs to trade that is the buyer's private information. The difference matters. With commitment, full surplus extraction is possible, for instance via limited‐time offers. Without commitment, ratcheting is mitigated, as not buying is not necessarily a sign of strength. Because time is informative, the seller learns and may adjust her behavior over time. When finding a suitable alternative seller is easy, she starts with a pooling offer before permanently switching to a screening offer. When finding a suitable alternative seller takes time, she starts with a pooling offer before occasionally experimenting with separating offers.</description>
+      <category>Vol. 94, No. 4, pp. 1245–1278</category>
       <dc:identifier>https://doi.org/10.3982/ECTA23049</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA23049</guid>
+      <guid isPermaLink="false">doi:10.3982/ECTA23049</guid>
     </item>
     <item>
       <title>The Inference‐Forecast Gap in Belief Updating</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23334?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1279-1312, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <link>https://doi.org/10.3982/ECTA23334</link>
       <dc:creator>Tony Q. Fan</dc:creator>
       <dc:creator>Yucheng Liang</dc:creator>
       <dc:creator>Cameron Peng</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>Evidence from the laboratory and the field has uncovered both underreaction and overreaction to new information. We provide new experimental evidence on the underlying mechanisms of under‐ and overreaction by comparing how people make inferences and revise forecasts in the same information environment. Participants underreact to signals when inferring about underlying states, but overreact to the same signals when revising forecasts about future outcomes—a phenomenon we term “the inference‐forecast gap.” We show that this gap is largely driven by different simplifying heuristics used in the two tasks. Additional treatments suggest that the choice of heuristics is affected by the similarity between statistics in the information environment and the statistic elicited by the belief‐updating problem.</description>
+      <category>Vol. 94, No. 4, pp. 1279–1312</category>
       <dc:identifier>https://doi.org/10.3982/ECTA23334</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA23334</guid>
+      <guid isPermaLink="false">doi:10.3982/ECTA23334</guid>
     </item>
     <item>
       <title>Double Robustness of Local Projections and Some Unpleasant VARithmetic</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23345?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1313-1343, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <link>https://doi.org/10.3982/ECTA23345</link>
       <dc:creator>José Luis Montiel Olea</dc:creator>
       <dc:creator>Mikkel Plagborg‐Møller</dc:creator>
       <dc:creator>Eric Qian</dc:creator>
       <dc:creator>Christian K. Wolf</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>We consider impulse response inference in a locally misspecified vector autoregression (VAR) model. The conventional local projection (LP) confidence interval has correct coverage even when the misspecification is so large that it can be detected with probability approaching 1. This result follows from a “double robustness” property analogous to that of popular partially linear regression estimators. By contrast, the conventional VAR confidence interval with short‐to‐moderate lag length can severely undercover for misspecification that is small, difficult to detect statistically, and cannot be ruled out based on economic theory. The VAR confidence interval has robust coverage if, and only if, the lag length is so large that the interval is as wide as the LP interval.</description>
+      <category>Vol. 94, No. 4, pp. 1313–1343</category>
       <dc:identifier>https://doi.org/10.3982/ECTA23345</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA23345</guid>
+      <guid isPermaLink="false">doi:10.3982/ECTA23345</guid>
     </item>
     <item>
       <title>The Class Gap in Career Progression: Evidence From U.S. Academia</title>
-      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23358?af=R</link>
-      <description>Econometrica, Volume 94, Issue 4, Page 1345-1373, July 2026.</description>
-      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <link>https://doi.org/10.3982/ECTA23358</link>
       <dc:creator>Anna Stansbury</dc:creator>
       <dc:creator>Kyra Rodriguez</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>Unlike gender or race, class background is rarely a focus of research on career progression, or of DEI efforts in elite occupations. Should it be? In this paper, we document a large class gap in career progression in one occupation—U.S. tenure‐track academia—using parental education to proxy for class background. First‐generation college graduates are 10% less likely to be tenured at an R1, are tenured at institutions ranked 11% lower, earn 3% less, and report 5% lower job satisfaction, than their former PhD classmates (from the same institution and field) with a parent with a non‐PhD graduate degree. Neither selection out of academia nor different preferences explain this gap; differential research productivity also plays little role. Instead, likely drivers are differences in cultural and social capital. We also find a class gap in career progression for PhDs who work in industry, suggesting this phenomenon generalizes outside academia.</description>
+      <category>Vol. 94, No. 4, pp. 1345–1373</category>
       <dc:identifier>https://doi.org/10.3982/ECTA23358</dc:identifier>
-      <guid isPermaLink="false">10.3982/ECTA23358</guid>
+      <guid isPermaLink="false">doi:10.3982/ECTA23358</guid>
+    </item>
+    <item>
+      <title>Economic Growth and the Rise of Large Firms</title>
+      <link>https://doi.org/10.3982/ECTA22110</link>
+      <dc:creator>Zhang Chen</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>I document that the right tail of the firm size distribution systematically thickens with economic development. To rationalize this fact, I develop a parsimonious idea search model in which both aggregate growth and the firm size distribution are endogenously determined. The model features an asymptotic balanced growth path along which Gibrat's law holds at each date, and the right tail of the firm size distribution thickens monotonically toward Zipf's law. The model also implies that policies favoring large firms can improve welfare by better utilizing the diffusion externalities arising from idea search.</description>
+      <category>Vol. 94, No. 4, pp. 1375–1408</category>
+      <dc:identifier>https://doi.org/10.3982/ECTA22110</dc:identifier>
+      <guid isPermaLink="false">doi:10.3982/ECTA22110</guid>
+    </item>
+    <item>
+      <title>Mechanism Design for Personalized Policy: A Field Experiment Incentivizing Exercise</title>
+      <link>https://doi.org/10.3982/ECTA21926</link>
+      <dc:creator>Rebecca Dizon‐Ross</dc:creator>
+      <dc:creator>Ariel Zucker</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>Personalizing policies can theoretically increase their effectiveness. However, personalization is difficult when individual types are unobservable and the preferences of policymakers and individuals are not aligned, which could cause individuals to misreport their type. Mechanism design offers a strategy to overcome this issue: offer an “incentive‐compatible” menu of policy choices designed to induce participants to select the variant intended for their type. Using a field experiment that personalized incentives for exercise among 6,800 adults with diabetes and hypertension in urban India, we show that personalizing with an incentive‐compatible choice menu substantially improves program performance, increasing the treatment effect of incentives on exercise by 80% without increasing incentive costs relative to a one‐size‐fits‐all benchmark. Offering choice achieves similar performance to personalizing with an extensive set of observable variables, but without the same data requirements.</description>
+      <category>Vol. 94, No. 4, pp. 1409–1448</category>
+      <dc:identifier>https://doi.org/10.3982/ECTA21926</dc:identifier>
+      <guid isPermaLink="false">doi:10.3982/ECTA21926</guid>
+    </item>
+    <item>
+      <title>Job Ladder and Wealth Dynamics in General Equilibrium</title>
+      <link>https://doi.org/10.3982/ECTA22542</link>
+      <dc:creator>Leo Kaas</dc:creator>
+      <dc:creator>Etienne Lalé</dc:creator>
+      <dc:creator>Nawid Siassi</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description>This paper develops a macroeconomic model that combines an incomplete‐markets overlapping‐generations economy with a job ladder featuring sequential wage bargaining, endogenous search effort of employed and non‐employed workers, and differences in match quality. With these ingredients, our model provides a joint microfoundation for the three main inputs in aggregate production: capital, employment, and labor efficiency. The calibrated model offers a good fit to the empirical age profiles of search activity, job‐finding rates, wages, and savings. We use the model to analyze the impact of tax and transfer policies for labor market dynamics and aggregate economic activity via capital, employment, and labor efficiency channels. Lower unemployment benefits and a less progressive tax schedule bring about welfare losses for a newborn worker which are mainly driven by higher consumption risk and costlier search effort; both policies have differential effects along the age, income, and wealth dimensions.</description>
+      <category>Vol. 94, No. 4, pp. 1449–1485</category>
+      <dc:identifier>https://doi.org/10.3982/ECTA22542</dc:identifier>
+      <guid isPermaLink="false">doi:10.3982/ECTA22542</guid>
     </item>
   </channel>
 </rss>

@@ -67,13 +67,10 @@
       "output_file": "econometrica.xml",
       "name": "Econometrica",
       "language": "en",
-      "source_url": "https://onlinelibrary.wiley.com/feed/14680262/most-recent",
-      "creator_separator": ",",
-      "exclude_title_contains": [
-        "Backmatter of Econometrica",
-        "Frontmatter of Econometrica",
-        "Submission of Manuscripts"
-      ]
+      "source_type": "repec_series_current",
+      "source_url": "https://ideas.repec.org/s/wly/emetrp.html",
+      "site_url": "https://onlinelibrary.wiley.com/journal/14680262",
+      "expected_journal_title": "Econometrica"
     },
     {
       "slug": "jpe",
