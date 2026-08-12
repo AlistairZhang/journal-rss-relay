@@ -6,6 +6,7 @@
     {
       "slug": "jjyj",
       "output_file": "jingji-yanjiu.xml",
+      "commit_label": "经济研究",
       "name": "经济研究",
       "language": "zh-cn",
       "source_type": "erj_official_api",
@@ -16,6 +17,7 @@
     {
       "slug": "sljjjsjjyj",
       "output_file": "shuliang-jingji-jishu-jingji-yanjiu.xml",
+      "commit_label": "数量经济技术经济研究",
       "name": "数量经济技术经济研究",
       "feed_title": "数量经济技术经济研究",
       "language": "zh-cn",
@@ -30,6 +32,7 @@
     {
       "slug": "jjdl",
       "output_file": "jingji-dili.xml",
+      "commit_label": "经济地理",
       "name": "经济地理",
       "language": "zh-cn",
       "source_type": "magtech_current",
@@ -40,6 +43,7 @@
     {
       "slug": "glsj",
       "output_file": "guanli-shijie.xml",
+      "commit_label": "管理世界",
       "name": "管理世界",
       "language": "zh-cn",
       "source_type": "ncpssd_current",
@@ -53,6 +57,7 @@
     {
       "slug": "zggyjj",
       "output_file": "zhongguo-gongye-jingji.xml",
+      "commit_label": "中国工业经济",
       "name": "中国工业经济",
       "language": "zh-cn",
       "source_type": "ncpssd_current",
@@ -67,6 +72,7 @@
     {
       "slug": "econometrica",
       "output_file": "econometrica.xml",
+      "commit_label": "Econometrica",
       "name": "Econometrica",
       "language": "en",
       "source_type": "repec_series_current",
@@ -77,6 +83,7 @@
     {
       "slug": "jpe",
       "output_file": "Journal-of-Political-Economy.xml",
+      "commit_label": "JPE",
       "name": "Journal of Political Economy",
       "feed_title": "Journal of Political Economy",
       "language": "en",
@@ -88,12 +95,14 @@
       "translation": {
         "slug": "jpe-zh",
         "output_file": "Journal-of-Political-Economy-zh.xml",
+        "commit_label": "JPE中文版",
         "title": "Journal of Political Economy中文版"
       }
     },
     {
       "slug": "aer",
       "output_file": "American-Economic-Review.xml",
+      "commit_label": "AER",
       "name": "American Economic Review",
       "feed_title": "American Economic Review",
       "language": "en",
@@ -105,12 +114,14 @@
       "translation": {
         "slug": "aer-zh",
         "output_file": "American-Economic-Review-zh.xml",
+        "commit_label": "AER中文版",
         "title": "American Economic Review中文版"
       }
     },
     {
       "slug": "sjjj",
       "output_file": "shijie-jingji.xml",
+      "commit_label": "世界经济",
       "name": "世界经济",
       "language": "zh-cn",
       "source_type": "magtech_current",
