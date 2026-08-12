@@ -100,12 +100,24 @@ def validate_translation_pair(source: ET.Element, translated: ET.Element, name: 
 
 def main() -> int:
     config = json.loads((ROOT / "journals.json").read_text(encoding="utf-8"))
-    outputs = [settings.get("output_file") or f"{settings['slug']}.xml" for _, settings in configured_feeds(config)]
+    feeds = configured_feeds(config)
+    outputs = [
+        settings.get("output_file") or f"{settings['slug']}.xml"
+        for _, settings in feeds
+    ]
     if len(outputs) != len(set(outputs)):
         raise ValueError("配置中存在重复输出文件名")
+    commit_labels = [
+        str(settings.get("commit_label") or "").strip()
+        for _, settings in feeds
+    ]
+    if any(not label or "\t" in label or "\n" in label for label in commit_labels):
+        raise ValueError("每个 RSS 必须配置单行 commit_label")
+    if len(commit_labels) != len(set(commit_labels)):
+        raise ValueError("配置中存在重复 commit_label")
 
     channels: dict[str, ET.Element] = {}
-    for name, settings in configured_feeds(config):
+    for name, settings in feeds:
         channels[settings["slug"]] = validate_one(name, settings, config["public_base_url"])
 
     for journal in config["journals"]:
