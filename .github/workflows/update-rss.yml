@@ -41,16 +41,20 @@ jobs:
       - name: 检查 RSS
         run: python validate_feeds.py
 
-      - name: 保存更新结果
+      - name: 保存 RSS 与翻译缓存
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs translation_cache.json
+          git add docs
           if ! git diff --cached --quiet; then
-            git commit -m "自动更新期刊 RSS"
-            git push
+            git commit -m "更新 RSS 订阅源文件"
           fi
+          git add translation_cache.json
+          if ! git diff --cached --quiet; then
+            git commit -m "更新英文期刊中文翻译缓存"
+          fi
+          git push
 
       - name: 准备 GitHub Pages
         uses: actions/configure-pages@v5
