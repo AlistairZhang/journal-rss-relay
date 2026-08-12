@@ -40,7 +40,8 @@ SIGNING_PREFIX = b"journal-rss-relay:gitee-ingest:v1\0"
 
 MAX_COMPRESSED_BYTES = 48 * 1024
 MAX_DECOMPRESSED_BYTES = 512 * 1024
-MAX_ITEMS_PER_JOURNAL = 100
+MIN_ITEMS_PER_JOURNAL = 5
+MAX_ITEMS_PER_JOURNAL = 30
 MAX_TITLE_CHARS = 600
 MAX_ABSTRACT_CHARS = 20_000
 MAX_AUTHOR_CHARS = 200
@@ -307,7 +308,10 @@ def validate_journal_payload(raw: Any, configs: dict[str, dict[str, Any]]) -> di
         raise _fail("issue year is outside the accepted publication window")
 
     raw_items = raw["items"]
-    if not isinstance(raw_items, list) or not 1 <= len(raw_items) <= MAX_ITEMS_PER_JOURNAL:
+    if (
+        not isinstance(raw_items, list)
+        or not MIN_ITEMS_PER_JOURNAL <= len(raw_items) <= MAX_ITEMS_PER_JOURNAL
+    ):
         raise _fail("item count is invalid")
 
     seen_ids: set[str] = set()
