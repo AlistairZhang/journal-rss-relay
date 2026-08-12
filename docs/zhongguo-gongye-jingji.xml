@@ -2,14 +2,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
     <title>中国工业经济 - 祥仔</title>
-    <link>https://www.ncpssd.org/journal/secure/details?params=RmZhSWMraWNzQUpyTkluZStrQUNzSGhiOUdZcisrbmhIeXNFMjZIWnhRZGgyZ1lxMlZDWmhSY1lTQTFyaldCOQ</link>
+    <link>https://ciejournal.ajcass.com/</link>
     <description>中国工业经济当期题录信息，由 Journal RSS Relay 每 3 天更新</description>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 12 Aug 2026 13:37:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 14:42:08 +0000</lastBuildDate>
     <atom:link href="https://alistairzhang.github.io/journal-rss-relay/zhongguo-gongye-jingji.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>构建中国哲学社会科学自主知识体系的工业经济样本</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006001&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>陈彦斌</dc:creator>
       <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
       <description>加快构建中国哲学社会科学自主知识体系，是为中国式现代化提供学理支撑、打破西方话语权垄断的迫切需要，也是更好回答中国之问、世界之问、人民之问、时代之问的迫切需要。在党的创新理论引领下，中国工业经济发展取得了伟大成就，形成了构建中国工业经济自主知识体系的实践底气，同时，丰富的学术研究成果奠定了坚实的研究基础，使工业经济较好地满足了自主知识体系建构所需要的基本条件。中国社会科学院工业经济研究所开展的“中国工业经济自主知识体系建设工程”，已经在中国特色产业政策、完整产业体系、自主创新和产业转移等领域取得了初步研究成果，并为哲学社会科学其他学科领域构建自主知识体系提供了可资借鉴的方法论。通过立足中国实践提炼和创造知识，遵循“中国实践→规律性认识→典型事实→一般性分析框架→标识性概念和原创性理论”的研究范式，可以加快构建中国哲学社会科学自主知识体系。</description>
@@ -19,12 +19,11 @@
       <category>标识性概念</category>
       <category>原创性理论</category>
       <category>一般性分析框架</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.002</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006001</guid>
     </item>
     <item>
       <title>从制造大国迈向制造强国的中国路径</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006002&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>戚聿东</dc:creator>
       <dc:creator>徐凯歌</dc:creator>
       <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
@@ -33,12 +32,11 @@
       <category>制造业</category>
       <category>制造强国</category>
       <category>结合型治理</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.001</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006002</guid>
     </item>
     <item>
       <title>自动化的制造业劳动收入份额效应——基于行业内结构变化视角</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006003&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>于泽</dc:creator>
       <dc:creator>张紫洋</dc:creator>
       <dc:creator>吴孟非</dc:creator>
@@ -49,12 +47,11 @@
       <category>工业机器人</category>
       <category>行业结构变化</category>
       <category>劳动收入份额</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.003</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006003</guid>
     </item>
     <item>
       <title>银行网络的气候转型风险溢出效应和宏观审慎政策</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006004&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>陈国进</dc:creator>
       <dc:creator>徐晓芳</dc:creator>
       <dc:creator>赵向琴</dc:creator>
@@ -65,12 +62,11 @@
       <category>核心—边缘网络结构</category>
       <category>差异化资本要求</category>
       <category>同业敞口限制</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.004</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006004</guid>
     </item>
     <item>
       <title>共同富裕进程中的数字政府建设：政务服务均等化与县域经济发展的视角</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006005&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>孙伟增</dc:creator>
       <dc:creator>万广华</dc:creator>
       <dc:creator>李怡凡</dc:creator>
@@ -83,12 +79,11 @@
       <category>区域平衡发展</category>
       <category>共同富裕</category>
       <category>夜间灯光</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.005</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006005</guid>
     </item>
     <item>
       <title>银行政府采购暴露对非采购企业信贷的影响——基于财政工具的货币效应视角</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006006&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>崔孟奇</dc:creator>
       <dc:creator>姚东旻</dc:creator>
       <dc:creator>张世宇</dc:creator>
@@ -100,12 +95,11 @@
       <category>企业信贷</category>
       <category>供应链</category>
       <category>财政货币协同</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.006</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006006</guid>
     </item>
     <item>
       <title>产业转移如何促进企业异地合作创新——基于产业链供应链优化视角</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006007&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>戴宏伟</dc:creator>
       <dc:creator>乔莹莹</dc:creator>
       <dc:creator>贺茜</dc:creator>
@@ -116,12 +110,11 @@
       <category>产业链供应链</category>
       <category>企业合作创新</category>
       <category>多期双重差分法</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.007</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006007</guid>
     </item>
     <item>
       <title>产业政策如何影响供应链关系变动——基于供应商转换机制的分析</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006008&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>鲁晓东</dc:creator>
       <dc:creator>王梦令</dc:creator>
       <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
@@ -131,12 +124,11 @@
       <category>供应链关系变动</category>
       <category>补贴</category>
       <category>机器学习</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.008</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006008</guid>
     </item>
     <item>
       <title>生态系统内的平台嵌套与平台型互补者的成长机制</title>
-      <link>https://m.ncpssd.cn/Literature/articleinfo?id=ZGGYJJ2026006009&amp;type=journalArticle&amp;typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&amp;nav=1&amp;langType=1</link>
+      <link>https://ciejournal.ajcass.com/</link>
       <dc:creator>杨佳铭</dc:creator>
       <dc:creator>魏江</dc:creator>
       <dc:creator>杨升曦</dc:creator>
@@ -148,7 +140,6 @@
       <category>多中心生态系统</category>
       <category>“一致性—拓展性”张力</category>
       <category>成长机制</category>
-      <dc:identifier>https://doi.org/10.19581/j.cnki.ciejournal.2026.06.009</dc:identifier>
       <guid isPermaLink="false">urn:ncpssd:ZGGYJJ2026006009</guid>
     </item>
   </channel>

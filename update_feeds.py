@@ -56,6 +56,79 @@ def feed_title(settings: dict, suffix: str) -> str:
     ).strip()
 
 
+NON_ARTICLE_SECTIONS = {
+    "书评",
+    "评论",
+    "编者按",
+    "卷首语",
+    "刊首语",
+    "社论",
+    "目录",
+    "征稿启事",
+    "新书评介",
+}
+NON_ARTICLE_TITLE_PATTERNS = (
+    r"^评《.+》$",
+    r"^书评[：:]?",
+    r"^新书评介[：:]?",
+    r"(?:^|——)评《.+》",
+    r"(?:^|——)读《.+》(?:有感|札记|随想)?$",
+    r"^《.+》读后感$",
+    r"^本期目录$",
+    r"^卷首语$",
+    r"^编者按[：:]?",
+    r"^(?:FrontMatter|BackMatter|Masthead|Contents|RecentReferees|JPETurnaroundTimes|SubmissionofManuscripts)$",
+    r"^(?:BookReview|Editorial|Commentary)(?:[：:]|$)",
+)
+
+
+def is_non_article(title: str, section: str = "") -> bool:
+    """Conservatively identify reviews and editorial matter, not research reviews."""
+    normalized_title = re.sub(r"\s+", "", html_to_text(title or ""))
+    normalized_section = re.sub(r"\s+", "", html_to_text(section or ""))
+    return normalized_section in NON_ARTICLE_SECTIONS or any(
+        re.search(pattern, normalized_title)
+        for pattern in NON_ARTICLE_TITLE_PATTERNS
+    )
+
+
+def official_article_link(journal: dict, article: dict[str, str]) -> str:
+    """Prefer a verified official article route and otherwise use the journal home page."""
+    if journal.get("slug") == "sljjjsjjyj":
+        match = re.fullmatch(
+            r"SLJJJSJJYJ(\d{4})(\d{3})(\d{3})",
+            str(article.get("id") or ""),
+            flags=re.IGNORECASE,
+        )
+        if match:
+            year, issue, sequence = match.groups()
+            file_number = f"{year}{int(issue):02d}{int(sequence):02d}"
+            return (
+                "https://www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?"
+                + urllib.parse.urlencode({"file_no": file_number, "flag": 1})
+            )
+    return str(journal.get("site_url") or journal["source_url"]).strip()
+
+
+def stable_source_guid(journal: dict, source_guid: str, title: str, link: str) -> str:
+    """Keep existing subscriber IDs stable when an article source changes."""
+    if source_guid:
+        return source_guid
+    if journal.get("slug") == "sljjjsjjyj":
+        query = urllib.parse.parse_qs(urllib.parse.urlparse(link).query)
+        file_number = (query.get("file_no") or [""])[0]
+        match = re.fullmatch(r"(\d{4})(\d{2})(\d{2})", file_number)
+        if match:
+            year, issue, sequence = match.groups()
+            return (
+                "urn:ncpssd:SLJJJSJJYJ"
+                f"{year}{int(issue):03d}{int(sequence):03d}"
+            )
+    return "urn:sha256:" + hashlib.sha256(
+        f"{title}|{link}".encode("utf-8")
+    ).hexdigest()
+
+
 def local_name(tag: str) -> str:
     return tag.rsplit("}", 1)[-1].split(":")[-1]
 
@@ -443,102 +516,6 @@ def build_translated_feed(
     )
 
 
-def parse_chndoi_metadata(data: bytes) -> dict[str, str]:
-    """Read the title and DOI from CNKI's public DOI registration result page."""
-    text = html_to_text(data.decode("utf-8", errors="replace"))
-    if "没有注册" in text:
-        return {}
-    title_match = re.search(
-        r"题名\s*[：:]\s*(.+?)(?=\s*作者\s*[：:])",
-        text,
-    )
-    doi_match = re.search(
-        r"DOI码\s*[：:]\s*(10\.\d{4,9}/\S+)",
-        text,
-        flags=re.IGNORECASE,
-    )
-    if not title_match or not doi_match:
-        return {}
-    return {
-        "title": title_match.group(1).strip(),
-        "doi": normalize_doi(doi_match.group(1)),
-    }
-
-
-def doi_registered_by_cnki(doi: str) -> bool:
-    """Confirm through DOI.org that the candidate is registered by CNKI."""
-    url = f"https://doi.org/ra/{urllib.parse.quote(doi, safe='/')}"
-    try:
-        records = json.loads(
-            fetch(url, attempts=1, accept="application/json, */*").decode("utf-8")
-        )
-    except Exception as exc:
-        print(f"WARNING: DOI注册机构暂无法核验: {doi} ({exc})", file=sys.stderr)
-        return False
-    return any(
-        normalize_doi(str(record.get("DOI", ""))).lower() == doi.lower()
-        and str(record.get("RA", "")).upper() == "CNKI"
-        for record in records
-        if isinstance(record, dict)
-    )
-
-
-def supplement_cnki_dois(articles: list[dict[str, str]], journal: dict) -> int:
-    """Add only CNKI-registered DOI records whose title matches exactly."""
-    prefix = str(journal.get("doi_prefix", "")).strip().rstrip(".")
-    if not prefix:
-        return 0
-
-    unresolved = {
-        normalize_title_key(article["title"]): article
-        for article in articles
-        if not article.get("doi") and normalize_title_key(article["title"])
-    }
-    if not unresolved:
-        return 0
-
-    issue_groups = {
-        (article["year"], int(article["issue_number"]))
-        for article in unresolved.values()
-    }
-    sequence_max = int(journal.get("doi_sequence_max", 20))
-    matched = 0
-    for year, issue_number in sorted(issue_groups):
-        for sequence in range(1, sequence_max + 1):
-            doi = f"{prefix}.{year}.{issue_number:02d}.{sequence:03d}"
-            url = (
-                "https://www.chndoi.org/Resolution/Handler?"
-                + urllib.parse.urlencode({"doi": doi})
-            )
-            try:
-                metadata = parse_chndoi_metadata(
-                    fetch(
-                        url,
-                        attempts=1,
-                        accept="text/html,application/xhtml+xml,*/*;q=0.8",
-                    )
-                )
-            except Exception as exc:
-                print(f"WARNING: CHNDOI暂无法查询: {doi} ({exc})", file=sys.stderr)
-                continue
-            title_key = normalize_title_key(metadata.get("title", ""))
-            registered_doi = normalize_doi(metadata.get("doi", ""))
-            article = unresolved.get(title_key)
-            if (
-                not article
-                or not registered_doi
-                or registered_doi.lower() != doi.lower()
-                or not doi_registered_by_cnki(registered_doi)
-            ):
-                continue
-            article["doi"] = registered_doi
-            matched += 1
-            del unresolved[title_key]
-            if not unresolved:
-                return matched
-    return matched
-
-
 def split_creator_names(
     value: str,
     language: str = "",
@@ -597,7 +574,6 @@ class MagtechCurrentParser(HTMLParser):
         "j-volumn": "citation",
         "j-abstract": "abstract",
         "j-column": "section",
-        "j-doi": "doi",
     }
 
     def __init__(self) -> None:
@@ -620,7 +596,6 @@ class MagtechCurrentParser(HTMLParser):
                 "citation": [],
                 "abstract": [],
                 "section": [],
-                "doi": [],
                 "link": "",
             }
 
@@ -742,10 +717,136 @@ class AeaArticleParser(HTMLParser):
         return values[0] if values else ""
 
 
+class MwmListParser(HTMLParser):
+    """Extract official 管理世界 article links from a current-issue page."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.links: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "a":
+            return
+        attributes = dict(attrs)
+        classes = set((attributes.get("class") or "").split())
+        href = (attributes.get("href") or "").strip()
+        if "con1_text" in classes and href:
+            self.links.append(href)
+
+
+class MwmDetailParser(HTMLParser):
+    """Extract complete metadata and the full citation from a 管理世界 article page."""
+
+    VOID_TAGS = {
+        "area", "base", "br", "col", "embed", "hr", "img", "input",
+        "link", "meta", "param", "source", "track", "wbr",
+    }
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.title_parts: list[str] = []
+        self.date_parts: list[str] = []
+        self.author_parts: list[str] = []
+        self.content_parts: list[str] = []
+        self.title_depth = 0
+        self.date_depth = 0
+        self.author_depth = 0
+        self.content_depth = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attributes = dict(attrs)
+        classes = set((attributes.get("class") or "").split())
+        is_container = tag not in self.VOID_TAGS
+        if self.title_depth and is_container:
+            self.title_depth += 1
+        if self.date_depth and is_container:
+            self.date_depth += 1
+        if self.author_depth and is_container:
+            self.author_depth += 1
+        if self.content_depth and is_container:
+            self.content_depth += 1
+        if tag == "p" and "titletext" in classes and not self.title_depth:
+            self.title_depth = 1
+        elif tag == "span" and "date" in classes and "mrl20" in classes:
+            self.author_depth = 1
+        elif tag == "span" and "date" in classes:
+            self.date_depth = 1
+        elif tag == "div" and "mrt20" in classes:
+            self.content_depth = 1
+
+    def handle_data(self, data: str) -> None:
+        if self.title_depth:
+            self.title_parts.append(data)
+        if self.date_depth:
+            self.date_parts.append(data)
+        if self.author_depth:
+            self.author_parts.append(data)
+        if self.content_depth:
+            self.content_parts.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in self.VOID_TAGS:
+            return
+        if self.title_depth:
+            self.title_depth -= 1
+        if self.date_depth:
+            self.date_depth -= 1
+        if self.author_depth:
+            self.author_depth -= 1
+        if self.content_depth:
+            self.content_depth -= 1
+
+    def metadata(self) -> dict[str, str]:
+        title = clean_html_text(self.title_parts)
+        date_text = clean_html_text(self.date_parts)
+        content = clean_html_text(self.content_parts)
+        date_match = re.search(r"(\d{4})年(\d{2})月(\d{2})日", date_text)
+        abstract_match = re.search(
+            r"摘要\s*[：:]\s*(.+?)(?=\s*关键词\s*[：:])",
+            content,
+        )
+        citation_match = re.search(
+            r"文章刊发\s*[：:]\s*(.{1,200}?)：《(.+?)》，《管理世界》，"
+            r"(\d{4})年第(\d+)期，第(\d+(?:\s*[~～—–-]\s*\d+)?(?:、\d+)?)页",
+            content,
+        )
+        if not citation_match:
+            return {
+                "title": title,
+                "published": "-".join(date_match.groups()) if date_match else "",
+                "abstract": abstract_match.group(1).strip() if abstract_match else "",
+                "author": "",
+                "issue": "",
+                "pages": "",
+            }
+        authors, citation_title, year, issue, pages = citation_match.groups()
+        if normalize_title_key(title) != normalize_title_key(citation_title):
+            raise RuntimeError(f"管理世界官网标题与标准引文不一致: {title}")
+        pages = re.sub(r"\s*[~～—–-]\s*", "-", pages)
+        return {
+            "title": title,
+            "published": "-".join(date_match.groups()) if date_match else "",
+            "abstract": abstract_match.group(1).strip() if abstract_match else "",
+            "author": authors.strip(),
+            "issue": f"{year}年第{issue}期",
+            "pages": pages,
+        }
+
+
 def build_magtech_feed(journal: dict, suffix: str, base_url: str, source_html: bytes) -> tuple[bytes, int]:
     parser = MagtechCurrentParser()
     parser.feed(source_html.decode("utf-8", errors="replace"))
-    items = parser.items
+    items = [
+        article
+        for article in parser.items
+        if not is_non_article(article["title"], article["section"])
+    ]
+    filtered_count = len(parser.items) - len(items)
+    if filtered_count:
+        print(
+            f"Filtered {filtered_count} non-article item(s) from {journal['name']}",
+            flush=True,
+        )
     published = normalize_date(parser.publication_date())
     if not items:
         raise RuntimeError("Magtech current-issue page contains no articles")
@@ -779,9 +880,6 @@ def build_magtech_feed(journal: dict, suffix: str, base_url: str, source_html: b
         ET.SubElement(item, "description").text = abstract
         if article["section"]:
             ET.SubElement(item, "category").text = article["section"]
-        doi = normalize_doi(article.get("doi", ""))
-        if doi:
-            ET.SubElement(item, f"{{{DC_NS}}}identifier").text = f"https://doi.org/{doi}"
         ET.SubElement(item, "guid", {"isPermaLink": "false"}).text = article["link"]
 
     ET.indent(rss, space="  ")
@@ -861,29 +959,30 @@ def build_ncpssd_feed(
         start_page = str(detail.get("beginpage") or "").strip()
         end_page = str(detail.get("endpage") or "").strip()
         pages = "-".join(part for part in (start_page, end_page) if part)
-        articles.append(
-            {
-                "id": reference["id"],
-                "title": title,
-                "author": author,
-                "link": reference["link"],
-                "year": year,
-                "issue_number": issue_number,
-                "pages": pages,
-                "published": str(detail.get("publishdate") or "").strip(),
-                "abstract": str(detail.get("remarkc") or "").strip(),
-                "keywords": str(detail.get("keywordc") or "").strip(),
-                "doi": normalize_doi(str(detail.get("doi") or "")),
-            }
-        )
+        article = {
+            "id": reference["id"],
+            "title": title,
+            "author": author,
+            "year": year,
+            "issue_number": issue_number,
+            "pages": pages,
+            "published": str(detail.get("publishdate") or "").strip(),
+            "abstract": str(detail.get("remarkc") or "").strip(),
+            "keywords": str(detail.get("keywordc") or "").strip(),
+        }
+        if is_non_article(title):
+            continue
+        article["link"] = official_article_link(journal, article)
+        articles.append(article)
         time.sleep(float(journal.get("request_delay_seconds", 0.3)))
-
-    supplemented = supplement_cnki_dois(articles, journal)
-    if supplemented:
+    filtered_count = len(references) - len(articles)
+    if filtered_count:
         print(
-            f"{journal['name']}从 CNKI DOI 登记库补全 {supplemented} 条 DOI",
+            f"Filtered {filtered_count} non-article item(s) from {journal['name']}",
             flush=True,
         )
+    if not articles:
+        raise RuntimeError(f"{journal['name']}当期目录过滤后没有文献")
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
@@ -921,10 +1020,6 @@ def build_ncpssd_feed(
         for keyword in re.split(r"\s*[；;]\s*", article["keywords"]):
             if keyword:
                 ET.SubElement(item, "category").text = keyword
-        if article["doi"]:
-            ET.SubElement(item, f"{{{DC_NS}}}identifier").text = (
-                f"https://doi.org/{article['doi']}"
-            )
         ET.SubElement(item, "guid", {"isPermaLink": "false"}).text = (
             f"urn:ncpssd:{article['id']}"
         )
@@ -999,6 +1094,9 @@ def build_aea_current_feed(
         volume = parser.first_meta("citation_volume").strip()
         issue_number = parser.first_meta("citation_issue").strip()
         published = parser.first_meta("citation_publication_date").strip()
+        if is_non_article(title):
+            print(f"Skipping AEA non-article item: {title}", flush=True)
+            continue
         if not parser.authors or not parser.abstract:
             front_matter_doi = f"10.1257/aer.{expected_volume}.{expected_issue}.i"
             if expected_doi.lower() == front_matter_doi.lower() and title == "Front Matter":
@@ -1121,6 +1219,117 @@ def discover_ncpssd_current_url(journal: dict) -> str:
     raise RuntimeError("国家哲社文献中心未返回可用的最新期目录")
 
 
+def build_mwm_feed(
+    journal: dict,
+    suffix: str,
+    base_url: str,
+    first_page_html: bytes,
+) -> tuple[bytes, int]:
+    """Build the current 管理世界 feed from official list and detail pages."""
+    first_page_text = first_page_html.decode("utf-8", errors="replace")
+    page_count_match = re.search(r"pageCount\s*=\s*parseInt\((\d+)\)", first_page_text)
+    total_count_match = re.search(r"totalcount\s*=\s*parseInt\((\d+)\)", first_page_text)
+    leaf_id_match = re.search(r"leafid\s*=\s*parseInt\((\d+)\)", first_page_text)
+    page_size_match = re.search(r"pagesize\s*=\s*parseInt\((\d+)\)", first_page_text)
+    if not all((page_count_match, total_count_match, leaf_id_match, page_size_match)):
+        raise RuntimeError("管理世界本期页面缺少分页信息")
+
+    page_count = int(page_count_match.group(1))
+    expected_count = int(total_count_match.group(1))
+    leaf_id = leaf_id_match.group(1)
+    page_size = page_size_match.group(1)
+    list_pages = [first_page_html]
+    for page_number in range(2, page_count + 1):
+        page_url = journal["source_url"] + "?" + urllib.parse.urlencode(
+            {
+                "leafid": leaf_id,
+                "curpage": page_number,
+                "pagesize": page_size,
+            }
+        )
+        list_pages.append(
+            fetch(
+                page_url,
+                accept="text/html,application/xhtml+xml,*/*;q=0.8",
+                user_agent=BROWSER_USER_AGENT,
+                referer=journal.get("referer", journal["source_url"]),
+            )
+        )
+
+    detail_links: list[str] = []
+    for page_html in list_pages:
+        parser = MwmListParser()
+        parser.feed(page_html.decode("utf-8", errors="replace"))
+        detail_links.extend(
+            urllib.parse.urljoin(journal["source_url"], link)
+            for link in parser.links
+        )
+    detail_links = list(dict.fromkeys(detail_links))
+    if len(detail_links) != expected_count:
+        raise RuntimeError(
+            f"管理世界本期文章数不一致: expected={expected_count}, actual={len(detail_links)}"
+        )
+
+    articles: list[dict[str, str]] = []
+    for detail_link in detail_links:
+        detail_html = fetch(
+            detail_link,
+            accept="text/html,application/xhtml+xml,*/*;q=0.8",
+            user_agent=BROWSER_USER_AGENT,
+            referer=journal.get("referer", journal["source_url"]),
+        )
+        detail_parser = MwmDetailParser()
+        detail_parser.feed(detail_html.decode("utf-8", errors="replace"))
+        article = detail_parser.metadata()
+        article["link"] = detail_link
+        if is_non_article(article.get("title", "")):
+            continue
+        if not all(
+            article.get(field)
+            for field in ("title", "author", "published", "abstract", "issue", "pages")
+        ):
+            raise RuntimeError(f"管理世界官网文章字段不完整: {detail_link}")
+        articles.append(article)
+    filtered_count = len(detail_links) - len(articles)
+    if filtered_count:
+        print(f"Filtered {filtered_count} non-article item(s) from 管理世界", flush=True)
+    if not articles:
+        raise RuntimeError("管理世界官网当前期过滤后没有文献")
+
+    rss = ET.Element("rss", {"version": "2.0"})
+    channel = ET.SubElement(rss, "channel")
+    ET.SubElement(channel, "title").text = feed_title(journal, suffix)
+    ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
+    ET.SubElement(channel, "description").text = (
+        "《管理世界》官网当期题录信息，由 Journal RSS Relay 每 3 天更新"
+    )
+    ET.SubElement(channel, "language").text = journal.get("language", "zh-cn")
+    ET.SubElement(channel, "lastBuildDate").text = format_datetime(datetime.now(timezone.utc))
+    ET.SubElement(
+        channel,
+        f"{{{ATOM_NS}}}link",
+        {
+            "href": public_feed_url(base_url, journal),
+            "rel": "self",
+            "type": "application/rss+xml",
+        },
+    )
+    for article in articles:
+        item = ET.SubElement(channel, "item")
+        ET.SubElement(item, "title").text = article["title"]
+        ET.SubElement(item, "link").text = article["link"]
+        add_creators(item, article["author"], journal.get("language", ""))
+        ET.SubElement(item, "pubDate").text = normalize_date(article["published"])
+        ET.SubElement(item, "description").text = article["abstract"]
+        ET.SubElement(item, "category").text = (
+            f"{article['issue']}，{article['pages']}页"
+        )
+        ET.SubElement(item, "guid", {"isPermaLink": "false"}).text = article["link"]
+
+    ET.indent(rss, space="  ")
+    return ET.tostring(rss, encoding="utf-8", xml_declaration=True), len(articles)
+
+
 def build_erj_official_feed(journal: dict, suffix: str, base_url: str) -> tuple[bytes, int]:
     api_base = journal["api_base"].rstrip("/")
     journal_id = journal["journal_id"]
@@ -1162,6 +1371,8 @@ def build_erj_official_feed(journal: dict, suffix: str, base_url: str) -> tuple[
         author = html_to_text(result.get("authors") or summary.get("authors") or "")
         abstract = html_to_text(result.get("abstract") or "")
         published = normalize_date(result.get("editDate") or "")
+        if is_non_article(title):
+            continue
         if not all((title, author, abstract, published)):
             raise RuntimeError(f"经济研究官网文章字段不完整: contentId={content_id}")
         article_link = "https://erj.ajcass.com/#/issue?" + urllib.parse.urlencode(
@@ -1182,9 +1393,10 @@ def build_erj_official_feed(journal: dict, suffix: str, base_url: str) -> tuple[
                 "issue": html_to_text(
                     result.get("yearVolumeIssue") or summary.get("yearVolumeIssue") or ""
                 ),
-                "doi": normalize_doi(result.get("doi") or summary.get("doi") or ""),
             }
         )
+    if not articles:
+        raise RuntimeError("经济研究官网当前期过滤后没有文献")
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
@@ -1214,10 +1426,6 @@ def build_erj_official_feed(journal: dict, suffix: str, base_url: str) -> tuple[
         ET.SubElement(item, "description").text = article["abstract"]
         if article["issue"]:
             ET.SubElement(item, "category").text = article["issue"]
-        if article["doi"]:
-            ET.SubElement(item, f"{{{DC_NS}}}identifier").text = (
-                f"https://doi.org/{article['doi']}"
-            )
         ET.SubElement(item, "guid", {"isPermaLink": "false"}).text = article["link"]
 
     ET.indent(rss, space="  ")
@@ -1234,7 +1442,8 @@ def discover_jpe_current_issue(source_xml: bytes) -> tuple[str, str, str, set[st
         cover_date = first_text(source_item, "coverDate").strip()
         doi = normalize_doi(first_text(source_item, "identifier", "doi"))
         author = first_text(source_item, "creator", "author").strip()
-        if not all((volume, issue, cover_date, doi, author)):
+        title = first_text(source_item, "title").strip()
+        if is_non_article(title) or not all((volume, issue, cover_date, doi, author)):
             continue
         if not re.fullmatch(r"\d+", volume) or not re.fullmatch(r"[A-Za-z0-9]+", issue):
             continue
@@ -1381,6 +1590,8 @@ def build_repec_series_current_feed(
         first_page = (meta.get("citation_firstpage") or [""])[0].strip()
         last_page = (meta.get("citation_lastpage") or [""])[0].strip()
         doi = normalize_doi(article_html.decode("utf-8", errors="replace"))
+        if is_non_article(title):
+            continue
         if (
             not all((title, abstract, authors, first_page, last_page, doi))
             or journal_title != journal["expected_journal_title"]
@@ -1400,7 +1611,7 @@ def build_repec_series_current_feed(
                 "first_page": int(first_page),
                 "pages": f"{first_page}\u2013{last_page}",
                 "doi": doi,
-                "link": f"https://doi.org/{doi}",
+                "link": f"https://www.econometricsociety.org/doi/{doi}",
             }
         )
     articles.sort(key=lambda article: int(article["first_page"]))
@@ -1435,7 +1646,9 @@ def build_repec_series_current_feed(
         ET.SubElement(item, "category").text = (
             f"Vol. {volume}, No. {issue_number}, pp. {article['pages']}"
         )
-        ET.SubElement(item, f"{{{DC_NS}}}identifier").text = str(article["link"])
+        ET.SubElement(item, f"{{{DC_NS}}}identifier").text = (
+            f"https://doi.org/{article['doi']}"
+        )
         ET.SubElement(item, "guid", {"isPermaLink": "false"}).text = (
             f"doi:{article['doi']}"
         )
@@ -1469,9 +1682,10 @@ def build_jpe_current_feed(
         ):
             continue
         source_doi = normalize_doi(first_text(source_item, "identifier", "doi")).lower()
-        if source_doi:
+        source_title = " ".join(first_text(source_item, "title").split())
+        if source_doi and not is_non_article(source_title):
             source_articles[source_doi] = {
-                "title": " ".join(first_text(source_item, "title").split()),
+                "title": source_title,
                 "link": item_link(source_item),
             }
     if set(source_articles) != issue_dois:
@@ -1497,6 +1711,8 @@ def build_jpe_current_feed(
         handle = (record.get("handle") or [""])[0]
         doi = normalize_doi(handle)
         page_match = re.fullmatch(r"(\d+)\s*-\s*(\d+)", pages)
+        if is_non_article(title):
+            continue
         if (
             not template_type.lower().startswith("redif-article")
             or not all((title, abstract, authors, doi, page_match))
@@ -1553,7 +1769,7 @@ def build_jpe_current_feed(
     for article in articles:
         item = ET.SubElement(channel, "item")
         ET.SubElement(item, "title").text = str(article["title"])
-        article_link = str(article["link"]) or (
+        article_link = (
             "https://www.journals.uchicago.edu/doi/abs/"
             + urllib.parse.quote(str(article["doi"]), safe="/")
         )
@@ -1583,6 +1799,10 @@ def build_feed(journal: dict, suffix: str, base_url: str, source_xml: bytes) -> 
         item
         for item in source_items(source_root)
         if not any(phrase in first_text(item, "title") for phrase in excluded_phrases)
+        and not is_non_article(
+            first_text(item, "title"),
+            first_text(item, "category", "section"),
+        )
     ]
     if not items:
         raise RuntimeError("source feed contains no items")
@@ -1616,14 +1836,15 @@ def build_feed(journal: dict, suffix: str, base_url: str, source_xml: bytes) -> 
                 break
         if journal.get("link_mode") == "cnki_title_search":
             link = "https://kns.cnki.net/kns8s/defaultresult/index?kw=" + urllib.parse.quote(item_title)
+        link = link or str(journal.get("site_url") or journal["source_url"])
         description = first_text(source_item, "description", "summary", "content", "encoded")
         published = normalize_date(first_text(source_item, "pubDate", "date", "published", "updated"))
         author = first_text(source_item, "creator", "author")
-        doi = normalize_doi(first_text(source_item, "doi", "identifier"))
+        doi = ""
+        if not journal.get("language", "").lower().startswith("zh"):
+            doi = normalize_doi(first_text(source_item, "doi", "identifier"))
         source_guid = first_text(source_item, "guid", "id")
-        guid = source_guid or "urn:sha256:" + hashlib.sha256(
-            f"{item_title}|{link}".encode("utf-8")
-        ).hexdigest()
+        guid = stable_source_guid(journal, source_guid, item_title, link)
 
         ET.SubElement(item, "title").text = item_title
         if link:
@@ -1639,7 +1860,7 @@ def build_feed(journal: dict, suffix: str, base_url: str, source_xml: bytes) -> 
                 journal.get("language", ""),
                 journal.get("creator_separator", ""),
             )
-        if doi:
+        if doi and not journal.get("language", "").lower().startswith("zh"):
             ET.SubElement(item, f"{{{DC_NS}}}identifier").text = f"https://doi.org/{doi}"
         ET.SubElement(item, "guid", {"isPermaLink": "false"}).text = guid
 
@@ -1727,6 +1948,14 @@ def main() -> int:
                 referer=journal.get("referer", journal["source_url"]),
             )
             feed_xml, count = build_magtech_feed(journal, suffix, base_url, source_data)
+        elif journal.get("source_type") == "mwm_current":
+            source_data = fetch(
+                journal["source_url"],
+                accept="text/html,application/xhtml+xml,*/*;q=0.8",
+                user_agent=BROWSER_USER_AGENT,
+                referer=journal.get("referer", journal["source_url"]),
+            )
+            feed_xml, count = build_mwm_feed(journal, suffix, base_url, source_data)
         else:
             source_data = fetch(journal["source_url"])
             feed_xml, count = build_feed(journal, suffix, base_url, source_data)

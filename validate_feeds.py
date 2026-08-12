@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import json
 import sys
+import re
 import xml.etree.ElementTree as ET
+import urllib.parse
 from pathlib import Path
 
 
@@ -26,7 +28,15 @@ def configured_feeds(config: dict) -> list[tuple[str, dict]]:
         feeds.append((journal["name"], journal))
         translation = journal.get("translation")
         if translation:
-            feeds.append((translation["title"], translation))
+            feeds.append(
+                (
+                    translation["title"],
+                    {
+                        **translation,
+                        "official_link_hosts": journal.get("official_link_hosts", []),
+                    },
+                )
+            )
     return feeds
 
 
@@ -71,6 +81,29 @@ def validate_one(name: str, settings: dict, base_url: str) -> ET.Element:
             raise ValueError(f"{name}: 第 {index} 条没有作者")
         if len(creators) != len(set(creators)):
             raise ValueError(f"{name}: 第 {index} 条作者重复")
+        title = text(item, "title")
+        if re.search(
+            r"^评《.+》$|(?:^|——)评《.+》|(?:^|——)读《.+》(?:有感|札记|随想)?$|"
+            r"^书评[：:]?|^(?:FrontMatter|BackMatter|Masthead|Contents|RecentReferees|"
+            r"JPETurnaroundTimes|SubmissionofManuscripts)$|"
+            r"^(?:BookReview|Editorial|Commentary)(?:[：:]|$)",
+            re.sub(r"\s+", "", title),
+        ):
+            raise ValueError(f"{name}: 第 {index} 条仍是书评或读后感：{title}")
+        if str(settings.get("language") or "").lower().startswith("zh"):
+            if item.findall(f"{{{DC_NS}}}identifier"):
+                raise ValueError(f"{name}: 中文期刊不应输出 DOI 标识")
+        allowed_hosts = {
+            host.casefold()
+            for host in settings.get("official_link_hosts", [])
+            if str(host).strip()
+        }
+        if allowed_hosts:
+            link_host = (urllib.parse.urlparse(text(item, "link")).hostname or "").casefold()
+            if link_host not in allowed_hosts:
+                raise ValueError(
+                    f"{name}: 第 {index} 条没有链接到期刊官网：{link_host or '无主机名'}"
+                )
     return channel
 
 

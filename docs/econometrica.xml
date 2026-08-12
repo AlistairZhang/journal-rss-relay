@@ -5,11 +5,11 @@
     <link>https://onlinelibrary.wiley.com/journal/14680262</link>
     <description>Econometrica latest-issue metadata, updated every 3 days</description>
     <language>en</language>
-    <lastBuildDate>Wed, 12 Aug 2026 13:38:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 14:42:46 +0000</lastBuildDate>
     <atom:link href="https://alistairzhang.github.io/journal-rss-relay/econometrica.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Walras–Bowley Lecture: Climate Policy in the Wide World</title>
-      <link>https://doi.org/10.3982/ECTA22451</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA22451</link>
       <dc:creator>John Hassler</dc:creator>
       <dc:creator>Per Krusell</dc:creator>
       <dc:creator>Conny Olovsson</dc:creator>
@@ -21,7 +21,7 @@
     </item>
     <item>
       <title>Identification in Instrumental Variables Models: The Central Role of Abadie's Kappa</title>
-      <link>https://doi.org/10.3982/ECTA23174</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA23174</link>
       <dc:creator>Manu Navjeevan</dc:creator>
       <dc:creator>Rodrigo Pinto</dc:creator>
       <dc:creator>Andres Santos</dc:creator>
@@ -33,7 +33,7 @@
     </item>
     <item>
       <title>Firm‐to‐Firm Trade: Imports, Exports, and the Labor Market</title>
-      <link>https://doi.org/10.3982/ECTA20506</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA20506</link>
       <dc:creator>Jonathan Eaton</dc:creator>
       <dc:creator>Samuel Kortum</dc:creator>
       <dc:creator>Francis Kramarz</dc:creator>
@@ -45,7 +45,7 @@
     </item>
     <item>
       <title>Information Design in Common Value Auction With Moral Hazard: Application to OCS Leasing Auctions</title>
-      <link>https://doi.org/10.3982/ECTA21839</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA21839</link>
       <dc:creator>Anh Nguyen</dc:creator>
       <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
       <description>This paper explores the impact of information design on the auctioneer's revenue in the U.S. offshore oil/gas lease auctions where, post‐auction, the winner decides whether to explore the auctioned tract and must pay the government a royalty on its production value. I first document that there is a positive correlation between the exploration rate and publicly observed losing bids. This suggests that the winning bidder uses the rivals' bids to infer their private information about the tract's potential. I then characterize the equilibrium bidding strategy when the auctioneer designs and commits to how to reveal information on losing bids to the winning bidder. Counterfactual exercises reveal that alternative bid disclosure policies significantly improve auctioneer revenue.</description>
@@ -55,7 +55,7 @@
     </item>
     <item>
       <title>The Equilibrium Effects of Campaign Finance Deregulation on U.S. Elections</title>
-      <link>https://doi.org/10.3982/ECTA22979</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA22979</link>
       <dc:creator>Christian Cox</dc:creator>
       <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
       <description>The U.S. Supreme Court's 2010 decision in Citizens United v. Federal Election Commission deregulated campaign finance, enabling the rise of a new political action committee (the Super PAC) with broad freedom to raise and spend money. This led to an unprecedented surge in spending in primary and general elections. To evaluate the impact of Super PACs, I estimate a multistage model of political competition using data from U.S. Congressional elections between 2010 and 2020. I find that Super PAC spending by both sides prompts offsetting responses, resulting in limited net equilibrium effects. However, by amplifying the role of donors, Super PACs still have the potential to reshape the electoral landscape.</description>
@@ -65,7 +65,7 @@
     </item>
     <item>
       <title>Dynamic Screening of Buyers With Heterogeneous Purchase Frequency</title>
-      <link>https://doi.org/10.3982/ECTA23049</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA23049</link>
       <dc:creator>Johannes Hörner</dc:creator>
       <dc:creator>Anna Sanktjohanser</dc:creator>
       <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
@@ -76,7 +76,7 @@
     </item>
     <item>
       <title>The Inference‐Forecast Gap in Belief Updating</title>
-      <link>https://doi.org/10.3982/ECTA23334</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA23334</link>
       <dc:creator>Tony Q. Fan</dc:creator>
       <dc:creator>Yucheng Liang</dc:creator>
       <dc:creator>Cameron Peng</dc:creator>
@@ -88,7 +88,7 @@
     </item>
     <item>
       <title>Double Robustness of Local Projections and Some Unpleasant VARithmetic</title>
-      <link>https://doi.org/10.3982/ECTA23345</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA23345</link>
       <dc:creator>José Luis Montiel Olea</dc:creator>
       <dc:creator>Mikkel Plagborg‐Møller</dc:creator>
       <dc:creator>Eric Qian</dc:creator>
@@ -101,7 +101,7 @@
     </item>
     <item>
       <title>The Class Gap in Career Progression: Evidence From U.S. Academia</title>
-      <link>https://doi.org/10.3982/ECTA23358</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA23358</link>
       <dc:creator>Anna Stansbury</dc:creator>
       <dc:creator>Kyra Rodriguez</dc:creator>
       <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
@@ -112,7 +112,7 @@
     </item>
     <item>
       <title>Economic Growth and the Rise of Large Firms</title>
-      <link>https://doi.org/10.3982/ECTA22110</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA22110</link>
       <dc:creator>Zhang Chen</dc:creator>
       <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
       <description>I document that the right tail of the firm size distribution systematically thickens with economic development. To rationalize this fact, I develop a parsimonious idea search model in which both aggregate growth and the firm size distribution are endogenously determined. The model features an asymptotic balanced growth path along which Gibrat's law holds at each date, and the right tail of the firm size distribution thickens monotonically toward Zipf's law. The model also implies that policies favoring large firms can improve welfare by better utilizing the diffusion externalities arising from idea search.</description>
@@ -122,7 +122,7 @@
     </item>
     <item>
       <title>Mechanism Design for Personalized Policy: A Field Experiment Incentivizing Exercise</title>
-      <link>https://doi.org/10.3982/ECTA21926</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA21926</link>
       <dc:creator>Rebecca Dizon‐Ross</dc:creator>
       <dc:creator>Ariel Zucker</dc:creator>
       <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
@@ -133,7 +133,7 @@
     </item>
     <item>
       <title>Job Ladder and Wealth Dynamics in General Equilibrium</title>
-      <link>https://doi.org/10.3982/ECTA22542</link>
+      <link>https://www.econometricsociety.org/doi/10.3982/ECTA22542</link>
       <dc:creator>Leo Kaas</dc:creator>
       <dc:creator>Etienne Lalé</dc:creator>
       <dc:creator>Nawid Siassi</dc:creator>

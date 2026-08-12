@@ -11,6 +11,7 @@
       "language": "zh-cn",
       "source_type": "erj_official_api",
       "source_url": "https://erj.ajcass.com/#/index",
+      "official_link_hosts": ["erj.ajcass.com"],
       "api_base": "https://api.ajcass.com/api",
       "journal_id": "201803050001"
     },
@@ -21,13 +22,15 @@
       "name": "数量经济技术经济研究",
       "feed_title": "数量经济技术经济研究",
       "language": "zh-cn",
-      "source_type": "ncpssd_current",
-      "source_url": "https://www.ncpssd.org/journal/secure/details?params=K0tQenlLclR2ODk1dTE2Mm0xUWM3ZUk5V1l4M05iRDRheWR6eEs4WFJaLzhUNUdLOGgxaHUyM2ZtNWtZWlYxbURHcW0rVUJhY3p6SExwMk82VEgyOVE9PQ",
+      "source_url": "https://www.jqte.net/download_upload_file.aspx?file_name=/rss/sljjjsjjyj/cn/current.xml",
       "site_url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-      "issue_list_api": "https://www.ncpssd.org/journal/journalHandler",
-      "journal_code": "94503X",
-      "detail_api": "https://m.ncpssd.cn/articleinfoHandler/getjournalarticletable",
-      "request_delay_seconds": 1.5
+      "official_link_hosts": ["www.jqte.net"],
+      "link_replacements": [
+        {
+          "from": "http://jqte.ijournals.cn/ch/reader/",
+          "to": "https://www.jqte.net/sljjjsjjyj/ch/reader/"
+        }
+      ]
     },
     {
       "slug": "jjdl",
@@ -37,6 +40,7 @@
       "language": "zh-cn",
       "source_type": "magtech_current",
       "source_url": "https://www.jjdl.com.cn/CN/current",
+      "official_link_hosts": ["www.jjdl.com.cn"],
       "referer": "https://www.jjdl.com.cn/",
       "missing_abstract_text": "官网未提供摘要。"
     },
@@ -46,13 +50,11 @@
       "commit_label": "管理世界",
       "name": "管理世界",
       "language": "zh-cn",
-      "source_type": "ncpssd_current",
-      "source_url": "https://www.ncpssd.org/journal/secure/details?params=V2ZQZUlGQnRhM3lxVEkrUDlvU2gyZkVJUE8yTmpKZDFHMElFUUNUR0MyWT0",
-      "site_url": "http://www.mwm.net.cn/web/bqym",
-      "issue_list_api": "https://www.ncpssd.org/journal/journalHandler",
-      "journal_code": "95499X",
-      "detail_api": "https://m.ncpssd.cn/articleinfoHandler/getjournalarticletable",
-      "request_delay_seconds": 1.5
+      "source_type": "mwm_current",
+      "source_url": "http://www.mwm.net.cn/web/bqym",
+      "site_url": "http://www.mwm.net.cn/web/",
+      "official_link_hosts": ["www.mwm.net.cn"],
+      "referer": "http://www.mwm.net.cn/web/"
     },
     {
       "slug": "zggyjj",
@@ -62,12 +64,12 @@
       "language": "zh-cn",
       "source_type": "ncpssd_current",
       "source_url": "https://www.ncpssd.org/journal/secure/details?params=RmZhSWMraWNzQUpyTkluZStrQUNzSGhiOUdZcisrbmhIeXNFMjZIWnhRZGgyZ1lxMlZDWmhSY1lTQTFyaldCOQ",
+      "site_url": "https://ciejournal.ajcass.com/",
+      "official_link_hosts": ["ciejournal.ajcass.com"],
       "issue_list_api": "https://www.ncpssd.org/journal/journalHandler",
       "journal_code": "93800A",
       "detail_api": "https://m.ncpssd.cn/articleinfoHandler/getjournalarticletable",
-      "request_delay_seconds": 1.5,
-      "doi_prefix": "10.19581/j.cnki.ciejournal",
-      "doi_sequence_max": 20
+      "request_delay_seconds": 1.5
     },
     {
       "slug": "econometrica",
@@ -78,6 +80,7 @@
       "source_type": "repec_series_current",
       "source_url": "https://ideas.repec.org/s/wly/emetrp.html",
       "site_url": "https://onlinelibrary.wiley.com/journal/14680262",
+      "official_link_hosts": ["www.econometricsociety.org"],
       "expected_journal_title": "Econometrica"
     },
     {
@@ -90,6 +93,7 @@
       "source_type": "jpe_repec_current",
       "source_url": "https://www.journals.uchicago.edu/action/showFeed?type=etoc&feed=rss&jc=jpe",
       "site_url": "https://www.journals.uchicago.edu/toc/jpe/current",
+      "official_link_hosts": ["www.journals.uchicago.edu"],
       "repec_base_url": "https://ucp-press-oae1.uchicago.edu/RePEc/ucp/jpolec",
       "expected_journal_title": "Journal of Political Economy",
       "translation": {
@@ -109,6 +113,7 @@
       "source_type": "aea_current",
       "source_url": "https://www.aeaweb.org/journals/aer/current-issue",
       "site_url": "https://www.aeaweb.org/journals/aer",
+      "official_link_hosts": ["www.aeaweb.org"],
       "expected_journal_title": "American Economic Review",
       "request_delay_seconds": 0.5,
       "translation": {
@@ -125,7 +130,8 @@
       "name": "世界经济",
       "language": "zh-cn",
       "source_type": "magtech_current",
-      "source_url": "https://sjjj.magtech.com.cn/CN/current"
+      "source_url": "https://sjjj.magtech.com.cn/CN/current",
+      "official_link_hosts": ["sjjj.magtech.com.cn"]
     }
   ]
 }
