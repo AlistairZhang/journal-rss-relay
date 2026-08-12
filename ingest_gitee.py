@@ -516,10 +516,9 @@ def main() -> None:
                         flush=True,
                     )
                     continue
-            if (
-                candidate_issue[0] == existing_issue[0]
-                and candidate_issue[1] > existing_issue[1] + 2
-            ):
+            candidate_ordinal = candidate_issue[0] * 12 + candidate_issue[1]
+            existing_ordinal = existing_issue[0] * 12 + existing_issue[1]
+            if candidate_ordinal > existing_ordinal + 2:
                 raise _fail(f"issue number jumped unexpectedly for {journal['slug']}")
             existing_item_count = len(ET.fromstring(existing).find("channel").findall("item"))
             candidate_item_count = len(ET.fromstring(candidate).find("channel").findall("item"))
