@@ -64,7 +64,7 @@
 
 ### 当前识别状态
 
-以下状态来自 2026-08-12 23:23（北京时间）完成的 [GitHub Actions 正式发布](https://github.com/AlistairZhang/journal-rss-relay/actions/runs/31611646476)。本次 11 个 RSS 全部生成、通过校验并成功部署；条目数会随期次变化。
+以下状态来自 2026-08-13 00:49（北京时间）完成的 [GitHub Actions 正式发布](https://github.com/AlistairZhang/journal-rss-relay/actions/runs/31619361220)。本次 11 个 RSS 全部生成、通过校验并成功部署。随后，《数量经济技术经济研究》和《管理世界》又完成了首次真实的 [Gitee 国内采集](https://gitee.com/alistairzhang/journal-rss/gitee_go/pipelines/builds/731491/view) 与 [GitHub 接收校验](https://github.com/AlistairZhang/journal-rss-relay/actions/runs/31619686519)；传入题录与现有 RSS 完全一致，因此系统按设计未产生重复提交。条目数会随期次变化。
 
 #### 中文期刊
 
