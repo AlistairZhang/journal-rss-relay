@@ -47,11 +47,25 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           changed=0
-          git add docs
-          if ! git diff --cached --quiet; then
-            git commit -m "更新 RSS 订阅源文件"
-            changed=1
-          fi
+          while IFS=$'\t' read -r filename label; do
+            feed_path="docs/$filename"
+            if [ -n "$(git status --porcelain --untracked-files=all -- "$feed_path")" ]; then
+              git add -- "$feed_path"
+              git commit -m "$label"
+              changed=1
+            fi
+          done < <(python - <<'PY'
+          import json
+
+          with open("journals.json", encoding="utf-8") as file:
+              config = json.load(file)
+          for journal in config["journals"]:
+              print(f"{journal['output_file']}\t{journal['commit_label']}")
+              translation = journal.get("translation")
+              if translation:
+                  print(f"{translation['output_file']}\t{translation['commit_label']}")
+          PY
+          )
           git add translation_cache.json
           if ! git diff --cached --quiet; then
             git commit -m "更新英文期刊中文翻译缓存"
