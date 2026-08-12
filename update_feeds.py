@@ -1202,7 +1202,10 @@ def discover_ncpssd_current_url(journal: dict) -> str:
         response = fetch_json(
             query_url,
             attempts=2,
-            referer=journal.get("source_url", "https://www.ncpssd.org/"),
+            referer=journal.get(
+                "ncpssd_source_url",
+                journal.get("source_url", "https://www.ncpssd.org/"),
+            ),
         )
         issue_links = re.findall(
             r"href=['\"]([^'\"]+)['\"][^>]*>\s*(\d+)\s*</a>",
@@ -1217,6 +1220,28 @@ def discover_ncpssd_current_url(journal: dict) -> str:
             href.replace("&amp;", "&"),
         )
     raise RuntimeError("国家哲社文献中心未返回可用的最新期目录")
+
+
+def fetch_ncpssd_current_feed(
+    journal: dict,
+    suffix: str,
+    base_url: str,
+) -> tuple[bytes, int]:
+    """Fetch and build the newest NCPS issue for a configured journal."""
+    current_url = discover_ncpssd_current_url(journal)
+    source_data = fetch(
+        current_url,
+        accept="text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        user_agent=BROWSER_USER_AGENT,
+        referer=journal.get("ncpssd_source_url", "https://www.ncpssd.org/"),
+    )
+    resolved_journal = {**journal, "source_url": current_url}
+    return build_ncpssd_feed(
+        resolved_journal,
+        suffix,
+        base_url,
+        source_data,
+    )
 
 
 def build_mwm_feed(
@@ -1925,21 +1950,22 @@ def main() -> int:
                 base_url,
                 source_data,
             )
+        elif journal.get("source_type") == "official_rss_with_ncpssd_fallback":
+            try:
+                source_data = fetch(
+                    journal["source_url"],
+                    attempts=int(journal.get("primary_attempts", 1)),
+                )
+                feed_xml, count = build_feed(journal, suffix, base_url, source_data)
+            except Exception as exc:
+                print(
+                    f"WARNING: {journal['name']}官网源不可用，改用国家哲社文献中心: {exc}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                feed_xml, count = fetch_ncpssd_current_feed(journal, suffix, base_url)
         elif journal.get("source_type") == "ncpssd_current":
-            current_url = discover_ncpssd_current_url(journal)
-            source_data = fetch(
-                current_url,
-                accept="text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                user_agent=BROWSER_USER_AGENT,
-                referer=journal.get("source_url", "https://www.ncpssd.org/"),
-            )
-            resolved_journal = {**journal, "source_url": current_url}
-            feed_xml, count = build_ncpssd_feed(
-                resolved_journal,
-                suffix,
-                base_url,
-                source_data,
-            )
+            feed_xml, count = fetch_ncpssd_current_feed(journal, suffix, base_url)
         elif journal.get("source_type") == "magtech_current":
             source_data = fetch(
                 journal["source_url"],
@@ -1948,14 +1974,28 @@ def main() -> int:
                 referer=journal.get("referer", journal["source_url"]),
             )
             feed_xml, count = build_magtech_feed(journal, suffix, base_url, source_data)
-        elif journal.get("source_type") == "mwm_current":
-            source_data = fetch(
-                journal["source_url"],
-                accept="text/html,application/xhtml+xml,*/*;q=0.8",
-                user_agent=BROWSER_USER_AGENT,
-                referer=journal.get("referer", journal["source_url"]),
-            )
-            feed_xml, count = build_mwm_feed(journal, suffix, base_url, source_data)
+        elif journal.get("source_type") == "mwm_with_ncpssd_fallback":
+            try:
+                source_data = fetch(
+                    journal["source_url"],
+                    attempts=int(journal.get("primary_attempts", 1)),
+                    accept="text/html,application/xhtml+xml,*/*;q=0.8",
+                    user_agent=BROWSER_USER_AGENT,
+                    referer=journal.get("referer", journal["source_url"]),
+                )
+                feed_xml, count = build_mwm_feed(
+                    journal,
+                    suffix,
+                    base_url,
+                    source_data,
+                )
+            except Exception as exc:
+                print(
+                    f"WARNING: 管理世界官网源不可用，改用国家哲社文献中心: {exc}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                feed_xml, count = fetch_ncpssd_current_feed(journal, suffix, base_url)
         else:
             source_data = fetch(journal["source_url"])
             feed_xml, count = build_feed(journal, suffix, base_url, source_data)

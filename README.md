@@ -46,9 +46,9 @@
 | 期刊 | 数据来源 | 处理措施 |
 | --- | --- | --- |
 | 经济研究 | [《经济研究》AJ-CASS 官网](https://erj.ajcass.com/#/index)及其公开接口 | 先由官网接口识别当前期，再逐篇读取详情；提取标题、作者、摘要、年卷期和编辑日期。中文作者被拆分为独立创建者并去重，条目直接链接官网详情路由。当前 RSS 日期采用官网 `editDate`，不一定等同于纸刊出版日。 |
-| 数量经济技术经济研究 | [期刊官网 RSS](https://www.jqte.net/download_upload_file.aspx?file_name=/rss/sljjjsjjyj/cn/current.xml) | 直接读取官网当前期题录，规范日期并把作者拆分为独立创建者；将 RSS 中的旧域名文章地址改为 `www.jqte.net` 官网详情页，并保留既有 GUID，避免订阅器把同一篇文章再次当成新文献。 |
+| 数量经济技术经济研究 | [期刊官网 RSS](https://www.jqte.net/download_upload_file.aspx?file_name=/rss/sljjjsjjyj/cn/current.xml)优先；[国家哲学社会科学文献中心](https://www.ncpssd.org/)兜底 | 优先读取官网当前期题录；GitHub 节点遇到 502 时自动改用文献中心详情。无论采用哪个题录源，都把作者拆分为独立创建者，并将每条链接精确转换到 `www.jqte.net` 官网文章页；既有 GUID 保持不变。 |
 | 经济地理 | [期刊官网当期目录](https://www.jjdl.com.cn/CN/current) | 解析 Magtech 当期静态页面，提取标题、作者、摘要、栏目、官网文章链接和统一刊出日期；作者拆分去重，栏目写入 RSS 分类，书评等非文献条目在生成前过滤。网页引文字段中的卷期页码目前尚未写入 RSS。 |
-| 管理世界 | [期刊官网当期目录](http://www.mwm.net.cn/web/bqym)及逐篇文章页 | 恢复直接抓取官网最新一期及每篇详情页。完整作者和页码优先从官网标准引文提取，避免页面顶部“某某 等”造成作者缺失；摘要和发布日期来自文章页，条目直接链接官网详情页。 |
+| 管理世界 | [期刊官网当期目录](http://www.mwm.net.cn/web/bqym)优先；[国家哲学社会科学文献中心](https://www.ncpssd.org/)兜底 | 优先抓取官网最新一期及每篇详情页，完整作者和页码从官网标准引文提取，避免“某某 等”造成作者缺失；若 GitHub 节点访问官网超时，则改用文献中心题录，过滤非文献后把条目链接退回期刊官网首页。 |
 | 中国工业经济 | [国家哲学社会科学文献中心](https://www.ncpssd.org/) | 按刊号 `93800A` 获取最新期及文章详情，清理作者机构序号，提取标题、作者、摘要、发布日期、页码和关键词。由于文献中心 ID 无法稳定映射到期刊官网文章 ID，条目统一退回[期刊官网首页](https://ciejournal.ajcass.com/)，不再链接文献中心文章页。 |
 | 世界经济 | [期刊官网当期目录](https://sjjj.magtech.com.cn/CN/current) | 解析 Magtech 当期静态页面，提取标题、作者、摘要、栏目、官网文章链接和统一刊出日期；作者拆分去重，栏目写入 RSS 分类。网页引文字段中的卷期页码目前尚未写入 RSS。 |
 | Econometrica | [IDEAS/RePEc 的 Wiley 系列页](https://ideas.repec.org/s/wly/emetrp.html)；[Econometric Society 期刊主页](https://www.econometricsociety.org/publications/econometrica) | 从 RePEc 的月份、年份、卷、期分组中选出最新一期，再读取该期每篇文章元数据；严格校验刊名、卷期、年份、标题、作者、摘要、页码和 DOI，按首页排序，并将链接直接指向 Econometric Society 官网 DOI 路由。日期统一记为该期月份第一天。 |
@@ -57,7 +57,7 @@
 
 ### 数据源变更说明
 
-原 Gitee 项目中，《数量经济技术经济研究》和《管理世界》都直接使用期刊官网。2026-08-12 迁移到 GitHub 时，GitHub Actions 访问前者官网 RSS 连续返回 HTTP 502，访问后者官网连续超时；为先让自动更新流程跑通，两刊曾临时改用国家哲学社会科学文献中心。这是运行环境兼容处理，不是因为文献中心更权威。本次已恢复官网数据源，并重新通过 GitHub Actions 实测。
+原 Gitee 项目中，《数量经济技术经济研究》和《管理世界》都直接使用期刊官网。2026-08-12 迁移到 GitHub 时，GitHub Actions 访问前者官网 RSS 连续返回 HTTP 502，访问后者官网连续超时；为先让自动更新流程跑通，两刊曾临时改用国家哲学社会科学文献中心。这是运行环境兼容处理，不是因为文献中心更权威。现在采用“官网优先、文献中心兜底”，兼顾官网时效性与定时任务稳定性。
 
 ### 当前识别状态
 

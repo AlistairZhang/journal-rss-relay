@@ -22,9 +22,16 @@
       "name": "数量经济技术经济研究",
       "feed_title": "数量经济技术经济研究",
       "language": "zh-cn",
+      "source_type": "official_rss_with_ncpssd_fallback",
       "source_url": "https://www.jqte.net/download_upload_file.aspx?file_name=/rss/sljjjsjjyj/cn/current.xml",
       "site_url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
       "official_link_hosts": ["www.jqte.net"],
+      "primary_attempts": 1,
+      "ncpssd_source_url": "https://www.ncpssd.org/journal/secure/details?params=K0tQenlLclR2ODk1dTE2Mm0xUWM3ZUk5V1l4M05iRDRheWR6eEs4WFJaLzhUNUdLOGgxaHUyM2ZtNWtZWlYxbURHcW0rVUJhY3p6SExwMk82VEgyOVE9PQ",
+      "issue_list_api": "https://www.ncpssd.org/journal/journalHandler",
+      "journal_code": "94503X",
+      "detail_api": "https://m.ncpssd.cn/articleinfoHandler/getjournalarticletable",
+      "request_delay_seconds": 1.5,
       "link_replacements": [
         {
           "from": "http://jqte.ijournals.cn/ch/reader/",
@@ -50,11 +57,17 @@
       "commit_label": "管理世界",
       "name": "管理世界",
       "language": "zh-cn",
-      "source_type": "mwm_current",
+      "source_type": "mwm_with_ncpssd_fallback",
       "source_url": "http://www.mwm.net.cn/web/bqym",
       "site_url": "http://www.mwm.net.cn/web/",
       "official_link_hosts": ["www.mwm.net.cn"],
-      "referer": "http://www.mwm.net.cn/web/"
+      "referer": "http://www.mwm.net.cn/web/",
+      "primary_attempts": 1,
+      "ncpssd_source_url": "https://www.ncpssd.org/journal/secure/details?params=V2ZQZUlGQnRhM3lxVEkrUDlvU2gyZkVJUE8yTmpKZDFHMElFUUNUR0MyWT0",
+      "issue_list_api": "https://www.ncpssd.org/journal/journalHandler",
+      "journal_code": "95499X",
+      "detail_api": "https://m.ncpssd.cn/articleinfoHandler/getjournalarticletable",
+      "request_delay_seconds": 1.5
     },
     {
       "slug": "zggyjj",
