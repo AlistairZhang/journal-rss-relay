@@ -47,12 +47,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           changed=0
+          feed_changed=0
           while IFS=$'\t' read -r filename label; do
             feed_path="docs/$filename"
             if [ -n "$(git status --porcelain --untracked-files=all -- "$feed_path")" ]; then
               git add -- "$feed_path"
               git commit -m "$label"
               changed=1
+              feed_changed=1
             fi
           done < <(python - <<'PY'
           import json
@@ -66,6 +68,23 @@ jobs:
                   print(f"{translation['output_file']}\t{translation['commit_label']}")
           PY
           )
+          if [ "$feed_changed" -eq 1 ]; then
+            python - <<'PY'
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          updated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          Path("docs/README.md").write_text(
+              "# RSS 订阅源文件\n\n"
+              "本目录由 GitHub Actions 自动维护，包含 11 个期刊 RSS 文件。"
+              "正式订阅链接请查看仓库根目录的 `README.md`。\n\n"
+              f"最近自动更新：{updated_at}\n",
+              encoding="utf-8",
+          )
+          PY
+            git add -- docs/README.md
+            git commit -m "RSS 订阅源文件"
+          fi
           git add translation_cache.json
           if ! git diff --cached --quiet; then
             git commit -m "更新英文期刊中文翻译缓存"
