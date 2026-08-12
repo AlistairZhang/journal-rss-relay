@@ -1,0 +1,116 @@
+{
+  "title_suffix": "祥仔",
+  "public_base_url": "https://alistairzhang.github.io/journal-rss-relay",
+  "journals": [
+    {
+      "slug": "jjyj",
+      "output_file": "jingji-yanjiu.xml",
+      "name": "经济研究",
+      "language": "zh-cn",
+      "source_type": "erj_official_api",
+      "source_url": "https://erj.ajcass.com/#/index",
+      "api_base": "https://api.ajcass.com/api",
+      "journal_id": "201803050001"
+    },
+    {
+      "slug": "sljjjsjjyj",
+      "output_file": "shujing-jijing.xml",
+      "name": "数量经济技术经济研究",
+      "language": "zh-cn",
+      "source_url": "https://www.jqte.net/download_upload_file.aspx?file_name=/rss/sljjjsjjyj/cn/current.xml",
+      "site_url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
+      "link_replacements": [
+        {
+          "from": "http://jqte.ijournals.cn/ch/reader/",
+          "to": "https://www.jqte.net/sljjjsjjyj/ch/reader/"
+        }
+      ]
+    },
+    {
+      "slug": "jjdl",
+      "output_file": "jingji-dili.xml",
+      "name": "经济地理",
+      "language": "zh-cn",
+      "source_type": "magtech_current",
+      "source_url": "https://www.jjdl.com.cn/CN/current",
+      "referer": "https://www.jjdl.com.cn/",
+      "missing_abstract_text": "官网未提供摘要。"
+    },
+    {
+      "slug": "glsj",
+      "output_file": "guanli-shijie.xml",
+      "name": "管理世界",
+      "language": "zh-cn",
+      "source_type": "mwm_current",
+      "source_url": "http://www.mwm.net.cn/web/bqym",
+      "referer": "http://www.mwm.net.cn/web/"
+    },
+    {
+      "slug": "zggyjj",
+      "output_file": "zhongguo-gongye-jingji.xml",
+      "name": "中国工业经济",
+      "language": "zh-cn",
+      "source_type": "ncpssd_current",
+      "source_url": "https://www.ncpssd.org/journal/secure/details?params=RmZhSWMraWNzQUpyTkluZStrQUNzSGhiOUdZcisrbmhIeXNFMjZIWnhRZGgyZ1lxMlZDWmhSY1lTQTFyaldCOQ",
+      "issue_list_api": "https://www.ncpssd.org/journal/journalHandler",
+      "journal_code": "93800A",
+      "detail_api": "https://m.ncpssd.cn/articleinfoHandler/getjournalarticletable",
+      "request_delay_seconds": 1.5,
+      "doi_prefix": "10.19581/j.cnki.ciejournal",
+      "doi_sequence_max": 20
+    },
+    {
+      "slug": "econometrica",
+      "output_file": "econometrica.xml",
+      "name": "Econometrica",
+      "language": "en",
+      "source_url": "https://onlinelibrary.wiley.com/feed/14680262/most-recent",
+      "creator_separator": ",",
+      "exclude_title_contains": [
+        "Backmatter of Econometrica",
+        "Frontmatter of Econometrica",
+        "Submission of Manuscripts"
+      ]
+    },
+    {
+      "slug": "jpe",
+      "output_file": "jpe.xml",
+      "name": "JPE",
+      "language": "en",
+      "source_type": "jpe_repec_current",
+      "source_url": "https://www.journals.uchicago.edu/action/showFeed?type=etoc&feed=rss&jc=jpe",
+      "site_url": "https://www.journals.uchicago.edu/toc/jpe/current",
+      "repec_base_url": "https://ucp-press-oae1.uchicago.edu/RePEc/ucp/jpolec",
+      "expected_journal_title": "Journal of Political Economy",
+      "translation": {
+        "slug": "jpe-zh",
+        "output_file": "jpe-zh.xml",
+        "title": "JPE译版-祥仔"
+      }
+    },
+    {
+      "slug": "aer",
+      "output_file": "aer.xml",
+      "name": "AER",
+      "language": "en",
+      "source_type": "aea_current",
+      "source_url": "https://www.aeaweb.org/journals/aer/current-issue",
+      "site_url": "https://www.aeaweb.org/journals/aer",
+      "expected_journal_title": "American Economic Review",
+      "request_delay_seconds": 0.5,
+      "translation": {
+        "slug": "aer-zh",
+        "output_file": "aer-zh.xml",
+        "title": "AER译版-祥仔"
+      }
+    },
+    {
+      "slug": "sjjj",
+      "output_file": "shijie-jingji.xml",
+      "name": "世界经济",
+      "language": "zh-cn",
+      "source_type": "magtech_current",
+      "source_url": "https://sjjj.magtech.com.cn/CN/current"
+    }
+  ]
+}

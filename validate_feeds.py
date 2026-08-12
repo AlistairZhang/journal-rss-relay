@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+"""Validate every configured feed before it is committed or published."""
+
+from __future__ import annotations
+
+import json
+import sys
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent
+DOCS = ROOT / "docs"
+ATOM_NS = "http://www.w3.org/2005/Atom"
+DC_NS = "http://purl.org/dc/elements/1.1/"
+
+
+def text(parent: ET.Element, tag: str) -> str:
+    element = parent.find(tag)
+    return "" if element is None else "".join(element.itertext()).strip()
+
+
+def configured_feeds(config: dict) -> list[tuple[str, dict]]:
+    feeds: list[tuple[str, dict]] = []
+    for journal in config["journals"]:
+        feeds.append((journal["name"], journal))
+        translation = journal.get("translation")
+        if translation:
+            feeds.append((translation["title"], translation))
+    return feeds
+
+
+def validate_one(name: str, settings: dict, base_url: str) -> ET.Element:
+    filename = settings.get("output_file") or f"{settings['slug']}.xml"
+    path = DOCS / filename
+    if path.name != filename or path.suffix != ".xml":
+        raise ValueError(f"{name}: 输出文件名不安全")
+    raw = path.read_bytes()
+    if b"<![CDATA[" in raw:
+        raise ValueError(f"{name}: 仍含旧版逐字 CDATA 规避内容")
+    root = ET.fromstring(raw)
+    if root.tag != "rss" or root.get("version") != "2.0":
+        raise ValueError(f"{name}: 不是 RSS 2.0")
+    channel = root.find("channel")
+    if channel is None:
+        raise ValueError(f"{name}: 缺少 channel")
+    self_link = channel.find(f"{{{ATOM_NS}}}link")
+    expected_url = f"{base_url.rstrip('/')}/{filename}"
+    if self_link is None or self_link.get("href") != expected_url:
+        raise ValueError(f"{name}: atom:self 不是公开订阅网址")
+    items = channel.findall("item")
+    if not items:
+        raise ValueError(f"{name}: 没有文献条目")
+    guids: set[str] = set()
+    for index, item in enumerate(items, 1):
+        for field in ("title", "link", "description", "pubDate", "guid"):
+            if not text(item, field):
+                raise ValueError(f"{name}: 第 {index} 条缺少 {field}")
+        guid = text(item, "guid")
+        if guid in guids:
+            raise ValueError(f"{name}: GUID 重复：{guid}")
+        guids.add(guid)
+        creators = [text(element, ".") for element in item.findall(f"{{{DC_NS}}}creator")]
+        creators = [creator for creator in creators if creator]
+        if not creators:
+            raise ValueError(f"{name}: 第 {index} 条没有作者")
+        if len(creators) != len(set(creators)):
+            raise ValueError(f"{name}: 第 {index} 条作者重复")
+    return channel
+
+
+def comparable_item(item: ET.Element) -> tuple:
+    creators = tuple(text(element, ".") for element in item.findall(f"{{{DC_NS}}}creator"))
+    identifiers = tuple(text(element, ".") for element in item.findall(f"{{{DC_NS}}}identifier"))
+    return (
+        text(item, "link"),
+        text(item, "pubDate"),
+        text(item, "category"),
+        creators,
+        identifiers,
+    )
+
+
+def validate_translation_pair(source: ET.Element, translated: ET.Element, name: str) -> None:
+    source_items = source.findall("item")
+    translated_items = translated.findall("item")
+    if len(source_items) != len(translated_items):
+        raise ValueError(f"{name}: 原文与译文条数不一致")
+    for index, (original, translation) in enumerate(zip(source_items, translated_items), 1):
+        if comparable_item(original) != comparable_item(translation):
+            raise ValueError(f"{name}: 第 {index} 条原文与译文元数据不一致")
+        if text(translation, "guid") != f"zh-cn:{text(original, 'guid')}":
+            raise ValueError(f"{name}: 第 {index} 条译文 GUID 不稳定")
+
+
+def main() -> int:
+    config = json.loads((ROOT / "journals.json").read_text(encoding="utf-8"))
+    outputs = [settings.get("output_file") or f"{settings['slug']}.xml" for _, settings in configured_feeds(config)]
+    if len(outputs) != len(set(outputs)):
+        raise ValueError("配置中存在重复输出文件名")
+
+    channels: dict[str, ET.Element] = {}
+    for name, settings in configured_feeds(config):
+        channels[settings["slug"]] = validate_one(name, settings, config["public_base_url"])
+
+    for journal in config["journals"]:
+        if journal.get("translation"):
+            validate_translation_pair(
+                channels[journal["slug"]],
+                channels[journal["translation"]["slug"]],
+                journal["translation"]["title"],
+            )
+    print(f"Validated {len(outputs)} RSS feeds.")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except Exception as exc:
+        print(f"VALIDATION ERROR: {exc}", file=sys.stderr)
+        raise SystemExit(1)

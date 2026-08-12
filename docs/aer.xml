@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>AER - 祥仔</title>
+    <link>https://www.aeaweb.org/journals/aer</link>
+    <description>American Economic Review latest-issue metadata, updated every 3 days</description>
+    <language>en</language>
+    <lastBuildDate>Wed, 12 Aug 2026 11:14:42 +0000</lastBuildDate>
+    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/aer.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Additionality and Asymmetric Information in Environmental Markets: Evidence from Conservation Auctions</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20250295</link>
+      <dc:creator>Karl M. Aspelund</dc:creator>
+      <dc:creator>Anna Russo</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Mechanisms that aim to reduce environmental degradation at low cost can be undermined when participants' conservation actions are not marginal to the incentive—or "additional"—as the lowest-cost participants may not be the highest social value. We investigate this challenge in the Conservation Reserve Program's auction mechanism for ecosystem services, linking bids to satellite-derived land use. Three-quarters of marginal auction winners are not additional. The heterogeneity in counterfactual land use introduces adverse selection. We develop a model of bidding and additionality to quantify welfare implications. Alternative auctions increase efficiency by using scoring rules that incorporate expected land use impacts.</description>
+      <category>Vol. 116, No. 8, pp. 2765–2805</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20250295</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20250295</guid>
+    </item>
+    <item>
+      <title>Uncertainty and Change: Survey Evidence of Firms' Subjective Beliefs</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20240056</link>
+      <dc:creator>Rüdiger Bachmann</dc:creator>
+      <dc:creator>Kai Carstensen</dc:creator>
+      <dc:creator>Stefan Lautenbacher</dc:creator>
+      <dc:creator>Manuel Menkhoff</dc:creator>
+      <dc:creator>Martin Schneider</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>This paper studies how managers plan under uncertainty. In a new panel survey of German manufacturing firms, we observe both forecasts of sales growth and a quantitative measure of subjective uncertainty. We show that subjective uncertainty reflects change experienced by firms: It is high when growth is either unusually low or unusually high. Subjective uncertainty is more than conditional volatility; while more volatile firms are typically more uncertain, experienced change alone increases uncertainty, consistent with a model of learning. Uncertainty over our sample is mostly idiosyncratic but varies substantially over time and leads managers to plan lower employment and prices.</description>
+      <category>Vol. 116, No. 8, pp. 2806–2849</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20240056</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20240056</guid>
+    </item>
+    <item>
+      <title>Random Utility with Unobservable Alternatives</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20240712</link>
+      <dc:creator>Haruki Kono</dc:creator>
+      <dc:creator>Kota Saito</dc:creator>
+      <dc:creator>Alec Sandroni</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>The random utility model (RUM), a cornerstone in economics, is typically studied under the assumption that choice frequencies of all alternatives are observable. In practice, however, some alternatives have unobservable choice frequencies and are commonly aggregated into a single category called an outside option. We study RUM in such environments and derive a finite, nonredundant system of inequality constraints on observed choice frequencies that characterizes RU-rationalizability. We show that the conventional practice of aggregating unobserved alternatives can miss key information leading to incorrect conclusions such as that observed choices are rationalizable, even when no RUM is consistent with them.</description>
+      <category>Vol. 116, No. 8, pp. 2850–2882</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20240712</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20240712</guid>
+    </item>
+    <item>
+      <title>The Productivity of Professions: Evidence from the Emergency Department</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20241007</link>
+      <dc:creator>David Chan</dc:creator>
+      <dc:creator>Yiqun Chen</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>This paper studies the productivity of nurse practitioners (NPs) and physicians, two professions performing overlapping tasks but with starkly different backgrounds, training, and pay. Using quasi-experimental variation in patient assignment to NPs versus physicians in Veterans Health Administration emergency departments, we find that, on average, NPs use more resources and exhibit a higher 30-day preventable hospitalization rate than physicians. However, the NP-physician performance difference varies by case complexity and severity. Importantly, even larger productivity variation exists within each profession, leading to substantial overlap between the productivity distributions of the two professions; NPs outperform physicians in 38 percent of random pairs.</description>
+      <category>Vol. 116, No. 8, pp. 2883–2927</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20241007</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20241007</guid>
+    </item>
+    <item>
+      <title>Energy Transitions in Regulated Markets</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20240094</link>
+      <dc:creator>Gautam Gowrisankaran</dc:creator>
+      <dc:creator>Ashley Langer</dc:creator>
+      <dc:creator>Mar Reguant</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Natural gas has replaced coal as the dominant fuel for US electricity generation. However, utilities in regulated US states have retired coal more slowly than others. We build a structural model of rate-of-return regulation during an energy transition where utilities face trade-offs between lowering costs and maintaining and using legacy capacity. A regulated utility facing carbon taxes lowers short-run coal generation 48 percent as much as a cost minimizer would. Thirty years after a sudden energy transition, a cost minimizer has retired 71 percent more coal capacity than the regulated utility. Alternative regulations may jeopardize affordability and reliability goals during energy transitions.</description>
+      <category>Vol. 116, No. 8, pp. 2928–2961</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20240094</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20240094</guid>
+    </item>
+    <item>
+      <title>Professional Motivations in the Public Sector: Evidence from Police Officers</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20231696</link>
+      <dc:creator>Aaron Chalfin</dc:creator>
+      <dc:creator>Felipe Gonçalves</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>We study how public sector workers balance their professional motivations with private economic concerns, focusing on police arrests. Arrests made near the end of an officer's shift typically require overtime work, and officers respond by reducing arrest frequency but increasing arrest quality. Days in which an officer works a second job after their police shift have higher opportunity cost, also reducing late-shift arrests. Combining our estimates in a dynamic model identifies officer preferences over workplace activity and overtime work. Our results indicate that officers' private costs of arrests have a first-order impact on the quantity and quality of enforcement.</description>
+      <category>Vol. 116, No. 8, pp. 2962–2995</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20231696</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20231696</guid>
+    </item>
+    <item>
+      <title>Merger Effects and Antitrust Enforcement: Evidence from US Consumer Packaged Goods</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20240497</link>
+      <dc:creator>Vivek Bhattacharya</dc:creator>
+      <dc:creator>Gastón Illanes</dc:creator>
+      <dc:creator>David Stillerman</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>We document the effects of a comprehensive set of mergers of consumer packaged goods manufacturers on prices, quantities, and product assortment. Across specifications, we find a small average price effect of mergers (−0.5−1.1 percent) but substantial heterogeneity, with a standard deviation between 3.9 and 7.6 percentage points. Through a model of enforcement, we find that agencies act as if they challenge mergers they expect would increase prices more than 4.8 to 6.3 percent. Increases in stringency would reduce prices and the prevalence of completed price-increasing mergers, with minimal impacts on blocked price-decreasing mergers, at significantly greater agency burden.</description>
+      <category>Vol. 116, No. 8, pp. 2996–3035</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20240497</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20240497</guid>
+    </item>
+    <item>
+      <title>Designing Dynamic Reassignment Mechanisms: Evidence from GP Allocation</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20240617</link>
+      <dc:creator>Ingrid Huitfeldt</dc:creator>
+      <dc:creator>Victoria Marone</dc:creator>
+      <dc:creator>Daniel Waldinger</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>We study the problem of designing a dynamic reassignment mechanism when agents' preferences over objects change over time. In the context of Norway's system for (re)assigning patients to general practitioners (GPs), we provide direct evidence of misallocation under the current mechanism—patients waiting for each others' GPs, but who cannot trade—and estimate a structural model of GP-switching behavior to evaluate alternatives. Introducing top trading cycles (TTC) would, on average, reduce waiting times and increase patient welfare. However, patients endowed with less desirable GPs would be harmed. Prioritizing these patients can avoid these harms while preserving most of the gains from TTC.</description>
+      <category>Vol. 116, No. 8, pp. 3036–3075</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20240617</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20240617</guid>
+    </item>
+    <item>
+      <title>Community Engagement and Public Safety: Evidence from Crime Enforcement Targeting Immigrants</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20250305</link>
+      <dc:creator>Felipe Gonçalves</dc:creator>
+      <dc:creator>Elisa Jácome</dc:creator>
+      <dc:creator>Emily Weisburst</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>We study the role of victim reporting in the production of public safety. We examine the Secure Communities program, a crime-reduction policy that involved police in detecting unauthorized immigrants and increased deportation fears in immigrant communities. We find that the policy reduced the likelihood that Hispanic victims report crimes to police and increased offending against Hispanics. The number of reported crimes is unchanged, masking these opposing effects. We show that reduced reporting drives the offending increase and provide the first elasticity of offending to victim reporting in the literature, calculating that a 10 percent decline in reporting increases offending by 7.9 percent.</description>
+      <category>Vol. 116, No. 8, pp. 3076–3109</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20250305</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20250305</guid>
+    </item>
+    <item>
+      <title>Talent Hoarding in Organizations</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20220264</link>
+      <dc:creator>Ingrid Haegele</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Most organizations rely on managers to identify talented workers. However, managers who are evaluated on team performance have an incentive to hoard workers. This study provides the first empirical evidence of talent hoarding using personnel records and survey evidence from a large firm. Talent hoarding is self-reported by three-fourths of managers, is detectable in manager ratings of worker talent, and occurs more frequently under stronger hoarding incentives, proxied by performance-related pay, team size, and talent visibility. Using quasi-random exposure to talent hoarding, I show that hoarding deters internal job applications, inhibiting career progression and altering talent allocation in the firm.</description>
+      <category>Vol. 116, No. 8, pp. 3110–3151</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20220264</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20220264</guid>
+    </item>
+    <item>
+      <title>Remote Work and City Structure</title>
+      <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20231414</link>
+      <dc:creator>Ferdinando Monte</dc:creator>
+      <dc:creator>Charly Porcher</dc:creator>
+      <dc:creator>Esteban Rossi-Hansberg</dc:creator>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Relative to remote work, working downtown facilitates valuable interactions with other in-office workers but entails commuting costs. The resulting coordination mechanism can lead to multiple stationary equilibria with varying levels of remote work. Temporary reductions in commuters, as in the COVID-19 pandemic, can lead to persistently large fractions of remote workers. Cell phone-based mobility data for the United States shows commuting trips in the largest cities, which are more likely to exhibit multiplicity, have stabilized at only 60 percent of prepandemic levels, while they are fully back in smaller cities. Cities with permanently low commuting experience average welfare losses of 2.3 percent.</description>
+      <category>Vol. 116, No. 8, pp. 3152–3196</category>
+      <dc:identifier>https://doi.org/10.1257/aer.20231414</dc:identifier>
+      <guid isPermaLink="false">doi:10.1257/aer.20231414</guid>
+    </item>
+  </channel>
+</rss>

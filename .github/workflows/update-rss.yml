@@ -1,0 +1,65 @@
+name: 更新 RSS
+
+on:
+  workflow_dispatch:
+  schedule:
+    # UTC 22:15（北京时间次日 06:15），约每 3 天运行一次。
+    - cron: "15 22 */3 * *"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: journal-rss-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+      TRANSLATION_API_URL: ${{ vars.TRANSLATION_API_URL }}
+      TRANSLATION_MODEL: ${{ vars.TRANSLATION_MODEL }}
+
+    steps:
+      - name: 读取仓库
+        uses: actions/checkout@v4
+
+      - name: 准备 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 更新全部订阅
+        run: python update_feeds.py
+
+      - name: 检查 RSS
+        run: python validate_feeds.py
+
+      - name: 保存更新结果
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs translation_cache.json
+          if ! git diff --cached --quiet; then
+            git commit -m "自动更新期刊 RSS"
+            git push
+          fi
+
+      - name: 准备 GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 打包 RSS 文件
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: 发布 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

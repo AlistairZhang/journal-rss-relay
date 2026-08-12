@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>JPE - 祥仔</title>
+    <link>https://www.journals.uchicago.edu/toc/jpe/current</link>
+    <description>Journal of Political Economy latest-issue metadata, updated every 3 days</description>
+    <language>en</language>
+    <lastBuildDate>Wed, 12 Aug 2026 11:13:58 +0000</lastBuildDate>
+    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/jpe.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Training, Communications Patterns, and Spillovers inside Organizations</title>
+      <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740219?af=R</link>
+      <dc:creator>Miguel Espinosa</dc:creator>
+      <dc:creator>Christopher Stanton</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 07:00:00 +0000</pubDate>
+      <description>This paper examines how training affects productivity across hierarchical layers within organizations. After a randomized training program for frontline employees at a government agency, trained workers’ output increased while their requests for managerial assistance fell. This freed managers to focus on strategic tasks—particularly managers with the strongest connections to trained employees. A structural model of organizational hierarchy shows that spillovers to managers account for approximately 45% of the program’s total benefits, indicating that evaluations focused solely on individual trainees may substantially understate the full value of training investments.</description>
+      <category>Vol. 134, No. 7, pp. 1933–1966</category>
+      <dc:identifier>https://doi.org/10.1086/740219</dc:identifier>
+      <guid isPermaLink="false">doi:10.1086/740219</guid>
+    </item>
+    <item>
+      <title>A Method to Estimate Discrete Choice Models That Is Robust to Consumer Search</title>
+      <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740223?af=R</link>
+      <dc:creator>Jason Abaluck</dc:creator>
+      <dc:creator>Giovanni Compiani</dc:creator>
+      <dc:creator>Fan Zhang</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 07:00:00 +0000</pubDate>
+      <description>We state conditions under which choice data suffice to identify preferences when consumers may not be fully informed about attributes of goods. Our approach can be used to test for full information, forecast how consumers will respond to information, and conduct welfare analysis when consumers are imperfectly informed. In a lab experiment, we successfully forecast the average response to new information when consumers engage in costly search. In data from Expedia, our method identifies which attribute was not immediately visible to consumers in search results and allows us to compute the value of additional information.</description>
+      <category>Vol. 134, No. 7, pp. 1967–2022</category>
+      <dc:identifier>https://doi.org/10.1086/740223</dc:identifier>
+      <guid isPermaLink="false">doi:10.1086/740223</guid>
+    </item>
+    <item>
+      <title>The Macroeconomic Consequences of Early Childhood Development Policies</title>
+      <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740224?af=R</link>
+      <dc:creator>Diego Daruich</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 07:00:00 +0000</pubDate>
+      <description>To study long-run large-scale early childhood policies, this paper incorporates early childhood investments into a general equilibrium heterogeneous agent overlapping generations model calibrated using US data. A randomized controlled trial evaluation of a short-run small-scale early childhood program in the model predicts effects on children’s education and income that are similar to the empirical evidence. A long-run large-scale program, however, yields over twice as large welfare gains as those of a short-run small-scale program even after considering general equilibrium and taxation effects. Key to this difference is that investing in a child not only improves her skills but also creates better ancestors for future generations.</description>
+      <category>Vol. 134, No. 7, pp. 2023–2073</category>
+      <dc:identifier>https://doi.org/10.1086/740224</dc:identifier>
+      <guid isPermaLink="false">doi:10.1086/740224</guid>
+    </item>
+    <item>
+      <title>The Zero-Beta Interest Rate</title>
+      <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740220?af=R</link>
+      <dc:creator>Sebastian Di Tella</dc:creator>
+      <dc:creator>Benjamin Hébert</dc:creator>
+      <dc:creator>Pablo Kurlat</dc:creator>
+      <dc:creator>Qitong Wang</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 07:00:00 +0000</pubDate>
+      <description>We use equity returns to construct a time-varying measure of the zero-beta interest rate: the expected return of a stock portfolio orthogonal to the stochastic discount factor. In contrast to safe rates, the zero-beta rate fits the aggregate consumption Euler equation remarkably well both unconditionally and conditional on monetary policy shocks and is high, volatile, and persistent enough to explain the average return and most of the volatility of the market portfolio. The puzzle is why safe rates are so low, stable, and disconnected from both consumption and the zero-beta rate.</description>
+      <category>Vol. 134, No. 7, pp. 2074–2118</category>
+      <dc:identifier>https://doi.org/10.1086/740220</dc:identifier>
+      <guid isPermaLink="false">doi:10.1086/740220</guid>
+    </item>
+    <item>
+      <title>Financial Aid and Upward Mobility: Evidence from Colombia’s Ser Pilo Paga</title>
+      <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740226?af=R</link>
+      <dc:creator>Juliana Londoño-Vélez</dc:creator>
+      <dc:creator>Catherine Rodríguez</dc:creator>
+      <dc:creator>Fabio Sánchez</dc:creator>
+      <dc:creator>Luis Esteban Álvarez-Arango</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 07:00:00 +0000</pubDate>
+      <description>We study the impact of financial aid on upward mobility. We estimate the causal impacts of a Colombian policy targeting high-achieving, low-socioeconomic-status students on later-life educational and labor market outcomes. Using regression discontinuity design, difference-in-differences, and population-wide administrative microdata, we find that the policy boosted attendance and completion at high-value-added colleges, particularly in STEM fields. Improved college quality led to greater skill development. Nine years later, recipients earn 18 log points more and are more likely to reach the top 1%. The policy narrowed socioeconomic gaps in college quality, attainment, skill development, earnings, and returns to ability, improving equity and efficiency.</description>
+      <category>Vol. 134, No. 7, pp. 2119–2165</category>
+      <dc:identifier>https://doi.org/10.1086/740226</dc:identifier>
+      <guid isPermaLink="false">doi:10.1086/740226</guid>
+    </item>
+    <item>
+      <title>The Gas Trap: Outcompeting Coal versus Renewables</title>
+      <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740172?af=R</link>
+      <dc:creator>Bård Harstad</dc:creator>
+      <dc:creator>Katinka Holtsmark</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 07:00:00 +0000</pubDate>
+      <description>We analyze a fundamental dilemma and time-inconsistency problem facing climate-concerned producers of natural gas. In the short term, it is tempting to produce more to outcompete coal. When this policy is anticipated, however, investments in renewables fall and emissions may ultimately increase. When the gas producers cannot precommit, their policies can be counterproductive. A simulated version applied to Europe verifies that the gas trap is quantitatively important. We discuss the robustness of this result and possible solutions, ranging from direct investments in renewables to taxes on the search and exploration of gas.</description>
+      <category>Vol. 134, No. 7, pp. 2166–2214</category>
+      <dc:identifier>https://doi.org/10.1086/740172</dc:identifier>
+      <guid isPermaLink="false">doi:10.1086/740172</guid>
+    </item>
+    <item>
+      <title>The Origin of the State: Land Productivity or Appropriability? A Comment</title>
+      <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740225?af=R</link>
+      <dc:creator>Nikolai Cook</dc:creator>
+      <dc:creator>Thibaut Duprey</dc:creator>
+      <dc:creator>Anthony Heyes</dc:creator>
+      <dc:creator>Martino Pelli</dc:creator>
+      <pubDate>Wed, 01 Jul 2026 07:00:00 +0000</pubDate>
+      <description>Mayshar, Moav, and Pascali apply an instrumental variables identification strategy to data from nearly 1,000 societies included in the Ethnographic Atlas to claim that cultivation of cereals (appropriable by elites), rather than increased land productivity following the adoption of agriculture, led to the development of the state. We show two things. (1) Evidence for the appropriability theory holds when moving from a tribe-chiefdom to a state and not more broadly. (2) Conclusions are driven by a handful of outliers with statistical significance at the 10% level lost with winsorization at 2.1% (or trimming at 1.2%) of locations by cereal advantage.</description>
+      <category>Vol. 134, No. 7, pp. 2215–2220</category>
+      <dc:identifier>https://doi.org/10.1086/740225</dc:identifier>
+      <guid isPermaLink="false">doi:10.1086/740225</guid>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Econometrica - 祥仔</title>
+    <link>https://onlinelibrary.wiley.com/feed/14680262/most-recent</link>
+    <description>Econometrica题录信息，由 Journal RSS Relay 每 3 天更新</description>
+    <language>en</language>
+    <lastBuildDate>Wed, 12 Aug 2026 11:13:54 +0000</lastBuildDate>
+    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/econometrica.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Firm‐to‐Firm Trade: Imports, Exports, and the Labor Market</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA20506?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1135-1170, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Jonathan Eaton</dc:creator>
+      <dc:creator>Samuel Kortum</dc:creator>
+      <dc:creator>Francis Kramarz</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA20506</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA20506</guid>
+    </item>
+    <item>
+      <title>Identification in Instrumental Variables Models: The Central Role of Abadie's Kappa</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23174?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1095-1133, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Manu Navjeevan</dc:creator>
+      <dc:creator>Rodrigo Pinto</dc:creator>
+      <dc:creator>Andres Santos</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA23174</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA23174</guid>
+    </item>
+    <item>
+      <title>The Equilibrium Effects of Campaign Finance Deregulation on U.S. Elections</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA22979?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1209-1243, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Christian Cox</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA22979</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA22979</guid>
+    </item>
+    <item>
+      <title>Information Design in Common Value Auction With Moral Hazard: Application to OCS Leasing Auctions</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA21839?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1171-1208, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Anh Nguyen</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA21839</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA21839</guid>
+    </item>
+    <item>
+      <title>Mechanism Design for Personalized Policy: A Field Experiment Incentivizing Exercise</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA21926?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1409-1448, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Rebecca Dizon‐Ross</dc:creator>
+      <dc:creator>Ariel Zucker</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA21926</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA21926</guid>
+    </item>
+    <item>
+      <title>Economic Growth and the Rise of Large Firms</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA22110?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1375-1408, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Zhang Chen</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA22110</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA22110</guid>
+    </item>
+    <item>
+      <title>Walras–Bowley Lecture: Climate Policy in the Wide World</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA22451?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1061-1093, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>John Hassler</dc:creator>
+      <dc:creator>Per Krusell</dc:creator>
+      <dc:creator>Conny Olovsson</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA22451</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA22451</guid>
+    </item>
+    <item>
+      <title>Job Ladder and Wealth Dynamics in General Equilibrium</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA22542?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1449-1485, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Leo Kaas</dc:creator>
+      <dc:creator>Etienne Lalé</dc:creator>
+      <dc:creator>Nawid Siassi</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA22542</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA22542</guid>
+    </item>
+    <item>
+      <title>Dynamic Screening of Buyers With Heterogeneous Purchase Frequency</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23049?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1245-1278, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Johannes Hörner</dc:creator>
+      <dc:creator>Anna Sanktjohanser</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA23049</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA23049</guid>
+    </item>
+    <item>
+      <title>The Inference‐Forecast Gap in Belief Updating</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23334?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1279-1312, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Tony Q. Fan</dc:creator>
+      <dc:creator>Yucheng Liang</dc:creator>
+      <dc:creator>Cameron Peng</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA23334</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA23334</guid>
+    </item>
+    <item>
+      <title>Double Robustness of Local Projections and Some Unpleasant VARithmetic</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23345?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1313-1343, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>José Luis Montiel Olea</dc:creator>
+      <dc:creator>Mikkel Plagborg‐Møller</dc:creator>
+      <dc:creator>Eric Qian</dc:creator>
+      <dc:creator>Christian K. Wolf</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA23345</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA23345</guid>
+    </item>
+    <item>
+      <title>The Class Gap in Career Progression: Evidence From U.S. Academia</title>
+      <link>https://onlinelibrary.wiley.com/doi/10.3982/ECTA23358?af=R</link>
+      <description>Econometrica, Volume 94, Issue 4, Page 1345-1373, July 2026.</description>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 -0700</pubDate>
+      <dc:creator>Anna Stansbury</dc:creator>
+      <dc:creator>Kyra Rodriguez</dc:creator>
+      <dc:identifier>https://doi.org/10.3982/ECTA23358</dc:identifier>
+      <guid isPermaLink="false">10.3982/ECTA23358</guid>
+    </item>
+  </channel>
+</rss>
