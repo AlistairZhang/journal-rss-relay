@@ -46,15 +46,20 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          changed=0
           git add docs
           if ! git diff --cached --quiet; then
             git commit -m "更新 RSS 订阅源文件"
+            changed=1
           fi
           git add translation_cache.json
           if ! git diff --cached --quiet; then
             git commit -m "更新英文期刊中文翻译缓存"
+            changed=1
           fi
-          git push
+          if [ "$changed" -eq 1 ]; then
+            git push
+          fi
 
       - name: 准备 GitHub Pages
         uses: actions/configure-pages@v5
