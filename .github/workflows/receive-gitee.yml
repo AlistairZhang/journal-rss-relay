@@ -18,7 +18,11 @@ jobs:
     permissions:
       contents: write
     outputs:
-      changed: ${{ steps.ingest.outputs.changed }}
+      outcome: ${{ steps.process.outputs.outcome }}
+      reason: ${{ steps.process.outputs.reason }}
+      rss_changed: ${{ steps.process.outputs.rss_changed }}
+      publish_safe: ${{ steps.process.outputs.publish_safe }}
+      has_result: ${{ steps.process.outputs.has_result }}
 
     steps:
       - name: 读取仓库
@@ -31,40 +35,166 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: 验证并接收题录
-        id: ingest
+      - name: 验证、校验并保存国内题录
+        id: process
+        shell: bash
         env:
           GITEE_RELAY_HMAC_SECRET: ${{ secrets.GITEE_RELAY_HMAC_SECRET }}
-        run: python ingest_gitee.py
-
-      - name: 检查全部 RSS
-        if: steps.ingest.outputs.changed == 'true'
-        run: python validate_feeds.py
-
-      - name: 保存国内期刊 RSS
-        if: steps.ingest.outputs.changed == 'true'
-        shell: bash
+          STATUS_RESULT_PATH: ${{ runner.temp }}/gitee-status-result.json
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          changed=0
-          while IFS=$'\t' read -r feed_path label; do
-            if [ -n "$(git status --porcelain --untracked-files=all -- "$feed_path")" ]; then
-              git add -- "$feed_path"
-              git commit -m "$label"
-              changed=1
+          set +e
+          outcome="failure"
+          reason="receiver_failed"
+          rss_changed="false"
+          publish_safe="false"
+          has_result="false"
+
+          python ingest_gitee.py
+          ingest_code=$?
+          if [ "$ingest_code" -eq 0 ] && [ -f "$STATUS_RESULT_PATH" ]; then
+            has_result="true"
+            outcome="$(python -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["outcome"])' "$STATUS_RESULT_PATH")"
+            changed_count="$(python -c 'import json,sys; print(len(json.load(open(sys.argv[1], encoding="utf-8"))["changed_files"]))' "$STATUS_RESULT_PATH")"
+            if [ "$outcome" = "partial" ] || [ "$outcome" = "failure" ]; then
+              reason="source_failure"
+            else
+              reason="none"
             fi
-          done <<'EOF'
+
+            if [ "$changed_count" -gt 0 ]; then
+              python validate_feeds.py
+              validate_code=$?
+              if [ "$validate_code" -ne 0 ]; then
+                outcome="failure"
+                reason="validation_failed"
+              else
+                git config user.name "github-actions[bot]"
+                git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                save_failed=0
+                while IFS=$'\t' read -r feed_path label; do
+                  if [ -n "$(git status --porcelain --untracked-files=all -- "$feed_path")" ]; then
+                    git add -- "$feed_path"
+                    git commit -m "$label" || save_failed=1
+                  fi
+                done <<'EOF'
           docs/shuliang-jingji-jishu-jingji-yanjiu.xml	数量经济技术经济研究
           docs/guanli-shijie.xml	管理世界
           EOF
-          if [ "$changed" -eq 1 ]; then
+                if [ "$save_failed" -eq 0 ]; then
+                  git push || save_failed=1
+                fi
+                if [ "$save_failed" -ne 0 ]; then
+                  outcome="failure"
+                  reason="publish_failed"
+                else
+                  rss_changed="true"
+                  publish_safe="true"
+                fi
+              fi
+            fi
+          fi
+
+          if [ "$reason" = "receiver_failed" ] || [ "$reason" = "validation_failed" ] || [ "$reason" = "publish_failed" ]; then
+            git restore --staged --worktree -- docs 2>/dev/null || true
+          fi
+          {
+            echo "outcome=$outcome"
+            echo "reason=$reason"
+            echo "rss_changed=$rss_changed"
+            echo "publish_safe=$publish_safe"
+            echo "has_result=$has_result"
+          } >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: 暂存经过验证的状态结果
+        if: steps.process.outputs.has_result == 'true'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitee-status-result-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/gitee-status-result.json
+          retention-days: 1
+          if-no-files-found: error
+
+  report:
+    if: always()
+    needs: receive
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      report_path: ${{ steps.report.outputs.report_path }}
+
+    steps:
+      - name: 读取最新仓库
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: 准备 Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: 读取经过验证的状态结果
+        if: needs.receive.outputs.has_result == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v5
+        with:
+          name: gitee-status-result-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/status-input
+
+      - name: 生成独立状态报告
+        id: report
+        shell: bash
+        env:
+          PROCESS_OUTCOME: ${{ needs.receive.outputs.outcome || 'failure' }}
+          PROCESS_REASON: ${{ needs.receive.outputs.reason || 'receiver_failed' }}
+          RSS_CHANGED: ${{ needs.receive.outputs.rss_changed || 'false' }}
+          HAS_RESULT: ${{ needs.receive.outputs.has_result || 'false' }}
+        run: |
+          publish_state="not-published"
+          publish_detail=""
+          if [ "$RSS_CHANGED" = "true" ]; then
+            publish_state="published"
+            publish_detail="rss_saved_pages_pending"
+          elif [ "$PROCESS_OUTCOME" = "success" ] || [ "$PROCESS_OUTCOME" = "partial" ]; then
+            publish_state="unchanged"
+          fi
+          result_arguments=()
+          if [ "$HAS_RESULT" = "true" ] && [ -f "$RUNNER_TEMP/status-input/gitee-status-result.json" ]; then
+            result_arguments=(--result-json "$RUNNER_TEMP/status-input/gitee-status-result.json")
+          fi
+          python status_report.py \
+            --kind gitee-receive \
+            --outcome "$PROCESS_OUTCOME" \
+            --reason "$PROCESS_REASON" \
+            --publish-state "$publish_state" \
+            --publish-detail "$publish_detail" \
+            --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            "${result_arguments[@]}"
+
+      - name: 永久保存状态报告
+        shell: bash
+        env:
+          REPORT_PATH: ${{ steps.report.outputs.report_path }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$REPORT_PATH" status-reports/index.md
+          if ! git diff --cached --quiet; then
+            git commit -m "记录国内期刊采集状态"
             git push
           fi
 
   package:
-    if: needs.receive.outputs.changed == 'true'
-    needs: receive
+    if: >-
+      always() && (needs.receive.outputs.outcome == 'success' ||
+      needs.receive.outputs.outcome == 'partial') &&
+      needs.receive.outputs.publish_safe == 'true' &&
+      needs.report.result == 'success'
+    needs: [receive, report]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -99,3 +229,25 @@ jobs:
       - name: 发布 GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  final-status:
+    if: always()
+    needs: [receive, report, deploy]
+    runs-on: ubuntu-latest
+    permissions: {}
+
+    steps:
+      - name: 汇总运行结果
+        shell: bash
+        env:
+          PROCESS_OUTCOME: ${{ needs.receive.outputs.outcome || 'failure' }}
+          PUBLISH_SAFE: ${{ needs.receive.outputs.publish_safe || 'false' }}
+          REPORT_RESULT: ${{ needs.report.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+        run: |
+          if [ "$PROCESS_OUTCOME" != "success" ] || [ "$REPORT_RESULT" != "success" ]; then
+            exit 1
+          fi
+          if [ "$PUBLISH_SAFE" = "true" ] && [ "$DEPLOY_RESULT" != "success" ]; then
+            exit 1
+          fi

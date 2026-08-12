@@ -49,6 +49,33 @@ def public_feed_url(base_url: str, settings: dict) -> str:
     return f"{base_url.rstrip('/')}/{output_filename(settings)}"
 
 
+def write_update_status(
+    outcome: str,
+    current_slug: str,
+    feeds: list[dict],
+) -> None:
+    """Persist a small, trusted progress record without source text or exceptions."""
+    configured_path = os.environ.get("STATUS_RESULT_PATH", "").strip()
+    if not configured_path:
+        return
+    try:
+        path = Path(configured_path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        value = {
+            "schema_version": 1,
+            "kind": "update-rss",
+            "outcome": outcome,
+            "current_slug": current_slug,
+            "feeds": feeds,
+        }
+        path.write_text(
+            json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+            encoding="utf-8",
+        )
+    except OSError:
+        print("WARNING: update status progress could not be recorded.", file=sys.stderr)
+
+
 def feed_title(settings: dict, suffix: str) -> str:
     """Return an explicit public title when configured, otherwise use the default suffix."""
     return str(
@@ -1962,8 +1989,11 @@ def main() -> int:
     prepared: list[tuple[Path, bytes, str, int]] = []
     translation_cache = load_translation_cache()
     translation_cache_changed = False
+    completed_feeds: list[dict] = []
+    write_update_status("running", "", completed_feeds)
 
     for journal in config["journals"]:
+        write_update_status("running", journal["slug"], completed_feeds)
         print(f"Fetching {journal['name']} ...", flush=True)
         if journal.get("source_type") == "gitee_ingest":
             output_path = OUTPUT_DIR / output_filename(journal)
@@ -2086,6 +2116,11 @@ def main() -> int:
             feed_xml, count = build_feed(journal, suffix, base_url, source_data)
         output_path = OUTPUT_DIR / output_filename(journal)
         prepared.append((output_path, feed_xml, journal["name"], count))
+        journal_status = (
+            "preserved"
+            if journal.get("source_type") == "gitee_ingest"
+            else "fetched"
+        )
 
         if journal.get("translation"):
             translation_settings = journal["translation"]
@@ -2108,6 +2143,7 @@ def main() -> int:
                     file=sys.stderr,
                     flush=True,
                 )
+                journal_status = "fetched_translation_preserved"
             else:
                 if cache_changed:
                     translation_cache = candidate_cache
@@ -2120,6 +2156,17 @@ def main() -> int:
                     )
                 )
                 translation_cache_changed = translation_cache_changed or cache_changed
+                journal_status = "fetched_translated"
+
+        completed_feeds.append(
+            {
+                "slug": journal["slug"],
+                "name": journal["name"],
+                "items": count,
+                "status": journal_status,
+            }
+        )
+        write_update_status("running", "", completed_feeds)
 
     for output_path, feed_xml, name, count in prepared:
         temp_path = output_path.with_suffix(".xml.tmp")
@@ -2136,6 +2183,8 @@ def main() -> int:
         )
         os.replace(cache_temp_path, TRANSLATION_CACHE_PATH)
         print(f"Updated {TRANSLATION_CACHE_PATH.name}", flush=True)
+
+    write_update_status("success", "", completed_feeds)
 
     return 0
 
