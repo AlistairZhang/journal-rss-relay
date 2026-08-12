@@ -61,7 +61,7 @@
 
 ### 当前识别状态
 
-以下状态来自 2026-08-12 23:18（北京时间）完成的 [GitHub Actions 云端全量试跑](https://github.com/AlistairZhang/journal-rss-relay/actions/runs/31611149825)。本次 11 个 RSS 全部生成并通过校验；条目数会随期次变化。
+以下状态来自 2026-08-12 23:23（北京时间）完成的 [GitHub Actions 正式发布](https://github.com/AlistairZhang/journal-rss-relay/actions/runs/31611646476)。本次 11 个 RSS 全部生成、通过校验并成功部署；条目数会随期次变化。
 
 #### 中文期刊
 
