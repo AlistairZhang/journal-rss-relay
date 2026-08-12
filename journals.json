@@ -92,8 +92,9 @@
     },
     {
       "slug": "aer",
-      "output_file": "aer.xml",
-      "name": "AER",
+      "output_file": "American-Economic-Review.xml",
+      "name": "American Economic Review",
+      "feed_title": "American Economic Review",
       "language": "en",
       "source_type": "aea_current",
       "source_url": "https://www.aeaweb.org/journals/aer/current-issue",
@@ -102,8 +103,8 @@
       "request_delay_seconds": 0.5,
       "translation": {
         "slug": "aer-zh",
-        "output_file": "aer-zh.xml",
-        "title": "AER译版-祥仔"
+        "output_file": "American-Economic-Review-zh.xml",
+        "title": "American Economic Review中文版"
       }
     },
     {

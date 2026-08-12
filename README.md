@@ -18,5 +18,5 @@
 | Econometrica | https://alistairzhang.github.io/journal-rss-relay/econometrica.xml |
 | Journal of Political Economy | https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml |
 | Journal of Political Economy中文版 | https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy-zh.xml |
-| American Economic Review（原文） | https://alistairzhang.github.io/journal-rss-relay/aer.xml |
-| AER译版-祥仔 | https://alistairzhang.github.io/journal-rss-relay/aer-zh.xml |
+| American Economic Review | https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml |
+| American Economic Review中文版 | https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review-zh.xml |
