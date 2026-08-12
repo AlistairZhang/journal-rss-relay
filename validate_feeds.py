@@ -5,10 +5,11 @@ from __future__ import annotations
 
 import json
 import sys
-import re
 import xml.etree.ElementTree as ET
 import urllib.parse
 from pathlib import Path
+
+from update_feeds import is_non_article
 
 
 ROOT = Path(__file__).resolve().parent
@@ -82,13 +83,7 @@ def validate_one(name: str, settings: dict, base_url: str) -> ET.Element:
         if len(creators) != len(set(creators)):
             raise ValueError(f"{name}: 第 {index} 条作者重复")
         title = text(item, "title")
-        if re.search(
-            r"^评《.+》$|(?:^|——)评《.+》|(?:^|——)读《.+》(?:有感|札记|随想)?$|"
-            r"^书评[：:]?|^(?:FrontMatter|BackMatter|Masthead|Contents|RecentReferees|"
-            r"JPETurnaroundTimes|SubmissionofManuscripts)$|"
-            r"^(?:BookReview|Editorial|Commentary)(?:[：:]|$)",
-            re.sub(r"\s+", "", title),
-        ):
+        if is_non_article(title):
             raise ValueError(f"{name}: 第 {index} 条仍是书评或读后感：{title}")
         if str(settings.get("language") or "").lower().startswith("zh"):
             if item.findall(f"{{{DC_NS}}}identifier"):

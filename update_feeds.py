@@ -92,6 +92,66 @@ def is_non_article(title: str, section: str = "") -> bool:
     )
 
 
+class SourceFetchError(RuntimeError):
+    """A source could not be reached after retrying; parsing errors stay distinct."""
+
+
+def feed_issue_key(feed_xml: bytes) -> tuple[int, int] | None:
+    """Read a comparable year/issue pair from an existing or candidate RSS feed."""
+    root = ET.fromstring(feed_xml)
+    keys: set[tuple[int, int]] = set()
+    for item in source_items(root):
+        for category in (
+            "".join(child.itertext()).strip()
+            for child in list(item)
+            if local_name(child.tag) == "category"
+        ):
+            match = re.search(r"(\d{4})\s*年\s*第\s*(\d+)\s*期", category)
+            if match:
+                keys.add((int(match.group(1)), int(match.group(2))))
+        link = item_link(item)
+        file_number = (
+            urllib.parse.parse_qs(urllib.parse.urlparse(link).query).get("file_no")
+            or [""]
+        )[0]
+        match = re.fullmatch(r"(\d{4})(\d{2})\d{2}", file_number)
+        if match:
+            keys.add((int(match.group(1)), int(match.group(2))))
+    if len(keys) == 1:
+        return next(iter(keys))
+    return None
+
+
+def preserve_existing_if_fallback_not_newer(
+    journal: dict,
+    candidate_xml: bytes,
+    candidate_count: int,
+) -> tuple[bytes, int]:
+    """Never replace a valid feed with an older or same-issue fallback source."""
+    output_path = OUTPUT_DIR / output_filename(journal)
+    if not output_path.exists():
+        return candidate_xml, candidate_count
+    existing_xml = output_path.read_bytes()
+    existing_issue = feed_issue_key(existing_xml)
+    candidate_issue = feed_issue_key(candidate_xml)
+    if (
+        existing_issue is None
+        or candidate_issue is None
+        or candidate_issue <= existing_issue
+    ):
+        existing_root = ET.fromstring(existing_xml)
+        existing_count = len(source_items(existing_root))
+        print(
+            f"WARNING: {journal['name']}兜底题录期次"
+            f"{candidate_issue or '无法识别'}未晚于现有期次"
+            f"{existing_issue or '无法识别'}，保留现有 RSS",
+            file=sys.stderr,
+            flush=True,
+        )
+        return existing_xml, existing_count
+    return candidate_xml, candidate_count
+
+
 def official_article_link(journal: dict, article: dict[str, str]) -> str:
     """Prefer a verified official article route and otherwise use the journal home page."""
     if journal.get("slug") == "sljjjsjjyj":
@@ -150,6 +210,7 @@ def fetch(
     accept: str = "application/rss+xml, application/atom+xml, application/xml, text/xml, */*",
     user_agent: str = USER_AGENT,
     referer: str = "",
+    timeout: float = 45,
 ) -> bytes:
     last_error = None
     for attempt in range(1, attempts + 1):
@@ -158,13 +219,13 @@ def fetch(
             if referer:
                 headers["Referer"] = referer
             request = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(request, timeout=45) as response:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
                 return response.read()
         except Exception as exc:  # keep the previous feed when a source is temporarily unavailable
             last_error = exc
             if attempt < attempts:
                 time.sleep(attempt * 3)
-    raise RuntimeError(f"fetch failed after {attempts} attempts: {last_error}")
+    raise SourceFetchError(f"fetch failed after {attempts} attempts: {last_error}")
 
 
 def fetch_json(
@@ -1955,15 +2016,21 @@ def main() -> int:
                 source_data = fetch(
                     journal["source_url"],
                     attempts=int(journal.get("primary_attempts", 1)),
+                    timeout=float(journal.get("primary_timeout_seconds", 45)),
                 )
                 feed_xml, count = build_feed(journal, suffix, base_url, source_data)
-            except Exception as exc:
+            except SourceFetchError as exc:
                 print(
                     f"WARNING: {journal['name']}官网源不可用，改用国家哲社文献中心: {exc}",
                     file=sys.stderr,
                     flush=True,
                 )
-                feed_xml, count = fetch_ncpssd_current_feed(journal, suffix, base_url)
+                candidate_xml, candidate_count = fetch_ncpssd_current_feed(
+                    journal, suffix, base_url
+                )
+                feed_xml, count = preserve_existing_if_fallback_not_newer(
+                    journal, candidate_xml, candidate_count
+                )
         elif journal.get("source_type") == "ncpssd_current":
             feed_xml, count = fetch_ncpssd_current_feed(journal, suffix, base_url)
         elif journal.get("source_type") == "magtech_current":
@@ -1982,6 +2049,7 @@ def main() -> int:
                     accept="text/html,application/xhtml+xml,*/*;q=0.8",
                     user_agent=BROWSER_USER_AGENT,
                     referer=journal.get("referer", journal["source_url"]),
+                    timeout=float(journal.get("primary_timeout_seconds", 45)),
                 )
                 feed_xml, count = build_mwm_feed(
                     journal,
@@ -1989,13 +2057,18 @@ def main() -> int:
                     base_url,
                     source_data,
                 )
-            except Exception as exc:
+            except SourceFetchError as exc:
                 print(
                     f"WARNING: 管理世界官网源不可用，改用国家哲社文献中心: {exc}",
                     file=sys.stderr,
                     flush=True,
                 )
-                feed_xml, count = fetch_ncpssd_current_feed(journal, suffix, base_url)
+                candidate_xml, candidate_count = fetch_ncpssd_current_feed(
+                    journal, suffix, base_url
+                )
+                feed_xml, count = preserve_existing_if_fallback_not_newer(
+                    journal, candidate_xml, candidate_count
+                )
         else:
             source_data = fetch(journal["source_url"])
             feed_xml, count = build_feed(journal, suffix, base_url, source_data)
