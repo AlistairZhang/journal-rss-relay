@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Update configured journals and publish normalized RSS 2.0 feeds."""
+"""抓取期刊当期题录，规范化元数据并生成 RSS 2.0 订阅源。"""
 
 from __future__ import annotations
 
