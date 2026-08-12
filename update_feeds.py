@@ -1965,7 +1965,19 @@ def main() -> int:
 
     for journal in config["journals"]:
         print(f"Fetching {journal['name']} ...", flush=True)
-        if journal.get("source_type") == "erj_official_api":
+        if journal.get("source_type") == "gitee_ingest":
+            output_path = OUTPUT_DIR / output_filename(journal)
+            if not output_path.exists():
+                raise RuntimeError(
+                    f"{journal['name']}由 Gitee 国内采集节点更新，但仓库中尚无有效 RSS"
+                )
+            feed_xml = output_path.read_bytes()
+            count = len(source_items(ET.fromstring(feed_xml)))
+            print(
+                f"Preserving {journal['name']}: waiting for signed Gitee ingest.",
+                flush=True,
+            )
+        elif journal.get("source_type") == "erj_official_api":
             feed_xml, count = build_erj_official_feed(journal, suffix, base_url)
         elif journal.get("source_type") == "aea_current":
             source_data = fetch(
