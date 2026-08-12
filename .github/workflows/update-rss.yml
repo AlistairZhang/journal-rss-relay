@@ -16,7 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pages: write
+    outputs:
+      outcome: ${{ steps.process.outputs.outcome }}
+      report_outcome: ${{ steps.process.outputs.report_outcome }}
+      reason: ${{ steps.process.outputs.reason }}
+      rss_changed: ${{ steps.process.outputs.rss_changed }}
+      publish_safe: ${{ steps.process.outputs.publish_safe }}
+      has_result: ${{ steps.process.outputs.has_result }}
 
     steps:
       - name: 读取仓库
@@ -29,30 +35,45 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: 更新全部订阅
+      - name: 更新、校验并保存订阅
+        id: process
+        shell: bash
         env:
           TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
           TRANSLATION_API_URL: ${{ vars.TRANSLATION_API_URL }}
           TRANSLATION_MODEL: ${{ vars.TRANSLATION_MODEL }}
-        run: python update_feeds.py
-
-      - name: 检查 RSS
-        run: python validate_feeds.py
-
-      - name: 保存 RSS 与翻译缓存
-        shell: bash
+          STATUS_RESULT_PATH: ${{ runner.temp }}/update-status-result.json
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          changed=0
-          while IFS=$'\t' read -r filename label; do
-            feed_path="docs/$filename"
-            if [ -n "$(git status --porcelain --untracked-files=all -- "$feed_path")" ]; then
-              git add -- "$feed_path"
-              git commit -m "$label"
-              changed=1
-            fi
-          done < <(python - <<'PY'
+          set +e
+          outcome="failure"
+          report_outcome="failure"
+          reason="workflow_failed"
+          rss_changed="false"
+          publish_safe="false"
+          has_result="false"
+
+          python update_feeds.py
+          update_code=$?
+          if [ "$update_code" -ne 0 ]; then
+            reason="update_failed"
+          else
+            python validate_feeds.py
+            validate_code=$?
+            if [ "$validate_code" -ne 0 ]; then
+              reason="validation_failed"
+            else
+              git config user.name "github-actions[bot]"
+              git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              changed=0
+              save_failed=0
+              while IFS=$'\t' read -r filename label; do
+                feed_path="docs/$filename"
+                if [ -n "$(git status --porcelain --untracked-files=all -- "$feed_path")" ]; then
+                  git add -- "$feed_path"
+                  git commit -m "$label" || save_failed=1
+                  changed=1
+                fi
+              done < <(python - <<'PY'
           import json
 
           with open("journals.json", encoding="utf-8") as file:
@@ -63,15 +84,151 @@ jobs:
               if translation:
                   print(f"{translation['output_file']}\t{translation['commit_label']}")
           PY
-          )
-          git add translation_cache.json
-          if ! git diff --cached --quiet; then
-            git commit -m "更新英文期刊中文翻译缓存"
-            changed=1
+              )
+              git add -- translation_cache.json
+              if ! git diff --cached --quiet; then
+                git commit -m "更新英文期刊中文翻译缓存" || save_failed=1
+                changed=1
+              fi
+              if [ "$save_failed" -eq 0 ] && [ "$changed" -eq 1 ]; then
+                git push || save_failed=1
+              fi
+              if [ "$save_failed" -ne 0 ]; then
+                reason="publish_failed"
+              else
+                outcome="success"
+                report_outcome="success"
+                reason="none"
+                if [ "$changed" -eq 1 ]; then
+                  rss_changed="true"
+                  publish_safe="true"
+                fi
+              fi
+            fi
           fi
-          if [ "$changed" -eq 1 ]; then
+
+          if [ "$outcome" != "success" ]; then
+            git restore --staged --worktree -- docs translation_cache.json 2>/dev/null || true
+          fi
+          if [ -f "$STATUS_RESULT_PATH" ]; then
+            has_result="true"
+            if grep -q 'fetched_translation_preserved' "$STATUS_RESULT_PATH"; then
+              report_outcome="partial"
+              if [ "$reason" = "none" ]; then
+                reason="translation_failed"
+              fi
+            fi
+          fi
+          {
+            echo "outcome=$outcome"
+            echo "report_outcome=$report_outcome"
+            echo "reason=$reason"
+            echo "rss_changed=$rss_changed"
+            echo "publish_safe=$publish_safe"
+            echo "has_result=$has_result"
+          } >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: 暂存经过筛选的更新进度
+        if: steps.process.outputs.has_result == 'true'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: update-status-result-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/update-status-result.json
+          retention-days: 1
+          if-no-files-found: error
+
+  report:
+    if: always()
+    needs: update
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      report_path: ${{ steps.report.outputs.report_path }}
+
+    steps:
+      - name: 读取最新仓库
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: 准备 Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: 读取经过筛选的更新进度
+        if: needs.update.outputs.has_result == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v5
+        with:
+          name: update-status-result-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/status-input
+
+      - name: 生成独立状态报告
+        id: report
+        shell: bash
+        env:
+          PROCESS_OUTCOME: ${{ needs.update.outputs.report_outcome || 'failure' }}
+          PROCESS_REASON: ${{ needs.update.outputs.reason || 'workflow_failed' }}
+          RSS_CHANGED: ${{ needs.update.outputs.rss_changed || 'false' }}
+          HAS_RESULT: ${{ needs.update.outputs.has_result || 'false' }}
+        run: |
+          publish_state="not-published"
+          publish_detail=""
+          if [ "$PROCESS_OUTCOME" = "success" ]; then
+            if [ "$RSS_CHANGED" = "true" ]; then
+              publish_state="published"
+              publish_detail="rss_saved_pages_pending"
+            else
+              publish_state="unchanged"
+            fi
+          fi
+          result_arguments=()
+          if [ "$HAS_RESULT" = "true" ] && [ -f "$RUNNER_TEMP/status-input/update-status-result.json" ]; then
+            result_arguments=(--result-json "$RUNNER_TEMP/status-input/update-status-result.json")
+          fi
+          python status_report.py \
+            --kind update-rss \
+            --outcome "$PROCESS_OUTCOME" \
+            --reason "$PROCESS_REASON" \
+            --publish-state "$publish_state" \
+            --publish-detail "$publish_detail" \
+            --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            "${result_arguments[@]}"
+
+      - name: 永久保存状态报告
+        shell: bash
+        env:
+          REPORT_PATH: ${{ steps.report.outputs.report_path }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$REPORT_PATH" status-reports/index.md
+          if ! git diff --cached --quiet; then
+            git commit -m "记录全部期刊更新状态"
             git push
           fi
+
+  package:
+    if: >-
+      always() && needs.update.outputs.outcome == 'success' &&
+      needs.update.outputs.publish_safe == 'true' &&
+      needs.report.result == 'success'
+    needs: [update, report]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+
+    steps:
+      - name: 读取更新后的仓库
+        uses: actions/checkout@v5
+        with:
+          ref: main
 
       - name: 准备 GitHub Pages
         uses: actions/configure-pages@v5
@@ -82,8 +239,7 @@ jobs:
           path: docs
 
   deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: update
+    needs: package
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -94,7 +250,28 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-
       - name: 发布 GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  final-status:
+    if: always()
+    needs: [update, report, deploy]
+    runs-on: ubuntu-latest
+    permissions: {}
+
+    steps:
+      - name: 汇总运行结果
+        shell: bash
+        env:
+          PROCESS_OUTCOME: ${{ needs.update.outputs.outcome || 'failure' }}
+          PUBLISH_SAFE: ${{ needs.update.outputs.publish_safe || 'false' }}
+          REPORT_RESULT: ${{ needs.report.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+        run: |
+          if [ "$PROCESS_OUTCOME" != "success" ] || [ "$REPORT_RESULT" != "success" ]; then
+            exit 1
+          fi
+          if [ "$PUBLISH_SAFE" = "true" ] && [ "$DEPLOY_RESULT" != "success" ]; then
+            exit 1
+          fi

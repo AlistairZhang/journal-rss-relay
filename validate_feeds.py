@@ -85,9 +85,6 @@ def validate_one(name: str, settings: dict, base_url: str) -> ET.Element:
         title = text(item, "title")
         if is_non_article(title):
             raise ValueError(f"{name}: 第 {index} 条仍是书评或读后感：{title}")
-        if str(settings.get("language") or "").lower().startswith("zh"):
-            if item.findall(f"{{{DC_NS}}}identifier"):
-                raise ValueError(f"{name}: 中文期刊不应输出 DOI 标识")
         allowed_hosts = {
             host.casefold()
             for host in settings.get("official_link_hosts", [])

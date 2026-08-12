@@ -68,6 +68,17 @@ ITEM_FIELDS = {
     "section",
     "official_url",
 }
+FAILURE_FIELDS = {"slug", "stage", "code"}
+ALLOWED_FAILURE_STAGES = {"fetch", "parse", "validate", "internal"}
+ALLOWED_FAILURE_CODES = {
+    "source_unreachable",
+    "source_too_large",
+    "invalid_source",
+    "incomplete_metadata",
+    "duplicate_items",
+    "inconsistent_issue",
+    "unexpected_error",
+}
 
 ET.register_namespace("atom", ATOM_NS)
 ET.register_namespace("dc", DC_NS)
@@ -221,13 +232,42 @@ def read_verified_payload() -> tuple[str, str, dict[str, Any]]:
         inner = json.loads(raw.decode("utf-8"))
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise _fail("inner payload is not valid UTF-8 JSON") from exc
-    if not isinstance(inner, dict) or set(inner) != {"schema_version", "journals"}:
-        raise _fail("inner payload fields are invalid")
-    if inner["schema_version"] != 1:
+    if not isinstance(inner, dict):
+        raise _fail("inner payload is not an object")
+    version = inner.get("schema_version")
+    if version == 1:
+        _require_exact_fields(inner, {"schema_version", "journals"}, "inner payload")
+        if not isinstance(inner["journals"], list) or len(inner["journals"]) != 2:
+            raise _fail("journal count is invalid")
+        inner = {**inner, "failures": []}
+    elif version == 2:
+        _require_exact_fields(
+            inner, {"schema_version", "journals", "failures"}, "inner payload"
+        )
+        if not isinstance(inner["journals"], list) or not 0 <= len(inner["journals"]) <= 2:
+            raise _fail("journal count is invalid")
+        if not isinstance(inner["failures"], list) or not 0 <= len(inner["failures"]) <= 2:
+            raise _fail("failure count is invalid")
+        if not inner["journals"] and not inner["failures"]:
+            raise _fail("inner payload contains no outcomes")
+    else:
         raise _fail("inner schema version is unsupported")
-    if not isinstance(inner["journals"], list) or not 1 <= len(inner["journals"]) <= 2:
-        raise _fail("journal count is invalid")
     return batch_id, collected_at, inner
+
+
+def validate_failure_payload(raw: Any) -> dict[str, str]:
+    """Validate one deliberately small, non-sensitive collector diagnosis."""
+    if not isinstance(raw, dict):
+        raise _fail("failure entry is not an object")
+    _require_exact_fields(raw, FAILURE_FIELDS, "failure")
+    slug = _require_string(raw["slug"], "failure slug", max_chars=30)
+    stage = _require_string(raw["stage"], "failure stage", max_chars=20)
+    code = _require_string(raw["code"], "failure code", max_chars=50)
+    if slug not in ALLOWED_SLUGS:
+        raise _fail("failure slug is not allowed")
+    if stage not in ALLOWED_FAILURE_STAGES or code not in ALLOWED_FAILURE_CODES:
+        raise _fail("failure diagnosis is not allowed")
+    return {"slug": slug, "stage": stage, "code": code}
 
 
 def _parse_date(value: Any, label: str) -> str:
@@ -484,6 +524,19 @@ def _write_outputs(changed: bool, files: list[str]) -> None:
         handle.write(f"files={' '.join(files)}\n")
 
 
+def _write_status_result(result: dict[str, Any]) -> None:
+    """Write only validated, allowlisted status data for the report generator."""
+    result_path = os.environ.get("STATUS_RESULT_PATH", "").strip()
+    if not result_path:
+        return
+    path = Path(result_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
 def main() -> None:
     batch_id, collected_at, inner = read_verified_payload()
     config = json.loads((ROOT / "journals.json").read_text(encoding="utf-8"))
@@ -501,15 +554,34 @@ def main() -> None:
         seen_slugs.add(validated["slug"])
         validated_batch.append(validated)
 
+    failures: list[dict[str, str]] = []
+    failed_slugs: set[str] = set()
+    for raw_failure in inner["failures"]:
+        failure = validate_failure_payload(raw_failure)
+        if failure["slug"] in failed_slugs or failure["slug"] in seen_slugs:
+            raise _fail("a journal has conflicting or duplicate outcomes")
+        failed_slugs.add(failure["slug"])
+        failures.append(failure)
+    if inner["schema_version"] == 2 and seen_slugs | failed_slugs != ALLOWED_SLUGS:
+        raise _fail("collector outcomes do not cover all allowed journals")
+
     base_url = config["public_base_url"].rstrip("/")
     suffix = config.get("title_suffix", "祥仔")
-    prepared: list[tuple[Path, bytes, int]] = []
+    prepared: list[tuple[Path, bytes, int, dict[str, Any]]] = []
+    feed_results: list[dict[str, Any]] = []
     for validated in validated_batch:
         journal = validated["journal"]
         output_file = journal.get("output_file", f"{journal['slug']}.xml")
         output_path = ROOT / "docs" / output_file
         candidate, count = build_rss(validated, base_url, suffix, collected_at)
         candidate_issue = (validated["year"], validated["issue"])
+        feed_result = {
+            "slug": validated["slug"],
+            "name": journal["name"],
+            "issue": f"{candidate_issue[0]}年第{candidate_issue[1]}期",
+            "items": count,
+            "status": "updated",
+        }
 
         if output_path.exists():
             existing = output_path.read_bytes()
@@ -518,6 +590,8 @@ def main() -> None:
                 raise _fail(f"existing issue cannot be identified for {journal['slug']}")
             if candidate_issue < existing_issue:
                 print(f"Ignored stale {journal['slug']} issue {candidate_issue[0]}-{candidate_issue[1]:02d}.")
+                feed_result["status"] = "ignored_stale"
+                feed_results.append(feed_result)
                 continue
             if candidate_issue == existing_issue:
                 existing_build_time = _feed_build_time(existing)
@@ -527,6 +601,8 @@ def main() -> None:
                         f"Ignored older same-issue collection for {journal['slug']}.",
                         flush=True,
                     )
+                    feed_result["status"] = "ignored_older"
+                    feed_results.append(feed_result)
                     continue
             candidate_ordinal = candidate_issue[0] * 12 + candidate_issue[1]
             existing_ordinal = existing_issue[0] * 12 + existing_issue[1]
@@ -538,19 +614,35 @@ def main() -> None:
                 raise _fail(f"same-issue item count decreased for {journal['slug']}")
             if _feed_signature(candidate) == _feed_signature(existing):
                 print(f"No semantic change for {journal['slug']}.")
+                feed_result["status"] = "unchanged"
+                feed_results.append(feed_result)
                 continue
-        prepared.append((output_path, candidate, count))
+        prepared.append((output_path, candidate, count, feed_result))
 
     changed_files: list[str] = []
-    for output_path, content, _count in prepared:
+    for output_path, content, _count, feed_result in prepared:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.NamedTemporaryFile("wb", dir=output_path.parent, delete=False) as handle:
             handle.write(content)
             temporary_path = Path(handle.name)
         os.replace(temporary_path, output_path)
         changed_files.append(f"docs/{output_path.name}")
+        feed_results.append(feed_result)
 
     _write_outputs(bool(changed_files), changed_files)
+    outcome = "success" if not failures else ("partial" if validated_batch else "failure")
+    _write_status_result(
+        {
+            "schema_version": 1,
+            "kind": "gitee-receive",
+            "batch_id": batch_id,
+            "collected_at": collected_at,
+            "outcome": outcome,
+            "feeds": sorted(feed_results, key=lambda entry: entry["slug"]),
+            "failures": sorted(failures, key=lambda entry: entry["slug"]),
+            "changed_files": sorted(changed_files),
+        }
+    )
     print(f"Accepted batch {batch_id}: {len(changed_files)} feed(s) changed.")
 
 
