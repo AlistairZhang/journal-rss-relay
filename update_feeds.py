@@ -49,6 +49,13 @@ def public_feed_url(base_url: str, settings: dict) -> str:
     return f"{base_url.rstrip('/')}/{output_filename(settings)}"
 
 
+def feed_title(settings: dict, suffix: str) -> str:
+    """Return an explicit public title when configured, otherwise use the default suffix."""
+    return str(
+        settings.get("feed_title") or f"{settings['name']} - {suffix}"
+    ).strip()
+
+
 def local_name(tag: str) -> str:
     return tag.rsplit("}", 1)[-1].split(":")[-1]
 
@@ -747,7 +754,7 @@ def build_magtech_feed(journal: dict, suffix: str, base_url: str, source_html: b
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = f"{journal['name']} - {suffix}"
+    ET.SubElement(channel, "title").text = feed_title(journal, suffix)
     ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
     ET.SubElement(channel, "description").text = f"{journal['name']}当期题录信息，由 Journal RSS Relay 每 3 天更新"
     ET.SubElement(channel, "language").text = journal.get("language", "zh-cn")
@@ -880,7 +887,7 @@ def build_ncpssd_feed(
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = f"{journal['name']} - {suffix}"
+    ET.SubElement(channel, "title").text = feed_title(journal, suffix)
     ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
     ET.SubElement(channel, "description").text = (
         f"{journal['name']}当期题录信息，由 Journal RSS Relay 每 3 天更新"
@@ -1038,7 +1045,7 @@ def build_aea_current_feed(
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = f"{journal['name']} - {suffix}"
+    ET.SubElement(channel, "title").text = feed_title(journal, suffix)
     ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
     ET.SubElement(channel, "description").text = (
         f"{journal['expected_journal_title']} latest-issue metadata, updated every 3 days"
@@ -1181,7 +1188,7 @@ def build_erj_official_feed(journal: dict, suffix: str, base_url: str) -> tuple[
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = f"{journal['name']} - {suffix}"
+    ET.SubElement(channel, "title").text = feed_title(journal, suffix)
     ET.SubElement(channel, "link").text = journal["source_url"]
     ET.SubElement(channel, "description").text = (
         "《经济研究》官网当期题录信息，由 Journal RSS Relay 每 3 天更新"
@@ -1400,7 +1407,7 @@ def build_repec_series_current_feed(
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = f"{journal['name']} - {suffix}"
+    ET.SubElement(channel, "title").text = feed_title(journal, suffix)
     ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
     ET.SubElement(channel, "description").text = (
         f"{journal['expected_journal_title']} latest-issue metadata, updated every 3 days"
@@ -1525,7 +1532,7 @@ def build_jpe_current_feed(
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = f"{journal['name']} - {suffix}"
+    ET.SubElement(channel, "title").text = feed_title(journal, suffix)
     ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
     ET.SubElement(channel, "description").text = (
         f"{expected_journal} latest-issue metadata, updated every 3 days"
@@ -1582,7 +1589,7 @@ def build_feed(journal: dict, suffix: str, base_url: str, source_xml: bytes) -> 
 
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    title = f"{journal['name']} - {suffix}"
+    title = feed_title(journal, suffix)
     ET.SubElement(channel, "title").text = title
     ET.SubElement(channel, "link").text = journal.get("site_url", journal["source_url"])
     ET.SubElement(channel, "description").text = f"{journal['name']}题录信息，由 Journal RSS Relay 每 3 天更新"

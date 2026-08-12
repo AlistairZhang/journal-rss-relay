@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
-    <title>JPE - 祥仔</title>
+    <title>Journal of Political Economy</title>
     <link>https://www.journals.uchicago.edu/toc/jpe/current</link>
     <description>Journal of Political Economy latest-issue metadata, updated every 3 days</description>
     <language>en</language>
     <lastBuildDate>Wed, 12 Aug 2026 11:45:15 +0000</lastBuildDate>
-    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/jpe.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Training, Communications Patterns, and Spillovers inside Organizations</title>
       <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740219?af=R</link>

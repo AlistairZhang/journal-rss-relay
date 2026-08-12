@@ -44,6 +44,11 @@ def validate_one(name: str, settings: dict, base_url: str) -> ET.Element:
     channel = root.find("channel")
     if channel is None:
         raise ValueError(f"{name}: 缺少 channel")
+    expected_title = str(
+        settings.get("feed_title") or settings.get("title") or ""
+    ).strip()
+    if expected_title and text(channel, "title") != expected_title:
+        raise ValueError(f"{name}: RSS 名称与配置不一致")
     self_link = channel.find(f"{{{ATOM_NS}}}link")
     expected_url = f"{base_url.rstrip('/')}/{filename}"
     if self_link is None or self_link.get("href") != expected_url:

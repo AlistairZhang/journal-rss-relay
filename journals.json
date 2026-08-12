@@ -14,8 +14,9 @@
     },
     {
       "slug": "sljjjsjjyj",
-      "output_file": "shujing-jijing.xml",
+      "output_file": "shuliang-jingji-jishu-jingji-yanjiu.xml",
       "name": "数量经济技术经济研究",
+      "feed_title": "数量经济技术经济研究",
       "language": "zh-cn",
       "source_type": "ncpssd_current",
       "source_url": "https://www.ncpssd.org/journal/secure/details?params=K0tQenlLclR2ODk1dTE2Mm0xUWM3ZUk5V1l4M05iRDRheWR6eEs4WFJaLzhUNUdLOGgxaHUyM2ZtNWtZWlYxbURHcW0rVUJhY3p6SExwMk82VEgyOVE9PQ",
@@ -74,8 +75,9 @@
     },
     {
       "slug": "jpe",
-      "output_file": "jpe.xml",
-      "name": "JPE",
+      "output_file": "Journal-of-Political-Economy.xml",
+      "name": "Journal of Political Economy",
+      "feed_title": "Journal of Political Economy",
       "language": "en",
       "source_type": "jpe_repec_current",
       "source_url": "https://www.journals.uchicago.edu/action/showFeed?type=etoc&feed=rss&jc=jpe",
@@ -84,8 +86,8 @@
       "expected_journal_title": "Journal of Political Economy",
       "translation": {
         "slug": "jpe-zh",
-        "output_file": "jpe-zh.xml",
-        "title": "JPE译版-祥仔"
+        "output_file": "Journal-of-Political-Economy-zh.xml",
+        "title": "Journal of Political Economy中文版"
       }
     },
     {
