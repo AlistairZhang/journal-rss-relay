@@ -1,8 +1,12 @@
 name: 接收 Gitee 国内期刊题录
 
 on:
-  repository_dispatch:
-    types: [gitee-journal-ingest-v1]
+  workflow_dispatch:
+    inputs:
+      envelope:
+        description: Gitee 采集器生成的签名数据包
+        required: true
+        type: string
 
 concurrency:
   group: journal-rss-update

@@ -32,7 +32,6 @@ from update_feeds import (
 )
 
 
-EVENT_TYPE = "gitee-journal-ingest-v1"
 SCHEMA = "journal-rss-relay/gitee-ingest@1"
 EXPECTED_REPOSITORY = "AlistairZhang/journal-rss-relay"
 EXPECTED_SENDER = "AlistairZhang"
@@ -150,17 +149,26 @@ def read_verified_payload() -> tuple[str, str, dict[str, Any]]:
     except (OSError, json.JSONDecodeError) as exc:
         raise _fail("event file cannot be read") from exc
 
-    if event.get("action") != EVENT_TYPE:
+    if os.environ.get("GITHUB_EVENT_NAME") != "workflow_dispatch":
         raise _fail("event type is not allowed")
     if (event.get("repository") or {}).get("full_name") != EXPECTED_REPOSITORY:
         raise _fail("repository is not allowed")
     if (event.get("sender") or {}).get("login") != EXPECTED_SENDER:
         raise _fail("sender is not allowed")
 
-    payload = event.get("client_payload")
+    inputs = event.get("inputs")
+    if not isinstance(inputs, dict) or set(inputs) != {"envelope"}:
+        raise _fail("workflow input is invalid")
+    envelope = inputs.get("envelope")
+    if not isinstance(envelope, str) or len(envelope) > 60_000:
+        raise _fail("workflow envelope is invalid")
+    try:
+        payload = json.loads(envelope)
+    except json.JSONDecodeError as exc:
+        raise _fail("workflow envelope is not valid JSON") from exc
     if not isinstance(payload, dict):
-        raise _fail("client_payload is missing")
-    _require_exact_fields(payload, OUTER_FIELDS, "client_payload")
+        raise _fail("workflow envelope is not an object")
+    _require_exact_fields(payload, OUTER_FIELDS, "workflow envelope")
 
     schema = _require_string(payload["schema"], "schema", max_chars=100)
     encoding = _require_string(payload["encoding"], "encoding", max_chars=30)
