@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "description": "英文期刊中文版的标题与摘要翻译缓存",
   "entries": {
     "aer:10.1257/aer.20250295": {
       "source_hash": "ed49655ca425a6b3e2c76d2623062ff720c9425a4fdf472961bc3b434f6f1ffe",
