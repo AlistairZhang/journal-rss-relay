@@ -6,7 +6,7 @@
     <description>中国工业经济当期题录信息，由 Journal RSS Relay 每 3 天更新</description>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 12 Aug 2026 17:43:19 +0000</lastBuildDate>
-    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/zhongguo-gongye-jingji.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://gitee.com/alistairzhang/journal-rss/raw/master/zhongguo-gongye-jingji.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>构建中国哲学社会科学自主知识体系的工业经济样本</title>
       <link>https://ciejournal.ajcass.com/</link>

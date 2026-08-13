@@ -1,7 +1,7 @@
 {
   "description": "期刊来源、RSS 输出文件和中文翻译版本配置",
   "title_suffix": "祥仔",
-  "public_base_url": "https://alistairzhang.github.io/journal-rss-relay",
+  "public_base_url": "https://gitee.com/alistairzhang/journal-rss/raw/master",
   "journals": [
     {
       "slug": "jjyj",
