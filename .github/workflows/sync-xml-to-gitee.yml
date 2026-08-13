@@ -1,0 +1,50 @@
+name: 同步 XML 到 Gitee
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - 更新 RSS
+      - 接收 Gitee 国内期刊题录
+    types:
+      - completed
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/*.xml"
+
+concurrency:
+  group: gitee-xml-publish
+  queue: max
+
+jobs:
+  sync:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: 读取 GitHub 最新 XML
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: 准备 Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: 校验全部 RSS
+        run: python validate_feeds.py
+
+      - name: 仅同步有变化的 XML
+        env:
+          GITEE_XML_SYNC_TOKEN: ${{ secrets.GITEE_XML_SYNC_TOKEN }}
+          GITEE_OWNER: alistairzhang
+          GITEE_REPO: journal-rss
+          GITEE_BRANCH: master
+        run: python sync_xml_to_gitee.py
