@@ -47,6 +47,20 @@ class SyncXmlToGiteeTests(unittest.TestCase):
         with mock.patch.object(sync, "request_json", return_value=(200, [])):
             self.assertIsNone(sync.remote_file("owner", "repo", "master", "new.xml", "token"))
 
+    def test_publish_encoding_preserves_xml_without_raw_non_ascii(self) -> None:
+        raw = (
+            '<?xml version="1.0" encoding="utf-8"?>'
+            '<rss version="2.0"><channel><title>经济研究 - 祥仔</title>'
+            '<item><title>Rüdiger 的文章</title></item></channel></rss>'
+        ).encode("utf-8")
+        published = sync.gitee_publishable_xml("test.xml", raw)
+        self.assertTrue(published.isascii())
+        self.assertNotIn("经济研究".encode("utf-8"), published)
+        self.assertEqual(
+            ET.tostring(ET.fromstring(published), encoding="utf-8"),
+            ET.tostring(ET.fromstring(raw), encoding="utf-8"),
+        )
+
     def test_main_skips_identical_and_updates_changed_files(self) -> None:
         config = {
             "journals": [
@@ -61,6 +75,7 @@ class SyncXmlToGiteeTests(unittest.TestCase):
             with (
                 mock.patch.object(sync, "ROOT", root),
                 mock.patch.object(sync, "validated_local_xml", return_value=rss),
+                mock.patch.object(sync, "gitee_publishable_xml", side_effect=lambda _name, raw: raw),
                 mock.patch.object(
                     sync,
                     "remote_file",
