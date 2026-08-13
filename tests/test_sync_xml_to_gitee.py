@@ -43,6 +43,10 @@ class SyncXmlToGiteeTests(unittest.TestCase):
         payload = {"content": base64.b64encode(raw).decode("ascii")}
         self.assertEqual(sync.decoded_remote_content("test.xml", payload), raw)
 
+    def test_gitee_empty_list_means_remote_file_does_not_exist(self) -> None:
+        with mock.patch.object(sync, "request_json", return_value=(200, [])):
+            self.assertIsNone(sync.remote_file("owner", "repo", "master", "new.xml", "token"))
+
     def test_main_skips_identical_and_updates_changed_files(self) -> None:
         config = {
             "journals": [

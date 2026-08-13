@@ -102,7 +102,12 @@ def remote_file(owner: str, repo: str, branch: str, filename: str, token: str) -
     query = urllib.parse.urlencode({"ref": branch})
     url = f"{API_ROOT}/repos/{owner}/{repo}/contents/{path}?{query}"
     status, payload = request_json("GET", url, token, expected=(200, 404))
-    return None if status == 404 else payload
+    # Gitee 对不存在的文件可能返回 HTTP 200 和空数组，而不是 404。
+    if status == 404 or payload == []:
+        return None
+    if not isinstance(payload, dict):
+        raise SyncError(f"{filename}: Gitee 返回了意外的文件信息")
+    return payload
 
 
 def decoded_remote_content(filename: str, payload: dict) -> bytes:
