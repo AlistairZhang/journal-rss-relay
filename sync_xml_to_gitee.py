@@ -60,15 +60,17 @@ def validated_local_xml(filename: str) -> bytes:
 
 
 def gitee_publishable_xml(filename: str, raw: bytes) -> bytes:
-    """用标准 XML 字符引用发布非 ASCII 文本，解析后的内容保持不变。"""
+    """用逐字符 CDATA 发布非 ASCII 文本，解析后的内容保持不变。"""
     try:
         text = raw.decode("utf-8")
     except UnicodeDecodeError:
         raise SyncError(f"{filename}: XML 不是 UTF-8") from None
     if "<![CDATA[" in text:
         raise SyncError(f"{filename}: 暂不支持含 CDATA 的发布文件")
-    published = "".join(char if ord(char) < 128 else f"&#{ord(char)};" for char in text).encode("ascii")
-    # 字符引用只是传输层编码；解析后的 XML 必须与 GitHub 原文件完全等价。
+    published = "".join(
+        char if ord(char) < 128 else f"<![CDATA[{char}]]>" for char in text
+    ).encode("utf-8")
+    # CDATA 只是传输层表示；解析后的 XML 必须与 GitHub 原文件完全等价。
     if ET.tostring(ET.fromstring(published), encoding="utf-8") != ET.tostring(
         ET.fromstring(raw), encoding="utf-8"
     ):
