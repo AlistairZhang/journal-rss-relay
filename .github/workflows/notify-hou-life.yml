@@ -1,0 +1,33 @@
+name: 通知 Hou Life 同步 RSS
+
+on:
+  workflow_run:
+    workflows: ["更新 RSS", "接收 Gitee 国内期刊题录"]
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  notify:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 签名并通知 Hou Life
+        shell: bash
+        env:
+          WEBHOOK_URL: ${{ secrets.HOU_LIFE_WEBHOOK_URL }}
+          WEBHOOK_SECRET: ${{ secrets.HOU_LIFE_WEBHOOK_SECRET }}
+        run: |
+          if [ -z "$WEBHOOK_URL" ] || [ -z "$WEBHOOK_SECRET" ]; then
+            echo "Hou Life 尚未部署或密钥尚未配置，本次安全跳过。"
+            exit 0
+          fi
+          timestamp="$(date +%s)"
+          body='{"event":"github-pages-published"}'
+          signature="$(printf '%s' "$timestamp.$body" | openssl dgst -sha256 -hmac "$WEBHOOK_SECRET" -hex | sed 's/^.* //')"
+          curl --fail-with-body --retry 3 --retry-all-errors \
+            -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -H "X-Hou-Life-Timestamp: $timestamp" \
+            -H "X-Hou-Life-Signature: sha256=$signature" \
+            --data "$body"
