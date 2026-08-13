@@ -6,7 +6,7 @@
     <description>American Economic Review 最新一期中文译版；标题和摘要由 AI 翻译，仅供参考</description>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 12 Aug 2026 17:43:36 +0000</lastBuildDate>
-    <atom:link href="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review-zh.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review-zh.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>环境市场中的附加性效应与信息不对称：来自保护性拍卖的证据</title>
       <link>https://www.aeaweb.org/articles?id=10.1257%2Faer.20250295</link>
@@ -17,7 +17,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20250295</dc:identifier>
       <description>那些旨在以低成本减少环境退化的机制，可能会受到破坏——因为如果参与者的保护行为对激励措施本身并无实质性影响（即这些行为并非“额外的”保护措施），那么那些以最低成本参与保护活动的主体可能并不会带来最大的社会效益。我们在“保护储备计划”（Conservation Reserve Program）的生态系统服务拍卖机制中研究了这一现象：该机制将投标价格与通过卫星技术获取的土地利用数据相关联。研究发现，四分之三的拍卖中标者其实并未为环境保护做出额外的贡献（即他们的保护行为并未超出最初设定的目标）。土地利用方式的多样性导致了“逆向选择”（即那些本应参与保护的人反而没有参与）。我们建立了一个模型来分析投标行为及其对环境保护的实际影响，并量化了这些行为所带来的福利变化。通过采用能够充分考虑土地利用预期影响的评分规则，替代性的拍卖机制可以提高拍卖的效率。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20250295</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>不确定性与变化：关于企业主观信念的调查证据</title>
@@ -32,7 +32,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20240056</dc:identifier>
       <description>本文研究了管理者在不确定性环境下的决策方式。通过对德国制造企业进行的新一轮调查，我们收集了企业对销售增长的预测数据以及反映其主观不确定性的定量指标。研究发现，主观不确定性实际上反映了企业所经历的变化：当企业增长速度异常低或异常高时，这种不确定性会显著增加。主观不确定性不仅仅是一种“条件性波动性”（即由某些特定因素引起的波动）；虽然波动性较大的企业通常也具有较高的不确定性，但企业自身所经历的变化本身也会导致不确定性的增加——这一现象与学习型组织的决策机制相符。样本中的不确定性在很大程度上具有特殊性（即因企业而异），但其水平会随时间发生显著变化；这种变化会促使管理者在招聘和定价方面采取更为保守的策略（即减少就业人数和降低产品价格）。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20240056</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>在无法观察到不同选择方案的情况下，随机效用理论的应用</title>
@@ -45,7 +45,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20240712</dc:identifier>
       <description>随机效用模型（Random Utility Model, RUM）是经济学中的核心概念之一。该模型通常在假设所有备选方案的选择频率均可被观测到的前提下进行研究。然而在现实中，有些备选方案的选择频率实际上是无法被观测到的；这些无法被观测到的备选方案通常会被归入一个被称为“外部选项”（outside option）的单一类别中。我们在这样的环境中对随机效用模型进行了研究，并推导出一组有限且非冗余的不等式约束条件，这些约束条件用于描述那些可以被观测到的选择频率，从而判断这些选择是否具有合理性（即是否符合随机效用模型的逻辑）。我们的研究表明：将那些无法被观测到的备选方案简单地进行汇总的做法可能会遗漏关键信息，从而导致错误的结论（例如认为所有被观测到的选择都是合理的）——即使实际上并不存在符合随机效用模型逻辑的决策行为。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20240712</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>不同职业的生产力：来自急诊科的证据</title>
@@ -57,7 +57,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20241007</dc:identifier>
       <description>本文研究了执业护士（NPs）与医生的工作效率。这两类职业虽然承担着部分重叠的工作任务，但他们的背景、培训经历及薪酬水平存在显著差异。通过分析退伍军人健康管理局（Veterans Health Administration）急诊科中患者分配给执业护士与医生的情况（属于准实验设计），我们发现：平均而言，执业护士使用的医疗资源更多，且30天内需要住院治疗的可预防病例比例也高于医生。不过，这种工作效率差异会因病例的复杂性和严重程度而有所不同。值得注意的是，即使在同一职业内部，工作效率也存在较大差异；在随机选取的病例对中，执业护士的表现优于医生的比例达到了38%。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20241007</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>受监管市场中的能源转型</title>
@@ -70,7 +70,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20240094</dc:identifier>
       <description>天然气已经取代煤炭，成为美国电力生产的主要燃料。然而，在那些受到政府监管的州，电力公司淘汰煤炭的速度相对较慢。我们建立了一个结构模型，用于分析能源转型期间监管机制对电力公司运营的影响；在这些情况下，电力公司需要在降低成本与维护或继续使用现有发电设施之间做出权衡。如果电力公司需要承担碳税，其煤炭发电量在短期内会减少48%（这一减少幅度与那些以成本最小化为目标的电力公司的减少幅度相同）。在能源转型发生30年后，以成本最小化为目标的电力公司会淘汰比受监管的电力公司多71%的煤炭发电设施。某些替代性的监管政策可能会对能源转型过程中的电力供应的“可负担性”和“可靠性”目标造成负面影响。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20240094</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>公共部门中的职业动机：来自警察警官的实证研究</title>
@@ -82,7 +82,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20231696</dc:identifier>
       <description>我们研究了公共部门工作人员如何平衡他们的职业目标与个人经济利益，重点关注警察的执法行为。在警察轮班结束时进行的逮捕通常需要加班；为应对这种情况，警察会减少逮捕次数，但提高每次逮捕的质量。如果警察在完成警察工作后还从事第二份工作，那么他们的机会成本会增加，这也会导致他们在轮班后期减少逮捕行为。通过将我们的研究结果纳入一个动态模型中，我们可以更清楚地了解警察对工作内容与加班工作的偏好。研究结果表明，警察因执法行为而产生的个人成本会直接影响执法的数量和质量。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20231696</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>合并效应与反垄断执法：来自美国消费品行业的证据</title>
@@ -95,7 +95,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20240497</dc:identifier>
       <description>我们记录了一系列消费品制造商合并事件对价格、销量以及产品种类（即产品组合）所产生的影响。研究发现，合并对平均价格的影响较为微小（降幅在 0.5% 至 1.1% 之间），但这种影响存在显著差异（价格变化的标准差介于 3.9% 至 7.6% 之间）。通过建立相应的模型进行分析后，我们发现相关监管机构会倾向于阻止那些可能导致价格涨幅超过 4.8% 至 6.3% 的合并行为。如果监管力度得到加强，价格水平以及那些旨在提高价格的合并行为的成功率将会下降；不过，这种加强措施对那些旨在降低价格的合并行为的影响几乎可以忽略不计，同时监管机构的负担也会显著增加。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20240497</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>设计动态任务重新分配机制：来自全科医生（GP）分配实践的证据</title>
@@ -108,7 +108,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20240617</dc:identifier>
       <description>我们研究了在代理对对象的偏好随时间变化时，如何设计一种动态重新分配机制的问题。以挪威将患者重新分配给全科医生（GP）的体系为例，我们直接证明了当前分配机制存在的缺陷：患者们需要等待其他患者的医生接诊，但他们之间无法进行资源交换；同时，我们还建立了一个关于患者更换全科医生行为的结构模型，以评估其他可能的分配方案。引入“顶级交易循环”（Top Trading Cycles, TTC）机制平均而言可以缩短患者的等待时间并提高他们的福利水平；不过，那些被分配到不太理想的全科医生手中的患者可能会受到负面影响。通过优先考虑这些患者的需求，可以在保留 TTC 机制带来的大部分好处的同时，避免他们对福利的损害。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20240617</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>社区参与与公共安全：针对移民的犯罪执法行动所提供的证据</title>
@@ -121,7 +121,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20250305</dc:identifier>
       <description>我们研究了受害者报案行为在维护公共安全方面所起的作用。我们重点分析了“安全社区计划”（Secure Communities Program）这一旨在减少犯罪的政策——该计划要求警方协助打击非法移民活动，但同时也加剧了移民群体对被驱逐出境的恐惧。研究结果表明：这一政策降低了西班牙裔受害者向警方报案的意愿，同时增加了针对西班牙裔的犯罪行为。尽管报案数量本身没有发生变化，但这掩盖了上述两种相反的影响。我们进一步发现：报案率的下降是导致犯罪行为增加的根本原因，并首次在学术文献中量化了犯罪行为与受害者报案行为之间的关联（具体而言：当报案率下降10%时，犯罪行为会增加7.9%）。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20250305</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>组织中的“人才囤积”现象</title>
@@ -132,7 +132,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20220264</dc:identifier>
       <description>大多数组织都依赖管理者来发现有才华的员工。然而，那些其绩效评估与团队整体表现挂钩的管理者，会有动机将优秀员工“据为己有”（即不让这些员工被其他部门或团队使用）。这项研究首次通过一家大型企业的人事记录和调查数据，提供了关于这种“人才囤积”行为的实证证据。研究发现：四分之三的管理者承认自己存在这种行为；这种行为会体现在他们对员工能力的评价中；而且在那些激励机制更强的情况下（如与绩效挂钩的薪酬制度、团队规模较大或员工能力更容易被识别等情况下），这种行为的发生频率更高。通过分析员工接触“人才囤积”现象的随机性（即员工是否偶然了解到这种行为），研究发现：这种行为会抑制员工内部晋升的积极性，阻碍他们的职业发展，并改变企业内部的人才分配机制。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20220264</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
     <item>
       <title>远程工作与城市结构</title>
@@ -145,7 +145,7 @@
       <dc:identifier>https://doi.org/10.1257/aer.20231414</dc:identifier>
       <description>与远程工作相比，在市中心工作可以促进与其他办公室工作人员之间的交流与合作，但需要承担通勤成本。这种协调机制可能导致多种不同的“静态平衡状态”（即各种工作模式共存的局面），其中远程工作的比例各不相同。在疫情期间（如 COVID-19 期间），通勤人数暂时减少，从而导致远程工作者的比例显著上升。根据美国手机移动数据的研究发现：在那些通勤情况较为复杂的大型城市中，通勤人数仅恢复到了疫情前的 60%；而在通勤较为简单的小型城市中，通勤人数已完全恢复到疫情前的水平。那些通勤成本长期处于较低水平的城市的平均福利水平下降了 2.3%。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1257/aer.20231414</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml">American Economic Review</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml">American Economic Review</source>
     </item>
   </channel>
 </rss>
