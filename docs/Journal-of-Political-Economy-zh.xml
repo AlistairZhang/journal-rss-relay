@@ -6,7 +6,7 @@
     <description>Journal of Political Economy 最新一期中文译版；标题和摘要由 AI 翻译，仅供参考</description>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 12 Aug 2026 17:43:24 +0000</lastBuildDate>
-    <atom:link href="https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy-zh.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy-zh.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>组织内部的培训、沟通方式以及这些方式所产生的影响（即“溢出效应”）。</title>
       <link>https://www.journals.uchicago.edu/doi/abs/10.1086/740219</link>
@@ -17,7 +17,7 @@
       <dc:identifier>https://doi.org/10.1086/740219</dc:identifier>
       <description>本文研究了培训如何影响组织内部各层级员工的生产效率。在一个政府机构中，对一线员工实施了随机分配的培训计划后，受训员工的的工作效率得到了提升，同时他们向管理层求助的频率也降低了。这使得管理者能够将更多精力投入到战略性任务上，尤其是那些与受训员工联系最为紧密的管理者。通过对组织层级结构的分析发现，培训带来的积极影响中有约45%直接惠及了管理者；这说明，如果仅基于个别受训者的表现来评估培训效果，可能会严重低估培训投资的实际价值。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1086/740219</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
     </item>
     <item>
       <title>一种用于估计离散选择模型的方法：该方法对消费者的搜索行为具有很强的适应性（即能够有效处理消费者在做出决策前所进行的各种搜索行为）。</title>
@@ -30,7 +30,7 @@
       <dc:identifier>https://doi.org/10.1086/740223</dc:identifier>
       <description>我们提出了这样一些条件：在这些条件下，即使消费者对商品的某些属性了解不完全，仅凭他们的选择数据也足以识别他们的偏好。我们的方法可用于判断消费者是否掌握了全部相关信息、预测他们会对新信息作出何种反应，以及在消费者信息掌握不充分的情况下进行福利分析。在实验室实验中，我们成功预测了消费者在花费大量时间进行信息搜索时对新信息的平均反应；通过对 Expedia 的数据进行分析，我们的方法能够识别出哪些商品属性在搜索结果中对消费者来说是“不可见”的（即消费者无法直接了解的），从而计算出额外信息对消费者的价值。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1086/740223</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
     </item>
     <item>
       <title>早期儿童发展政策的宏观经济后果</title>
@@ -41,7 +41,7 @@
       <dc:identifier>https://doi.org/10.1086/740224</dc:identifier>
       <description>为了研究长期、大规模的早期儿童教育政策，本文将早期儿童教育投资纳入了一个基于美国数据校准的“一般均衡模型”（该模型考虑了不同类型个体之间的相互作用以及代际传承现象）。在该模型中，对一个短期、小规模的早期儿童教育项目进行的随机对照试验评估结果表明，该项目对儿童的教育水平和收入的影响与实证研究结果一致。然而，一个长期、大规模的教育项目所带来的福利收益是短期、小规模项目的两倍以上（即使考虑了一般均衡效应和税收影响之后也是如此）。这种差异的关键在于：对儿童的投资不仅能够提升他们的个人能力，还能为后代创造更好的“基因基础”（即更优秀的祖先）。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1086/740224</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
     </item>
     <item>
       <title>零贝塔利率（Zero-Beta Interest Rate）</title>
@@ -55,7 +55,7 @@
       <dc:identifier>https://doi.org/10.1086/740220</dc:identifier>
       <description>我们利用股票市场的收益率来构建一个随时间变化的“零贝塔利率”（zero-beta interest rate）衡量指标：这个利率代表的是与随机折现因子（stochastic discount factor）正交的股票投资组合的预期收益率。与那些被视为“安全”的利率不同，零贝塔利率无论在何种情况下（无论是无条件情况下，还是在受到货币政策冲击的情况下），都能非常准确地拟合总消费量的变化规律。此外，零贝塔利率具有较高的波动性，并且其波动趋势具有持续性，因此能够解释市场投资组合的平均收益率以及大部分市场波动性。令人困惑的是：为什么那些被视为“安全”的利率会如此低、如此稳定，且与消费量及零贝塔利率之间的关联性如此之弱（或者说，为什么它们之间的变化趋势几乎完全不一致）。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1086/740220</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
     </item>
     <item>
       <title>财政援助与个人社会地位的提升：来自哥伦比亚“Ser Pilo Paga”项目的证据</title>
@@ -69,7 +69,7 @@
       <dc:identifier>https://doi.org/10.1086/740226</dc:identifier>
       <description>我们研究了经济援助对个人社会经济地位提升的影响。我们评估了一项针对成绩优异但社会经济地位较低学生的哥伦比亚政策的实际效果（即该政策对其日后在教育及劳动力市场中的表现所产生的影响）。通过运用回归分析方法、差异对比分析（DID）以及涵盖整个人口的行政微观数据，我们发现该政策显著提高了这些学生进入高价值大学（尤其是STEM领域）的入学率及毕业率；同时，大学教育质量的提升也促进了他们的技能发展。九年后，这些受政策帮助的学生收入增加了18个对数单位（log units），并且他们更有可能跻身收入最高的1%人群之列。该政策有效缩小了学生在大学教育质量、学业成就、技能发展、收入等方面的社会经济差距，从而提升了社会的公平性与效率。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1086/740226</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
     </item>
     <item>
       <title>“天然气陷阱”：在市场竞争中，天然气相对于煤炭和可再生能源的优势与劣势  
@@ -83,7 +83,7 @@
       <dc:identifier>https://doi.org/10.1086/740172</dc:identifier>
       <description>我们分析了那些关注气候变化、从事天然气生产的企业所面临的一个根本性困境：即如何在短期行为（如增加天然气产量以击败煤炭生产商）与长期目标（如减少温室气体排放）之间做出平衡。从短期来看，增加天然气产量确实是一种具有吸引力的选择；然而，如果其他企业也预期到这种策略，那么对可再生能源的投资就会减少，从而导致温室气体排放量反而上升。当天然气生产商无法提前制定明确的减排计划时，他们的决策可能会适得其反。通过对欧洲地区的模拟分析，我们证实了这种“天然气陷阱”（即增加天然气产量反而加剧环境问题的现象）在现实中确实存在，并且其影响是相当严重的。我们还讨论了这一结论的可靠性以及可能的解决方案，这些方案包括直接投资可再生能源，以及对天然气勘探活动征税等。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1086/740172</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
     </item>
     <item>
       <title>国家的起源：是土地的生产力，还是土地的所有权？——一种评论</title>
@@ -99,7 +99,7 @@
 （1）“资源可被精英阶层控制或占有”的理论在从部落酋长制向国家制度转变的过程中仍然成立；这一理论并不适用于更广泛的社会形态。  
 （2）研究结论主要受到少数具有统计显著性的异常数据的影响；当使用“温索尔化方法”（Winsorization）将这些异常数据剔除后（即仅保留那些在10%显著性水平上具有统计显著性的数据），结论会发生显著变化（在2.1%或1.2%的显著性水平下）。</description>
       <guid isPermaLink="false">zh-cn:doi:10.1086/740225</guid>
-      <source url="https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
+      <source url="https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml">Journal of Political Economy</source>
     </item>
   </channel>
 </rss>

@@ -6,7 +6,7 @@
     <description>管理世界当期文章题录，由国内采集节点获取。</description>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 12 Aug 2026 16:16:33 +0000</lastBuildDate>
-    <atom:link href="https://gitee.com/alistairzhang/journal-rss/raw/master/guanli-shijie.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://alistairzhang.github.io/journal-rss-relay/guanli-shijie.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>价格战监管与平台创新：资金约束下的平台动态竞争</title>
       <link>http://www.mwm.net.cn/web/xq?leafId=226&amp;docId=6201</link>

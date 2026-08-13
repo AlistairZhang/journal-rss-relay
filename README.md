@@ -6,28 +6,26 @@
 
 | 期刊 | RSS 订阅链接 |
 | --- | --- |
-| 经济研究 | https://gitee.com/alistairzhang/journal-rss/raw/master/jingji-yanjiu.xml |
-| 数量经济技术经济研究 | https://gitee.com/alistairzhang/journal-rss/raw/master/shuliang-jingji-jishu-jingji-yanjiu.xml |
-| 经济地理 | https://gitee.com/alistairzhang/journal-rss/raw/master/jingji-dili.xml |
-| 管理世界 | https://gitee.com/alistairzhang/journal-rss/raw/master/guanli-shijie.xml |
-| 中国工业经济 | https://gitee.com/alistairzhang/journal-rss/raw/master/zhongguo-gongye-jingji.xml |
-| 世界经济 | https://gitee.com/alistairzhang/journal-rss/raw/master/shijie-jingji.xml |
+| 经济研究 | https://alistairzhang.github.io/journal-rss-relay/jingji-yanjiu.xml |
+| 数量经济技术经济研究 | https://alistairzhang.github.io/journal-rss-relay/shuliang-jingji-jishu-jingji-yanjiu.xml |
+| 经济地理 | https://alistairzhang.github.io/journal-rss-relay/jingji-dili.xml |
+| 管理世界 | https://alistairzhang.github.io/journal-rss-relay/guanli-shijie.xml |
+| 中国工业经济 | https://alistairzhang.github.io/journal-rss-relay/zhongguo-gongye-jingji.xml |
+| 世界经济 | https://alistairzhang.github.io/journal-rss-relay/shijie-jingji.xml |
 
 ## 英文期刊
 
 | Journal | RSS Feed |
 | --- | --- |
-| Econometrica | https://gitee.com/alistairzhang/journal-rss/raw/master/econometrica.xml |
-| Journal of Political Economy | https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy.xml |
-| Journal of Political Economy中文版 | https://gitee.com/alistairzhang/journal-rss/raw/master/Journal-of-Political-Economy-zh.xml |
-| American Economic Review | https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review.xml |
-| American Economic Review中文版 | https://gitee.com/alistairzhang/journal-rss/raw/master/American-Economic-Review-zh.xml |
+| Econometrica | https://alistairzhang.github.io/journal-rss-relay/econometrica.xml |
+| Journal of Political Economy | https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy.xml |
+| Journal of Political Economy中文版 | https://alistairzhang.github.io/journal-rss-relay/Journal-of-Political-Economy-zh.xml |
+| American Economic Review | https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review.xml |
+| American Economic Review中文版 | https://alistairzhang.github.io/journal-rss-relay/American-Economic-Review-zh.xml |
 
 ## 自动更新与翻译
 
-- 自动更新分为两条相互衔接的流程。《数量经济技术经济研究》和《管理世界》由 Gitee 国内节点在北京时间每月 1、4、7……日 05:30 左右采集，成功后立即把压缩并签名的内存数据发送给 GitHub；GitHub 收到事件后随即校验、生成 RSS 并发布，不需要等下一次定时任务，也不进行轮询。国内采集过程不把临时题录或构建产物写入 Gitee，日志也不输出标题、作者或摘要；Gitee 仓库最终只保存 GitHub 校验通过的 XML。
-- GitHub 是全部 RSS 的唯一生成源。任一最终 XML 发生变化后，独立同步流程会逐文件比较并只更新 Gitee 中对应的 XML；代码、配置、翻译缓存和状态报告不会随之传输。订阅地址统一使用 Gitee 原始文件链接。
-- Gitee 发布副本会把非 ASCII 文本逐字写入标准 XML CDATA，以适配其内容发布机制；RSS 阅读器解析后的期刊名称、标题、作者和摘要与 GitHub 原文件一致。
+- 自动更新分为两条相互衔接的流程。《数量经济技术经济研究》和《管理世界》由 Gitee 国内节点在北京时间每月 1、4、7……日 05:30 左右采集，成功后立即把压缩并签名的内存数据发送给 GitHub；GitHub 收到事件后随即校验、生成 RSS 并发布，不需要等下一次定时任务，也不进行轮询。Gitee 不保存临时题录文件、不上传构建产物，日志也不输出标题、作者或摘要。
 - 其余期刊由 GitHub Actions 在 UTC 每月 1、4、7……日 23:15，即北京时间次日 07:15 左右检查；两个时段特意错开。上述计划均是“约每 3 天”，跨月时可能缩短或延长，平台排队也可能造成延迟，并非严格的每 72 小时。
 - 两条流程都会先完成来源、签名、期次、字段、作者、链接、重复条目和非文献过滤检查，再更新线上文件。任何检查失败都不会用残缺结果覆盖现有 RSS；旧期数据也不会覆盖新期数据。
 - JPE 和 AER 都是先生成当轮英文 RSS，再逐篇检查翻译缓存。缓存以 DOI（无 DOI 时使用 GUID）区分文章，并比较英文标题与摘要的哈希值；只有新文章、DOI/GUID 改变，或英文标题/摘要发生变化时，才调用翻译 API。每个需要更新的条目分别翻译标题和摘要。
@@ -62,7 +60,7 @@
 
 原 Gitee 项目中，《数量经济技术经济研究》和《管理世界》都直接使用期刊官网。2026-08-12 迁移到 GitHub 时，GitHub Actions 访问前者官网 RSS [连续返回 HTTP 502](https://github.com/AlistairZhang/journal-rss-relay/actions/runs/31591318513)，访问后者官网[连续超时](https://github.com/AlistairZhang/journal-rss-relay/actions/runs/31591678651)；两刊因此一度临时改用国家哲学社会科学文献中心。这只是运行环境兼容措施，不是因为文献中心更权威。
 
-目前两刊已经恢复为官网数据：Gitee 国内节点负责采集和即时发送，GitHub 负责不可信输入校验、RSS 生成和版本保存。传输采用 SHA-256 摘要和独立 HMAC 密钥签名；GitHub 只接受指定账户发来的这两个期刊，拒绝过期、篡改、来源不明、字段异常或期次倒退的数据。Gitee 采集器本身不生成题录 XML；GitHub 完成全部处理后，只把最终 XML 同步回 Gitee 供国内订阅。旧提交历史中曾经保存的文件不会因本次改造自动消失。
+目前两刊已经恢复为官网数据：Gitee 国内节点负责采集和即时发送，GitHub 负责不可信输入校验、RSS 生成、版本保存和 Pages 发布。传输采用 SHA-256 摘要和独立 HMAC 密钥签名；GitHub 只接受指定账户发来的这两个期刊，拒绝过期、篡改、来源不明、字段异常或期次倒退的数据。Gitee 采集器本身不生成新的题录 XML。
 
 ### 当前识别状态
 
