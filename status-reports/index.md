@@ -2,6 +2,7 @@
 
 每次自动检查或国内采集接收都会生成一份独立报告，按时间倒序排列。
 
+- [2026-08-25 23-42-16 UTC · update-rss-run-32911843076-attempt-1](2026/08/2026-08-25T23-42-16Z-update-rss-run-32911843076-attempt-1.md)
 - [2026-08-24 21-30-38 UTC · gitee-receive-run-32779841499-attempt-1](2026/08/2026-08-24T21-30-38Z-gitee-receive-run-32779841499-attempt-1.md)
 - [2026-08-22 23-41-13 UTC · update-rss-run-32605734643-attempt-1](2026/08/2026-08-22T23-41-13Z-update-rss-run-32605734643-attempt-1.md)
 - [2026-08-21 21-30-34 UTC · gitee-receive-run-32528805982-attempt-1](2026/08/2026-08-21T21-30-34Z-gitee-receive-run-32528805982-attempt-1.md)
